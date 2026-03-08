@@ -1,0 +1,99 @@
+.home-container {
+  display: flex;
+  height: 100vh;
+  background-color: #282828;
+}
+
+/* Imagen izquierda */
+.home-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #474747;
+}
+
+.home-image img {
+  width: 50%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Formulario derecha */
+.home-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 140px; /* más espacioso */
+  background-color: #181818;
+  box-shadow: -2px 0 15px rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
+.home-form h2 {
+  margin-bottom: 40px;
+  color: #d40000;
+  font-size: 42px; /* más grande */
+}
+
+.home-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px; /* más separación */
+  width: 100%;
+  max-width: 450px; /* más ancho */
+}
+
+.home-form label {
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-size: 20px; /* más grande */
+}
+
+.home-form input {
+  padding: 15px 20px; /* más grande */
+  font-size: 20px; /* más legible */
+  border: 2px solid #202020;
+  background-color: #474747;
+  border-radius: 12px;
+  color: #fff;
+}
+
+.home-form button {
+  padding: 15px 30px; /* más grande */
+  font-size: 20px; /* más grande */
+  background-color: #d40000;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.home-form button:hover {
+  background-color: #ffffff;
+  color: #d40000;
+}
+
+.home-form p {
+  margin-top: 25px;
+  color: #d40000;
+  font-size: 18px;
+  text-align: center;
+}
+
+.register-link {
+  color: #d40000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link:hover {
+  color: #a00000;
+}
+
+.register-link:active {
+  color: #ffffff;
+}
