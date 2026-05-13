@@ -1,0 +1,201 @@
+/* HEADER (flecha + ruta + buscador) */
+.explorador-header{
+
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:15px;
+
+}
+
+/* BOTÓN FLECHA */
+.explorador-back{
+
+  background:#181818;
+  border:1px solid #333;
+  border-radius:8px;
+  padding:8px 12px;
+  cursor:pointer;
+  color:white;
+  font-size:16px;
+  transition:0.2s;
+
+}
+
+.explorador-back:hover{
+  background:#438e23;
+  color:black;
+}
+
+/* RUTA */
+.ruta{
+
+  color:#438e23;
+  font-weight:bold;
+  font-size:14px;
+
+}
+
+/* BUSCADOR (mismo estilo que modal) */
+.explorador-busqueda{
+
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  background:#181818;
+  border:1px solid #333;
+  border-radius:8px;
+  color:white;
+
+}
+
+.explorador-busqueda:focus{
+  outline:none;
+  border-color:#438e23;
+}
+
+.explorador-container{
+
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  min-height:0; /* 🔴 CLAVE */
+
+}
+
+.explorador-container h2{
+    
+  color:#438e23;
+  font-weight:bold;
+  font-size:32px;
+  padding-bottom: 30px;
+
+}
+
+.explorador-grid{
+
+  flex:1;
+  min-height:0; /* 🔴 CLAVE */
+  overflow-y:auto;
+
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));
+  gap:20px;
+  align-content: start;
+  padding-right:10px;
+}
+
+/* ========================= */
+/* SCROLL EXPLORADOR */
+/* ========================= */
+
+.explorador-grid::-webkit-scrollbar {
+  width:10px;
+}
+
+/* FONDO */
+.explorador-grid::-webkit-scrollbar-track {
+  background:#181818;
+  border-radius:10px;
+}
+
+/* BARRA */
+.explorador-grid::-webkit-scrollbar-thumb {
+  background:#438e23;
+  border-radius:10px;
+  border:2px solid #181818;
+}
+
+/* HOVER */
+.explorador-grid::-webkit-scrollbar-thumb:hover {
+  background:#5bbf2f;
+}
+
+/* FIREFOX */
+.explorador-grid {
+  scrollbar-width:thin;
+  scrollbar-color:#438e23 #181818;
+}
+
+.explorador-item{
+
+  background:#181818;
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
+  cursor:pointer;
+  transition:all 0.2s ease;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  height:140px; /* CUADRADO */
+
+}
+
+.explorador-item:hover{
+  background:#2a2a2a;
+  transform:translateY(-2px);
+}
+
+.explorador-icono{
+
+  width:50px;
+  height:50px;
+  object-fit:contain;
+  margin-bottom:10px;
+
+}
+
+.explorador-item p{
+
+  font-size:14px;
+  color:white;
+
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  width:100%;
+
+}
+
+.explorador-item button{
+
+  margin-top:8px;
+  background:#438e23;
+  border:none;
+  padding:5px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:12px;
+
+}
+
+.explorador-item button:hover{
+  background:white;
+  color:#438e23;
+}
+
+.explorador-item.seleccionado{
+  background:#2e4d2e;
+  border:1px solid #438e23;
+}
+
+.explorador-busqueda {
+  margin: 10px 0;
+}
+
+.explorador-busqueda input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #1e1e1e;
+  color: white;
+}
+
+.explorador-busqueda input::placeholder {
+  color: #aaa;
+}

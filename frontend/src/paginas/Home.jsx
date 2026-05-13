@@ -14,29 +14,41 @@ const Home = () => {
     e.preventDefault();
 
     try {
+
+      const formData = new URLSearchParams();
+      formData.append("username", email);   // username = email
+      formData.append("password", password);
+
       const res = await fetch('http://localhost:8000/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        // Guardamos el token y user_id
+
         localStorage.setItem('token', data.access_token);
         localStorage.setItem('user_id', data.user_id);
+        localStorage.setItem('nombre', data.nombre);
 
-        // Redirigimos a la página principal o dashboard
-        navigate('/dashboard'); // Cambia a la ruta que quieras
+        navigate('/dashboard');
+
       } else {
-        // Mostrar errores de backend
+
         if (Array.isArray(data.detail)) {
-          setMensaje(data.detail.map(err => `${err.loc.join('.')} - ${err.msg}`).join(', '));
+          setMensaje(
+            data.detail.map(err => `${err.loc.join('.')} - ${err.msg}`).join(', ')
+          );
         } else {
           setMensaje(data.detail || JSON.stringify(data));
         }
+
       }
+
     } catch (err) {
       setMensaje('Error de conexión con el backend');
     }

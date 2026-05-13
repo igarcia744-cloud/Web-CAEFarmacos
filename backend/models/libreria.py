@@ -1,28 +1,29 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
-from sqlalchemy.orm import relationship
 from datetime import datetime
 import pytz
+from sqlalchemy.orm import relationship
+from models.relaciones_etiquetas import libreria_etiquetas
 from database import Base
 
 class Libreria(Base):
     __tablename__ = "librerias"
 
     id = Column(Integer, primary_key=True, index=True)
-    nombre = Column(String, nullable=False, unique=True)
-    comentario = Column(String, nullable=True)
 
-    creado_por = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
-    fecha_creacion = Column(DateTime(timezone=True), default=lambda: datetime.now(pytz.UTC))
+    nombre = Column(String, nullable=False)
+    comentario = Column(String)
 
-    actualizado_por = Column(Integer, ForeignKey("usuarios.id"), nullable=True)
-    fecha_actualizacion = Column(DateTime(timezone=True), onupdate=lambda: datetime.now(pytz.UTC))
+    ruta_zip = Column(String)
 
-    ruta_zip = Column(String, nullable=False)
+    creada_por = Column(Integer, ForeignKey("usuarios.id"))
 
-    # Relación con etiqueta
-    etiqueta_id = Column(Integer, ForeignKey("etiquetas.id"), nullable=True)
-    etiqueta = relationship("Etiqueta", back_populates="librerias")
+    fecha_creacion = Column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(pytz.UTC)
+    )
 
-    # Relación con moléculas
-    moleculas = relationship("Molecula", back_populates="libreria")
-
+    etiquetas = relationship(
+        "Etiqueta",
+        secondary=libreria_etiquetas,
+        back_populates="librerias"
+    )

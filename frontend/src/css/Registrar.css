@@ -55,7 +55,7 @@ body, html {
 
 .registrar-form h2 {
   margin-bottom: 30px;
-  color: #d40000;
+  color: #438e23;
   text-align: center;
 }
 
@@ -80,7 +80,7 @@ body, html {
 
 .registrar-form button {
   padding: 12px;
-  background-color: #d40000;
+  background-color: #438e23;
   color: #000;
   border: none;
   border-radius: 10px;
@@ -95,19 +95,19 @@ body, html {
 
 .registrar-form p {
   margin-top: 20px;
-  color: #d40000;
+  color: #438e23;
   text-align: center;
 }
 
 .login-link {
-  color: #d40000;
+  color: #438e23;
   font-weight: bold;
   text-decoration: none;
   transition: color 0.3s;
 }
 
 .login-link:hover {
-  color: #a00000;
+  color: #2d5f17;
 }
 
 .login-link:active {

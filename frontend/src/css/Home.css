@@ -34,7 +34,7 @@
 
 .home-form h2 {
   margin-bottom: 40px;
-  color: #d40000;
+  color: #438e23;
   font-size: 42px; /* más grande */
 }
 
@@ -64,7 +64,7 @@
 .home-form button {
   padding: 15px 30px; /* más grande */
   font-size: 20px; /* más grande */
-  background-color: #d40000;
+  background-color: #438e23;
   color: #000;
   border: none;
   border-radius: 10px;
@@ -74,24 +74,24 @@
 
 .home-form button:hover {
   background-color: #ffffff;
-  color: #d40000;
+  color: #438e23;
 }
 
 .home-form p {
   margin-top: 25px;
-  color: #d40000;
+  color: #438e23;
   font-size: 18px;
   text-align: center;
 }
 
 .register-link {
-  color: #d40000;
+  color: #438e23;
   text-decoration: none;
   font-weight: bold;
 }
 
 .register-link:hover {
-  color: #a00000;
+  color: #2d5f17;
 }
 
 .register-link:active {

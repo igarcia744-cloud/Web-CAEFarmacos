@@ -1,0 +1,276 @@
+/* =========================
+   CONTENEDOR GENERAL
+========================= */
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #282828;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 15px 40px;
+
+  background-color: #181818;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+
+
+/* LOGO */
+
+.logo-container{
+  display:flex;
+  align-items:center;
+}
+
+.logo-container img{
+  height:120px;
+  width:auto;
+  object-fit:contain;
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-item {
+  background: none;
+  border-color: #438e23;
+  border-radius: 5px;
+  color: #438e23;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  color: #438e23;
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   DROPDOWN
+========================= */
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  left: 0;
+
+  background-color: #181818;
+  border-radius: 10px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+
+  display: flex;
+  flex-direction: column;
+  min-width: 170px;
+
+  overflow: hidden;
+  animation: dropdownFade 0.2s ease;
+}
+
+.dropdown-menu button {
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #d0d0d0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dropdown-menu button:hover {
+  background-color: #438e23;
+  color: black;
+}
+
+
+/* ANIMACIÓN */
+
+@keyframes dropdownFade {
+  from{
+    opacity:0;
+    transform:translateY(-5px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+
+/* =========================
+   USUARIO
+========================= */
+
+.usuario {
+  font-size: 16px;
+  color: #d0d0d0;
+}
+
+.usuario span {
+  color: #438e23;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.usuario span:hover {
+  color: white;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+.dashboard-content{
+  flex:1;
+  padding:30px;
+  background:#202020;
+  color:white;
+
+  display:flex;              /* 🔴 IMPORTANTE */
+  flex-direction:column;     /* 🔴 IMPORTANTE */
+
+  overflow:hidden;
+}
+
+.dashboard-body {
+  display: flex;
+  gap: 30px;
+
+  padding: 30px;
+
+  flex: 1;
+}
+
+/* Layout principal */
+.dashboard-main{
+  display:flex;
+  height:100vh;
+  background:#282828;
+  height:calc(100vh - 80px); /* ajusta si tu header mide otra cosa */
+}
+
+/* SIDEBAR */
+.sidebar{
+
+  width:25%;
+  background:#181818;
+  padding:25px;
+  border-right:1px solid #333;
+
+  display:flex;
+  flex-direction:column;
+
+  height:100%;        /* 🔥 importante */
+  overflow-y:auto;    /* 🔥 clave */
+
+}
+
+/* Título */
+.sidebar h2{
+  color:#438e23;
+  margin-bottom:25px;
+  font-size:22px;
+}
+
+/* Sección */
+.sidebar-section{
+  display:flex;
+  flex-direction:column;
+  gap: 15px;
+}
+
+/* Subtítulo */
+.sidebar-title{
+  color:#888;
+  font-size:14px;
+  margin-bottom:10px;
+}
+
+/* Items */
+.sidebar-item{
+
+  padding:12px;
+  border-radius:10px;
+  cursor:pointer;
+  margin-bottom:8px;
+  color:white;
+  background:#202020;
+  transition:all 0.2s ease;
+
+}
+
+/* Hover */
+.sidebar-item:hover{
+  background:#2a2a2a;
+}
+
+/* Activo */
+.sidebar-item.active{
+
+  background:#438e23;
+  color:#000;
+  font-weight:bold;
+
+}
+
+.sidebar::-webkit-scrollbar{
+  width:8px;
+}
+
+.sidebar::-webkit-scrollbar-track{
+  background:#202020;
+  border-radius:10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+  background:#2e6b1a;
+  border-radius:10px;
+  border:2px solid #202020;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover{
+  background:#438e23;
+}
+
+.sidebar {
+  scrollbar-width:thin;
+  scrollbar-color:#2e6b1a #202020;
+}
+
+#visorPrincipal_appletdiv {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+canvas {
+  position: relative !important;
+  z-index: 1 !important;
+}

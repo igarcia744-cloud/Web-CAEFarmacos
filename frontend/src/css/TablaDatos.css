@@ -1,0 +1,108 @@
+.tabla-contenedor{
+
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+
+  height:100%; /* 🔥 CLAVE (NO vh) */
+  min-height:0; /* 🔥 CLAVE */
+
+}
+
+.tabla-contenedor h2{
+    
+  color:#438e23;
+  font-weight:bold;
+  font-size:32px;
+  padding-bottom: 30px;
+
+}
+
+.tabla-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+/* botón refresh */
+.btn-refresh{
+  background:#181818;
+  border:1px solid #333;
+  color:#438e23;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.btn-refresh:hover{
+  background:#438e23;
+  color:black;
+}
+
+/* BLOQUE (MITAD Y MITAD) */
+.tabla-bloque{
+
+  height:50%; /* 🔥 FUERZA MITAD EXACTA */
+  min-height:0;
+
+  display:flex;
+  flex-direction:column;
+
+  background:#202020;
+  border-radius:10px;
+  padding:10px;
+
+}
+
+/* TÍTULO */
+.tabla-bloque h3{
+  color:#438e23;
+  margin-bottom:10px;
+}
+
+/* SCROLL */
+.tabla-scroll{
+
+  flex:1;
+  overflow-y:auto;
+
+  min-height:0;
+
+}
+
+.tabla-scroll table{
+
+  width:100%;
+  border-collapse:collapse;
+
+}
+
+.tabla-scroll::-webkit-scrollbar {
+  width:8px;
+}
+
+/* FONDO */
+.tabla-scroll::-webkit-scrollbar-track {
+  background:#202020;
+  border-radius:10px;
+}
+
+/* BARRA */
+.tabla-scroll::-webkit-scrollbar-thumb {
+  background:#2e6b1a;
+  border-radius:10px;
+  border:2px solid #202020;
+}
+
+/* HOVER */
+.tabla-scroll::-webkit-scrollbar-thumb:hover {
+  background:#438e23;
+}
+
+/* FIREFOX */
+.tabla-scroll {
+  scrollbar-width:thin;
+  scrollbar-color:#2e6b1a #202020;
+}

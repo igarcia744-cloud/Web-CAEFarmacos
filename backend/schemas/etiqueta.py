@@ -1,18 +1,20 @@
 from pydantic import BaseModel
-from typing import Optional
 
-class EtiquetaBase(BaseModel):
+
+class EtiquetaCrear(BaseModel):
+
     nombre: str
-    color: Optional[str]
 
-class EtiquetaCreate(EtiquetaBase):
-    pass
 
-class EtiquetaUpdate(BaseModel):
-    nombre: Optional[str] = None
-    color: Optional[str] = None
+class EtiquetaActualizar(BaseModel):
 
-class EtiquetaOut(EtiquetaBase):
+    nombre: str
+
+
+class EtiquetaRespuesta(BaseModel):
+
     id: int
+    nombre: str
+
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -1,79 +1,161 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
-from database import async_session
-from models.etiqueta import Etiqueta
-from schemas.etiqueta import EtiquetaCreate, EtiquetaUpdate, EtiquetaOut
-from typing import List
-from models.usuario import Usuario
-from auth import admin_required
 
-router = APIRouter(
-    prefix="/etiquetas",
-    tags=["etiquetas"]
+from sqlalchemy.future import select
+from models.compuesto import Compuesto
+from models.libreria import Libreria
+from models.etiqueta import Etiqueta
+
+from database import get_db
+from auth import get_current_user
+
+from models.log import Log 
+
+from crud.etiqueta import (
+    obtener_etiquetas,
+    crear_etiqueta,
+    actualizar_etiqueta,
+    eliminar_etiqueta
 )
 
-# Dependencia para obtener sesión asíncrona
-async def get_db():
-    async with async_session() as session:
-        yield session
+from schemas.etiqueta import EtiquetaCrear, EtiquetaActualizar
 
-# Crear una etiqueta
-@router.post("/", response_model=EtiquetaOut)
-async def crear_etiqueta(etiqueta: EtiquetaCreate, db: AsyncSession = Depends(get_db), current_user: Usuario = Depends(admin_required)):
-    result = await db.execute(select(Etiqueta).filter(Etiqueta.nombre == etiqueta.nombre))
-    etiqueta_existente = result.scalar_one_or_none()
-    if etiqueta_existente:
-        raise HTTPException(status_code=400, detail="Ya existe una etiqueta con ese nombre")
-    
-    nueva_etiqueta = Etiqueta(nombre=etiqueta.nombre, color=etiqueta.color)
-    db.add(nueva_etiqueta)
-    await db.commit()
-    await db.refresh(nueva_etiqueta)
-    return nueva_etiqueta
+router = APIRouter(prefix="/etiquetas", tags=["Etiquetas"], dependencies=[Depends(get_current_user)])
 
-# Actualizar una etiqueta
-@router.put("/{etiqueta_id}", response_model=EtiquetaOut)
-async def actualizar_etiqueta(etiqueta_id: int, etiqueta: EtiquetaUpdate, db: AsyncSession = Depends(get_db), current_user: Usuario = Depends(admin_required)):
-    result = await db.execute(select(Etiqueta).filter(Etiqueta.id == etiqueta_id))
-    etiqueta_db = result.scalar_one_or_none()
-    if not etiqueta_db:
-        raise HTTPException(status_code=404, detail="Etiqueta no encontrada")
-    
-    if etiqueta.nombre:
-        result = await db.execute(
-            select(Etiqueta).filter(Etiqueta.nombre == etiqueta.nombre, Etiqueta.id != etiqueta_id)
-        )
-        etiqueta_duplicada = result.scalar_one_or_none()
-        if etiqueta_duplicada:
-            raise HTTPException(status_code=400, detail="Ya existe otra etiqueta con ese nombre")
-        
-        etiqueta_db.nombre = etiqueta.nombre
-    if etiqueta.color:
-        etiqueta_db.color = etiqueta.color
-    
-    await db.commit()
-    await db.refresh(etiqueta_db)
-    return etiqueta_db
-
-# Listar etiquetas
-@router.get("/", response_model=List[EtiquetaOut])
+@router.get("/")
 async def listar_etiquetas(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Etiqueta))
-    etiquetas = result.scalars().all()
-    return etiquetas
 
-# Eliminar una etiqueta
-@router.delete("/{etiqueta_id}")
-async def eliminar_etiqueta(etiqueta_id: int, db: AsyncSession = Depends(get_db), current_user: Usuario = Depends(admin_required)):
-    result = await db.execute(select(Etiqueta).filter(Etiqueta.id == etiqueta_id))
-    etiqueta_db = result.scalar_one_or_none()
-    if not etiqueta_db:
-        raise HTTPException(status_code=404, detail="Etiqueta no encontrada")
+    return await obtener_etiquetas(db)
+
+@router.post("/")
+async def crear(
+    datos: EtiquetaCrear,
+    db: AsyncSession = Depends(get_db),
+    usuario = Depends(get_current_user)
+):
+
+    if not usuario.es_admin:
+        raise HTTPException(status_code=403, detail="Solo admin")
     
-    if etiqueta_db.librerias:
-        raise HTTPException(status_code=400, detail="No se puede eliminar la etiqueta, está asociada a librerías")
-    
-    await db.delete(etiqueta_db)
+    log = Log(
+        usuario_id=usuario.id,
+        accion="create",
+        descripcion=f"Etiqueta con nombre {datos} creada"
+    )
+
+    db.add(log)
     await db.commit()
-    return {"detail": "Etiqueta eliminada correctamente"}
+
+    return await crear_etiqueta(db, datos.nombre)
+
+@router.put("/{etiqueta_id}")
+async def modificar(
+    etiqueta_id: int,
+    datos: EtiquetaActualizar,
+    db: AsyncSession = Depends(get_db),
+    usuario = Depends(get_current_user)
+):
+
+    if not usuario.es_admin:
+        raise HTTPException(status_code=403)
+
+    etiqueta = await actualizar_etiqueta(db, etiqueta_id, datos.nombre)
+
+    if not etiqueta:
+        raise HTTPException(status_code=404)
+    
+    log = Log(
+        usuario_id=usuario.id,
+        accion="update",
+        descripcion=f"Etiqueta con ID {etiqueta_id} modificada"
+    )
+
+    db.add(log)
+    await db.commit()
+
+    return etiqueta
+
+@router.delete("/{etiqueta_id}")
+async def eliminar(
+    etiqueta_id: int,
+    db: AsyncSession = Depends(get_db),
+    usuario = Depends(get_current_user)
+):
+
+    if not usuario.es_admin:
+        raise HTTPException(status_code=403)
+    
+    log = Log(
+        usuario_id=usuario.id,
+        accion="delete",
+        descripcion=f"Etiqueta con ID {etiqueta_id} eliminada"
+    )
+
+    db.add(log)
+    await db.commit()
+
+    return await eliminar_etiqueta(db, etiqueta_id)
+
+@router.post("/compuesto")
+async def asignar_etiqueta_compuesto(
+    compuesto_id: int,
+    etiqueta_id: int,
+    db: AsyncSession = Depends(get_db),
+    usuario = Depends(get_current_user)
+):
+
+    if not usuario.es_admin:
+        raise HTTPException(status_code=403)
+
+    compuesto_result = await db.execute(
+        select(Compuesto).where(Compuesto.id == compuesto_id)
+    )
+
+    compuesto = compuesto_result.scalar_one_or_none()
+
+    etiqueta_result = await db.execute(
+        select(Etiqueta).where(Etiqueta.id == etiqueta_id)
+    )
+
+    etiqueta = etiqueta_result.scalar_one_or_none()
+
+    if not compuesto or not etiqueta:
+        raise HTTPException(status_code=404)
+
+    compuesto.etiquetas.append(etiqueta)
+
+    await db.commit()
+
+    return {"mensaje": "Etiqueta asignada la conformación"}
+
+@router.post("/libreria")
+async def asignar_etiqueta_libreria(
+    libreria_id: int,
+    etiqueta_id: int,
+    db: AsyncSession = Depends(get_db),
+    usuario = Depends(get_current_user)
+):
+
+    if not usuario.es_admin:
+        raise HTTPException(status_code=403)
+
+    libreria_result = await db.execute(
+        select(Libreria).where(Libreria.id == libreria_id)
+    )
+
+    libreria = libreria_result.scalar_one_or_none()
+
+    etiqueta_result = await db.execute(
+        select(Etiqueta).where(Etiqueta.id == etiqueta_id)
+    )
+
+    etiqueta = etiqueta_result.scalar_one_or_none()
+
+    if not libreria or not etiqueta:
+        raise HTTPException(status_code=404)
+
+    libreria.etiquetas.append(etiqueta)
+
+    await db.commit()
+
+    return {"mensaje": "Etiqueta asignada al compuesto"}
