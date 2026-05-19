@@ -1,38 +1,8 @@
-// JSmolGLmol.js -- Jmol GLmol  extension	 author: Bob Hanson, hansonr@stolaf.edu	4/16/2012
-//                                                       biochem_fan 6/12/2012
-
-// BH 2/9/2014 6:34:17 PM updated for integration of org.jmol.exportjs into org.jmol.export
-
-// This library requires
-//
-//  JSmol.min.js
-//  JSmolThree.js
-//
-// prior to JmolGlmol.js
-
-/*
-
-BH: added drawSphere and getMat methods
+﻿
 
 
- GLmol - Molecular Viewer on WebGL/Javascript (0.44)
-	(C) Copyright 2011-2012, biochem_fan
-		License: dual license of MIT or LGPL3
-
-	 This program uses
-		Three.js 
-			https://github.com/mrdoob/three.js
-			Copyright (c) 2010-2012 three.js Authors. All rights reserved.
-		jQuery
-			http://jquery.org/
-			Copyright (c) 2011 John Resig
-
-	// ParseXYZ by Bob Hanson hansonr@stolaf.edu 6/12/2012
-
- */
 
 (function(THREE) {
-// Workaround for Intel GMA series (gl_FrontFacing causes compilation error)
 THREE.ShaderLib.lambert.fragmentShader = THREE.ShaderLib.lambert.fragmentShader.replace("gl_FrontFacing", "true");
 THREE.ShaderLib.lambert.vertexShader = THREE.ShaderLib.lambert.vertexShader.replace(/\}$/, "#ifdef DOUBLE_SIDED\n if (transformedNormal.z < 0.0) vLightFront = vLightBack;\n #endif\n }");
 })(THREE);
@@ -69,11 +39,7 @@ GLmol.extendApplet = function(applet) {
 
 	applet._refresh = function() {
 	
-		// Called by org.jmol.Viewer.viewer.refresh
 			
-		// pixelsPerAngstrom can be used to calculate the new camera position.
-		// modelRadius is half the distance across the screen. 
-		// 100% implies that camera Z position is 3.5 * modelRadius, with a field of view of 16.24 degrees (2 * atan(1/7))
 		
 		if (!this._applet)
 			return
@@ -86,15 +52,11 @@ GLmol.extendApplet = function(applet) {
 		var mg = gl.modelGroup;
 		var rQ = view.quaternion;
 		rg.quaternion = new THREE.Quaternion(-rQ.q3, -rQ.q0, rQ.q1, rQ.q2);
-		// cameraDistance is in units of screenPixelCount; distance is to front of scene, not to the center.
-		// scaled linearly by zoom
 		var sppa = view.scale;
 		rg.position.z = gl.CAMERA_Z + (view.cameraDistance+view.pixelCount*0.5)/sppa;
-		//model "position" is moved such that {0 0 0} is the fixedRotationCenter 
 		mg.position.x = -view.center.x; 
 		mg.position.y = -view.center.y;
 		mg.position.z = -view.center.z; 
-		//there is also the fixedTranslation to worry about (from CTRL-ALT-drag)
 		if (view.perspective) {
 			gl.camera = gl.perspectiveCamera;
 			gl.camera.fov = gl.fov;
@@ -114,14 +76,8 @@ GLmol.extendApplet = function(applet) {
 
 GLmol.extendJSExporter = function(exporter){
 
-	// This method will be called just after org.jmol.export.JSExporter has loaded,
-	//  as one of its static calls.  
 	
-	// exporter is org.jmol.export.JSExporter.protothpe
 	
-	// What we are doing here is overriding methods of org.jmol.export.JSExporter.
-	// These methods are called by that general class and implemened here usring
-	// GLmol and THREE.  
 	
 				
 	exporter.jsInitExport = function(applet) {
@@ -147,23 +103,8 @@ GLmol.extendJSExporter = function(exporter){
 	exporter.jsSurface = function(applet, vertices, normals, indices, 
 			nVertices, nPolygons, nFaces, bsPolygons, faceVertexMax,
 			color, vertexColors, polygonColors) {
-	// notes: Color is only used if both vertexColors and polygonColors are null.
-	//        Only one of vertexColors or polygonColors will NOT be null.
-	//        Int facevertexMax is either 3 or 4; indices may have MORE than that number
-	//        of vertex indices, because the last one may be a flag indicating which 
-	//        edges to display when just showing mesh edges. When there are quadrilaterals,
-	//        then nPolygons != nFaces, and you need to create both 3-sides and 4-sided faces
-	//				based on the length of the individual indices[i] array.  
 
-	// nFaces was determined as follows:
 
-	//    boolean isAll = (bsPolygons == null);
-	//    if (isAll) {
-	//      for (int i = nPolygons; --i >= 0;)
-	//        nFaces += (faceVertexMax == 4 && indices[i].length == 4 ? 2 : 1);    
-	//    } else {
-	//      for (int i = bsPolygons.nextSetBit(0); i >= 0; i = bsPolygons.nextSetBit(i + 1))
-	//        nFaces += (faceVertexMax == 4 && indices[i].length == 4 ? 2 : 1);      
 
 
 		var params = {};
@@ -185,7 +126,6 @@ GLmol.extendJSExporter = function(exporter){
 			var m = indices[i][3];
 			var is3 = (faceVertexMax == 3 || indices[i].length == 3);
 			var f = (is3 ? new THREE.Face3(h, k, l) : new THREE.Face4(h, k, l, m));
-			// we can use the normals themselves, because they have .x .y .z
 			f.vertexNormals[0] = normals[h];
 			f.vertexNormals[1] = normals[k];
 			f.vertexNormals[2] = normals[l];
@@ -203,7 +143,6 @@ GLmol.extendJSExporter = function(exporter){
 
 		var obj = new THREE.Mesh(geo, new THREE.MeshLambertMaterial(params));
 		obj.doubleSided = true; // generally?
-	  //obj.material.wireframe = true;
 		applet._GLmol.modelGroup.add(obj);
 	}
 
@@ -220,7 +159,6 @@ GLmol.getMat = function(me, color) {
 GLmol.setPt = function(p,q) {p.x = q.x;p.y=q.y;p.z=q.z;};
 
 
-// The GLmol object is defined by the following functions: 
 
 ;(function(gp){
 
@@ -277,7 +215,6 @@ gp.create = function() {
 	this.slabNear = -50; // relative to the center of rotationGroup
 	this.slabFar = 50;
 
-	// Default values
 	this.sphereQuality = 16; //16;
 	this.cylinderQuality = 16; //8;
  
@@ -327,13 +264,11 @@ gp.setSlabAndFog = function() {
 	this.camera.far = center + this.slabFar;
 	if (this.camera.near + 1 > this.camera.far) this.camera.far = this.camera.near + 1;
 	this.scene.fog.near = this.camera.near + this.fogStart * (this.camera.far - this.camera.near);
-//   if (this.scene.fog.near > center) this.scene.fog.near = center;
 	this.scene.fog.far = this.camera.far;
 	this.camera.updateProjectionMatrix();
 };
 
 gp.initializeScene = function() {
-	// CHECK: Should I explicitly call scene.deallocateObject?
 	this.scene = new THREE.Scene();
 	this.scene.fog = new THREE.Fog(this.bgColor, 100, 200);
 
@@ -356,7 +291,6 @@ gp.show = function() {
     this._rendered = true;
     Jmol._hideLoadingSpinner(this.applet);
   }
-	//console.log("rendered in " + (+new Date() - time) + "ms");
 };
 
 gp.initializeJmolExport = function() {
@@ -426,7 +360,6 @@ gp.finalizeJmolExport = function() {
 		var params = {vertexColors: THREE.FaceColors};
 		var obj = new THREE.Mesh(geo, new THREE.MeshLambertMaterial(params));
 		obj.doubleSided = true; // generally?
-//			    obj.material.wireframe = true;
 		this.modelGroup.add(obj);
 	}
 	this.setView(this._view);

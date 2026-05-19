@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.awtjs2d");
+﻿Clazz.declarePackage("J.awtjs2d");
 Clazz.load(["J.api.GenericPlatform"], "J.awtjs2d.Platform", ["java.net.URL", "JU.AjaxURLStreamHandlerFactory", "$.Rdr", "J.api.Interface", "J.awtjs2d.Display", "$.Image", "$.JSFile", "$.JSFont", "$.Mouse"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.canvas = null;
@@ -221,7 +221,6 @@ return x[3] + MM + dd + x[4].replace(/\:/g,"") + x[5].substring(3,6) + "'" + x[5
 } else if (isoType.indexOf("8601") >= 0){
 var d = new Date();
 var x = d.toString().split(" ");
-// Firefox now doing this?
 if (x.length == 1)
 return x;
 var MM = "0" + (1 + d.getMonth()); MM = MM.substring(MM.length - 2);

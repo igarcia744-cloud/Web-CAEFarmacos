@@ -1,5 +1,4 @@
-/* HEADER (flecha + ruta + buscador) */
-.explorador-header{
+﻿.explorador-header{
 
   display:flex;
   align-items:center;
@@ -8,7 +7,6 @@
 
 }
 
-/* BOTÓN FLECHA */
 .explorador-back{
 
   background:#181818;
@@ -27,7 +25,6 @@
   color:black;
 }
 
-/* RUTA */
 .ruta{
 
   color:#438e23;
@@ -36,7 +33,6 @@
 
 }
 
-/* BUSCADOR (mismo estilo que modal) */
 .explorador-busqueda{
 
   width:100%;
@@ -59,7 +55,7 @@
   flex:1;
   display:flex;
   flex-direction:column;
-  min-height:0; /* 🔴 CLAVE */
+  min-height:0; 
 
 }
 
@@ -75,7 +71,7 @@
 .explorador-grid{
 
   flex:1;
-  min-height:0; /* 🔴 CLAVE */
+  min-height:0; 
   overflow-y:auto;
 
   display:grid;
@@ -85,33 +81,26 @@
   padding-right:10px;
 }
 
-/* ========================= */
-/* SCROLL EXPLORADOR */
-/* ========================= */
 
 .explorador-grid::-webkit-scrollbar {
   width:10px;
 }
 
-/* FONDO */
 .explorador-grid::-webkit-scrollbar-track {
   background:#181818;
   border-radius:10px;
 }
 
-/* BARRA */
 .explorador-grid::-webkit-scrollbar-thumb {
   background:#438e23;
   border-radius:10px;
   border:2px solid #181818;
 }
 
-/* HOVER */
 .explorador-grid::-webkit-scrollbar-thumb:hover {
   background:#5bbf2f;
 }
 
-/* FIREFOX */
 .explorador-grid {
   scrollbar-width:thin;
   scrollbar-color:#438e23 #181818;
@@ -131,7 +120,7 @@
   align-items:center;
   justify-content:center;
 
-  height:140px; /* CUADRADO */
+  height:140px; 
 
 }
 

@@ -1,13 +1,7 @@
-Clazz.declarePackage("JU");
+﻿Clazz.declarePackage("JU");
 Clazz.load(null, "JU.PatternMatcher", ["JV.Viewer"], function(){
 var c$ = Clazz.declareType(JU, "PatternMatcher", null);
-/*LV!1824 unnec constructor*/Clazz.defineMethod(c$, "compile", 
-function(regex, isCaseInsensitive){
-if (JV.Viewer.isJS && !JV.Viewer.isSwingJS) {
-return  new JU.PatternMatcher.JSPattern(regex, isCaseInsensitive);
-}{
-}}, "~S,~B");
-/*if3*/;(function(){
+;(function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.regexp = null;
 this.strString = null;
@@ -53,6 +47,3 @@ this.leftBound = 0;
 this.rightBound = s.length;
 return this;
 }, "~S");
-/*eoif3*/})();
-});
-;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

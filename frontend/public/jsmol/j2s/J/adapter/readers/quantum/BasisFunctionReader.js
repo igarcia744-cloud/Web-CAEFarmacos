@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.adapter.readers.quantum");
+﻿Clazz.declarePackage("J.adapter.readers.quantum");
 Clazz.load(["J.adapter.smarter.AtomSetCollectionReader", "java.util.Hashtable", "JU.Lst", "J.quantum.QS"], "J.adapter.readers.quantum.BasisFunctionReader", ["java.util.Arrays", "JU.PT", "JU.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.shells = null;
@@ -127,17 +127,7 @@ this.slaterArray = null;
 this.slaters = null;
 });
 c$.$BasisFunctionReader$MOEnergySorter$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-Clazz.instantialize(this, arguments);}, J.adapter.readers.quantum.BasisFunctionReader, "MOEnergySorter", null, java.util.Comparator);
-Clazz.overrideMethod(c$, "compare", 
-function(a, b){
-var ea = ((a).get("energy")).floatValue();
-var eb = ((b).get("energy")).floatValue();
-return (ea < eb ? -1 : ea > eb ? 1 : 0);
-}, "~O,~O");
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

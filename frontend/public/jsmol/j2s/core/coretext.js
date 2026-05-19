@@ -1,4 +1,4 @@
-(function(Clazz
+﻿(function(Clazz
 ,Clazz_getClassName
 ,Clazz_newLongArray
 ,Clazz_doubleToByte
@@ -56,11 +56,9 @@
 ,Clazz_defineMethod
 ,Clazz_overrideMethod
 ,Clazz_declareAnonymous
-//,Clazz_checkPrivateMethod
 ,Clazz_cloneFinals
 ){
 var $t$;
-//var c$;
 Clazz_declarePackage("JM");
 Clazz_load(null, "JM.Text", ["JU.PT", "J.shape.Shape", "JU.C", "$.Font", "JV.JC"], function(){
 var c$ = Clazz_decorateAsClass(function(){
@@ -2821,6 +2819,5 @@ return (this.ms.isJmolDataFrame(atom.mi) && label.equals("%U") ? "%W" : label);
 ,Clazz.defineMethod
 ,Clazz.overrideMethod
 ,Clazz.declareAnonymous
-//,Clazz.checkPrivateMethod
 ,Clazz.cloneFinals
 );

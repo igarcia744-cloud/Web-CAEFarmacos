@@ -1,25 +1,4 @@
-/*
-*  JSpecView Utility functions
-*  Version 2.0, Copyright(c) 2006-2012, Dept of Chemistry, University of the West Indies, Mona
-*  Robert J Lancashire  robert.lancashire@uwimona.edu.jm
-*
-*
-*  12:19 PM 3/8/2012 added support for JSpecViewAppletPro  -- BH
-*  5/21/2012 -- incorporated as JmolJSV.js into Jmol
-* 
-*/
-
-// BH 2019.04.27 fixes 1H+13C viewing
-// BH 1/14/2017 7:12:47 PM adds proto._showTooltip
-// BH 4/24/2016 4:42:06 PM working around Resolver 2D issues
-// BH 2/2/2014 11:39:44 AM Jmol/JSME/JSV working triad
-// BH 1/30/2014 1:04:09 PM adds Info.viewSet 
-// BH 10/10/2013 1:25:28 PM JSV HTML5 option
-/*
-	Inserts the JSpecView applet in any compatible User Agent using the <object> tag
-	uses IE conditional comments to distinguish between IE and Mozilla
-	see http://msdn.microsoft.com/workshop/author/dhtml/overview/ccomment_ovw.asp
-*/
+﻿
 
 ;(function (Jmol, document, $) {
 
@@ -63,8 +42,6 @@
 
 ;(function (Applet, proto) {
 	Applet._get = function(id, Info, checkOnly) {
-	// note that the variable name the return is assigned to MUST match the first parameter in quotes
-	// applet = Jmol.getJSVApplet("applet", Info)
 
 		Info || (Info = {});
 		var DefaultInfo = {
@@ -132,7 +109,6 @@
 	proto._addCoreFiles = function() {
 		Jmol._addCoreFile("jsv", this._j2sPath, this.__Info.preloadCore);
 		if (Jmol._debugCode) {
-		// no min package for that
 			Jmol._addExec([this, null, "JSV.appletjs.JSVApplet", "load JSV"]);
 			if (this._isPro)
 				Jmol._addExec([this, null, "JSV.appletjs.JSVAppletPro", "load JSV(signed)"]);
@@ -155,7 +131,6 @@
 	}
 
 	proto._cover = function (doCover) {
-		// TODO: cover options here, including Java
 		if (!this._isJava)
 			this._newCanvas(false);
 		this._showInfo(false);
@@ -240,8 +215,6 @@
 		this._showInfo(false);
 		params || (params = "");
 		this._thisJSVModel = "" + Math.random();
-		// TODO
-//		this._script("zap;set echo middle center;echo Retrieving data...");
 		if (this._jvsIsSigned && this._viewSet == null) {
 			this._script("load \"" + fileName + "\"" + params);
 			return;
@@ -271,7 +244,6 @@
   }
   
 	proto._loadInline = function(data) {
-		// called when loading JDX data
 		this._currentView = null;
 		if (data != null)
 			this._applet.loadInline(data);
@@ -280,8 +252,6 @@
 	}
 
 	proto._loadModelFromView = function(view, _jsv_loadModelFromView) {
-		// called request to update view with view.JSV.data==null from Jmol.View
-		// we must get the simulation from MOL data
 
 		this._currentView = view;
 		var molData = null;
@@ -303,7 +273,6 @@
 			
 			
 		if (v && !molData) {
-			// complete Jmol or JME needs first
 			v.applet._loadModelFromView(view);
 			return;
 		}
@@ -312,7 +281,6 @@
 			this._applet.runScriptNow("SELECT ID \"" + view.info.viewID + "\"");
 			return;
 		}
-		// get the simulation into JSpecView
 		var script = this.__Info.preloadScript;
 		if (this._addC13)
 			script = "CLOSE ALL";
@@ -322,7 +290,6 @@
   	if (this._addC13)
       script += "; LOAD ID \"" + view.info.viewID + "__C13\" APPEND \"http://SIMULATION/C13/MOL=" + molData.replace(/\n/g,"\\n") + "\"";
 		this._applet.runScriptNow(script);
-		// update Jmol and/or JME to correspond with the model returned.
 		molData = this._getAppletInfo("DATA_mol");
 		if (!molData)
 			return;
@@ -354,11 +321,7 @@
 	proto._updateView = function(msgOrPanel, peakData, _jsv_updateView) {
 		if (this._viewSet == null || !this._applet || msgOrPanel && msgOrPanel.vwr)
 			return;
-		// JSV applet will call this, but we don't care for now 
 		if (!peakData) {
-			// comming from JSmolCore.js -- view not found; new load
-			// generally we will IGNORE THIS as an actual spectrum load, but if there
-			// is a MOL file, that should be recognized.
 			var msg = msgOrPanel;			
 			if (msg && (msg.indexOf("http://SIMULATION" >= 0) || msg.indexOf("cache://") >= 0)) {
 				var molData = this._getAppletInfo("DATA_mol");
@@ -369,24 +332,16 @@
 			}
 			return;
 		}
- 		// called from file load or panel selection or peak selection
 		Jmol.View.updateFromSync(this, peakData);
 	}
  
 	proto.__selectSpectrum = function() {
-	// not entirely clear why this should be necessary, but it is, especially
-	// after a peak pick
 		var me = this;
 		setTimeout(function() {me._applet.runScript("SELECT ID \"" + me._currentView.info.viewID + "\"")},10);
 	}
 	 
 	proto._updateAtomPick = function(A) {
-		// from JSmolCore.js
-		// send the message to JSpecView to highlight a peak;
-		// will result in a return to _updateView providing a <PeakData record
 		this._applet.syncScript('<PeakData atom="' + A[0] + '" sourceID="' + this._currentView.info.viewID + '">');
-		// seems to be necessary when there are two spectra and when this atom is clicked,
-		// this structure is not yet highlighted.
 		this.__selectSpectrum();
 	}
 
@@ -395,14 +350,12 @@
 	}
 
 	proto.__loadModel = function(data, chemID, viewID) {
-	// retun from asynchronous call in loadModelFromView 
 		if (data == null)
 			return;
 		Jmol.View.updateView(this, {chemID:chemID, data:data, viewID:viewID});
 	}
 
 	proto._showStatus = function(msg, title) {
-	 // from JSV
 		title && (msg = title + "\n\n\n" + msg);
 		alert (msg);
 	}
@@ -413,23 +366,12 @@
 
 })(Jmol._JSVApplet, Jmol._JSVApplet.prototype);
 
-////// additional API for JSpecView ////////////
 
-	/**
-	 * returns a Java Map<String, Object>
-	 * -- use key = "" for full set
-	 * -- key can drill down into spectra selecting specific subsets of data 
-	 */ 
 
 	Jmol.jsvGetPropertyAsJavaObject = function(jsvApplet, key) {
 		return jsvApplet._applet.getPropertyAsJavaObject(key)
 	}
 
-	/**
-	 * returns a JSON equivalent of jsvGetPropertyAsJavaObject
-	 * -- use key = "" for full set	
-	 * -- key can drill down into spectra selecting specific subsets of data 
-	 */ 
 
 	Jmol.jsvGetPropertyAsJSON = function(jsvApplet, key) {
 		return "" + jsvApplet._applet.getPropertyAsJSON(key)
@@ -443,160 +385,71 @@
 		return (jsvApplet._applet.isSigned() ? true : false);
 	}
 
-	/**
-	 * Returns the calculated colour of a visible spectrum (Transmittance)
-	 * 
-	 * @return Color as a string
-	 */
 	Jmol.jsvGetSolnColour = function(jsvApplet) {
 		return "" + jsvApplet._applet.getSolnColour();
 	}
 
-	/**
-	 * Method that can be called from another applet or from javascript to return
-	 * the coordinate of clicked point in the plot area of the <code>
-	 * JSVPanel</code>
-	 * 
-	 * @return A String representation of the coordinate
-	 */
 
 	Jmol.jsvGetCoordinate = function(jsvApplet) {
 		return "" + jsvApplet._applet.getCoordinate();
 	}
 
-	/**
-	 * Delivers spectrum coded as desired: XY, SQZ, PAC, DIF, DIFDUP, FIX, AML, CML
-	 * 
-	 * @param type
-	 * @param n -- nth spectrum in set: -1 for current; 0->[nSpec-1] for a specific one
-	 * @return data or "only <nSpec> spectra available"
-	 * 
-	 */
 
 	Jmol.jsvExport = function(jsvApplet, exportType, n) {
 		return "" + jsvApplet._applet.exportSpectrum(exportType, n);
 	}
 
-	/**
-	 * runs a script right now, without queuing it, and returns 
-	 * only after completion 
-	 * returns TRUE if succesful (ureliably; under development)
-	 */	 
 	Jmol.jsvRunScriptNow = function(jsvApplet, script) {
 		return (jsvApplet._applet.runScriptNow(script) ? true : false);
 	}
 
-	/**
-	 * runs a script using a queue, possibly waiting until an applet is ready
-	 * same as Jmol.script(jsvApplet, script) 
-	 * 
-	 * @param script
-	 */
 	Jmol.jsvRunScript = function(jsvApplet, script) {
 		jsvApplet.runScript(script); 
 	}
 
-	/**
-	 * Loads in-line JCAMP-DX data into the existing applet window
-	 * 
-	 * @param data
-	 *      String
-	 */
 
 	Jmol.jsvLoadInline = function(jsvApplet, data, params) {
 		jsvApplet._loadInline(data);
-		// currently params are ignored
 	}
 
 	Jmol.jsvSetFilePath = function(jsvApplet, tmpFilePath) {
 		jsvApplet._applet.setFilePath(tmpFilePath);
 	}
 
-	/**
-	 * Sets the spectrum to the specified block number
-	 * same as SPECTRUMNUMBER n
-	 * @param n -- starting with 1
-	 */
 	Jmol.jsvSetSpectrumNumber = function(jsvApplet, n) {
 		jsvApplet._applet.setSpectrumNumber(n);
 	}
 
-	/**
-	 * toggles the grid on/off
-	 */
 
 	Jmol.jsvToggleGrid = function(jsvApplet) {
 		jsvApplet._applet.toggleGrid();
 	}
 
-	/**
-	 * toggles the coordinate display
-	 */
 	Jmol.jsvToggleCoordinate = function(jsvApplet) {
 		jsvApplet._applet.toggleCoordinate();
 	}
 
-	/**
-	 * toggles the integration graph on/off
-	 */
 	Jmol.jsvToggleIntegration = function(jsvApplet) {
 		jsvApplet._applet.toggleIntegration();
 	}
 
-	/**
-	 * adds a highlight to a portion of the plot area
-	 * 
-	 * @param x1
-	 *        the starting x value
-	 * @param x2
-	 *        the ending x value
-	 * @param r
-	 *        the red portion of the highlight color or -1
-	 * @param g
-	 *        the green portion of the highlight color or -1
-	 * @param b
-	 *        the blue portion of the highlight color or -1
-	 * @param a
-	 *        the alpha portion of the highlight color or -1
-	 */
 	Jmol.jsvAddHighlight = function(jsvApplet, x1, x2, r, g, b, a) {
 		if (arguments.length == 7)
 			jsvApplet._applet.addHighlight(x1, x2, r, g, b, a);
 	}
 
-	/**
-	 * removes all highlights from the plot area
-	 */
 	Jmol.jsvRemoveAllHighlights = function(jsvApplet) {
 		jsvApplet._applet.removeAllHighlights();
 	}
 
-	/**
-	 * removes a highlight from the plot area
-	 * 
-	 * @param x1
-	 *        the starting x value
-	 * @param x2
-	 *        the ending x value
-	 */
 	Jmol.jsvRemoveHighlight = function(jsvApplet, x1, x2) {
 		jsvApplet._applet.removeHighlight(x1, x2);
 	}
 
-	/**
-	 * Method that can be called from another applet or from javascript that
-	 * toggles reversing the plot on a <code>JSVPanel</code>
-	 */
 	Jmol.jsvReversePlot = function(jsvApplet) {
 		jsvApplet._applet.reversePlot();
 	}
 
-	/**
-	 * Writes a message to the status label
-	 * 
-	 * @param msg
-	 *        the message
-	 */
 	Jmol.jsvWriteStatus = function(jsvApplet, msg) {
 		jsvApplet._applet.writeStatus(msg);
 	}
@@ -606,7 +459,6 @@
 	}
 
 	Jmol.getJSVAppletHtml = function(applet, Info) {
-		// optional Info here	
 		if (Info) {
 			var d = Jmol._document;
 			Jmol._document = null;

@@ -1,4 +1,4 @@
-Clazz.declarePackage("JV");
+﻿Clazz.declarePackage("JV");
 Clazz.load(["java.lang.Enum", "J.api.JmolViewer", "$.PlatformViewer", "J.atomdata.AtomDataServer", "java.util.Hashtable", "JU.P3"], "JV.Viewer", ["java.util.Arrays", "JU.AU", "$.BS", "$.CU", "$.DF", "$.Lst", "$.M3", "$.P3i", "$.PT", "$.Quat", "$.Rdr", "$.SB", "J.adapter.smarter.SmarterJmolAdapter", "J.api.Interface", "J.atomdata.RadiusData", "J.c.FIL", "$.STER", "$.VDW", "J.i18n.GT", "JM.Measurement", "$.ModelSet", "JS.SV", "$.T", "J.thread.TimeoutThread", "JU.BSUtil", "$.C", "$.CommandHistory", "$.Elements", "$.Escape", "$.GData", "$.JmolMolecule", "$.Logger", "$.Parser", "$.TempArray", "JV.ActionManager", "$.AnimationManager", "$.ColorManager", "$.FileManager", "$.GlobalSettings", "$.JC", "$.ModelManager", "$.SelectionManager", "$.ShapeManager", "$.StateManager", "$.StatusManager", "$.TransformManager", "JV.binding.Binding"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.testAsync = false;
@@ -7336,21 +7336,9 @@ this.ms.vib.rotateModelSpinVectors(this.ms, this.am.splitFrame ? this.am.getSpli
 this.refresh(2, this.sm.syncingMouse ? "Mouse: rotateSpins " + deltaX + " " + deltaY : "");
 }}, "~N,~N");
 c$.$Viewer$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(JV, "Viewer$1", null, Runnable);
-Clazz.overrideMethod(c$, "run", 
-function(){
-this.f$.me.dragMinimizeAtom(this.f$.iAtom);
-});
-/*eoif5*/})();
+})();
 };
-/*if2*/;(function(){
-var c$ = Clazz.declareType(JV.Viewer, "ACCESS", Enum);
-Clazz.defineEnumConstant(c$, "NONE", 0, []);
-Clazz.defineEnumConstant(c$, "READSPT", 1, []);
-Clazz.defineEnumConstant(c$, "ALL", 2, []);
-Clazz.defineEnumConstant(c$, "INTERNAL", 3, []);
-/*eoif2*/})();
+})();
 {
 {
 self.Jmol && Jmol.extend && Jmol.extend("vwr",

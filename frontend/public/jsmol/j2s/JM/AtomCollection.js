@@ -1,4 +1,4 @@
-Clazz.declarePackage("JM");
+﻿Clazz.declarePackage("JM");
 Clazz.load(["JU.V3"], "JM.AtomCollection", ["java.util.Arrays", "$.Hashtable", "JU.A4", "$.AU", "$.BS", "$.Lst", "$.M3", "$.Measure", "$.P3", "$.PT", "$.SB", "J.api.Interface", "J.atomdata.RadiusData", "J.c.PAL", "$.VDW", "JM.Group", "JS.T", "JU.BSUtil", "$.Elements", "$.Logger", "$.Parser", "$.Vibration"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.vwr = null;
@@ -2103,15 +2103,7 @@ function(atom){
 return (atom == null || atom.isDeleted());
 }, "JM.Atom");
 c$.$AtomCollection$AtomSorter$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-Clazz.instantialize(this, arguments);}, JM.AtomCollection, "AtomSorter", null, java.util.Comparator);
-Clazz.overrideMethod(c$, "compare", 
-function(a1, a2){
-return (a1.i > a2.i ? 1 : a1.i < a2.i ? -1 : 0);
-}, "JM.Atom,JM.Atom");
-/*eoif4*/})();
+})();
 };
 c$.sqrt3_2 = Math.sqrt(3) / 2;
 c$.vRef = JU.V3.new3(3.14159, 2.71828, 1.41421);

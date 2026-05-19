@@ -1,4 +1,4 @@
-Clazz.declarePackage("JSV.common");
+﻿Clazz.declarePackage("JSV.common");
 Clazz.load(["JSV.common.XYScaleConverter", "java.util.Hashtable", "JU.BS", "$.Lst", "JSV.common.Coordinate"], "JSV.common.GraphSet", ["JU.DF", "$.PT", "JSV.common.Annotation", "$.ColorParameters", "$.ColoredAnnotation", "$.ImageView", "$.IntegralData", "$.Measurement", "$.MeasurementData", "$.PanelData", "$.Parameters", "$.PeakData", "$.PeakPickEvent", "$.PlotWidget", "$.ScaleData", "$.ScriptToken", "$.Spectrum", "$.ViewData", "JU.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.gs2dLinkedX = null;
@@ -2995,36 +2995,7 @@ function(ad){
 return (ad != null && ad.isDialog());
 }, "JSV.api.AnnotationData");
 c$.$GraphSet$Highlight$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.x1 = 0;
-this.x2 = 0;
-this.color = null;
-this.spectrum = null;
-Clazz.instantialize(this, arguments);}, JSV.common.GraphSet, "Highlight", null);
-Clazz.makeConstructor(c$, 
-function(x1, x2, spec, color){
-this.x1 = x1;
-this.x2 = x2;
-this.color = color;
-this.spectrum = spec;
-}, "~N,~N,JSV.common.Spectrum,javajs.api.GenericColor");
-Clazz.overrideMethod(c$, "toString", 
-function(){
-return "highlight " + this.x1 + " " + this.x2 + " " + this.spectrum;
-});
-Clazz.overrideMethod(c$, "equals", 
-function(obj){
-if (!(Clazz.instanceOf(obj,"JSV.common.GraphSet.Highlight"))) return false;
-var hl = obj;
-return ((hl.x1 == this.x1) && (hl.x2 == this.x2));
-}, "~O");
-Clazz.overrideMethod(c$, "hashCode", 
-function(){
-return Clazz.doubleToInt(this.x1 * 1000 + this.x2 * 1000000);
-});
-/*eoif4*/})();
+})();
 };
 c$.RT2 = Math.sqrt(2.0);
 c$.veryLightGrey = null;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import SelectorExploradorModal from "../componentes/modales/SelectorExploradorModal";
 import "../css/Dashboard.css";
 import "../css/VisorMoleculas.css"
@@ -13,7 +13,6 @@ function VisorMoleculas() {
 
   const navigate = useNavigate();
 
-  // 🔥 INICIALIZAR JSMOL
   useEffect(() => {
 
     if (!window.Jmol) {
@@ -37,7 +36,6 @@ function VisorMoleculas() {
 
   }, []);
 
-  // 🔥 CARGAR MOLÉCULA (VERSIÓN ESTABLE)
   const cargarMolecula = async (archivo) => {
 
   if (!archivo || !applet) {
@@ -93,27 +91,23 @@ function VisorMoleculas() {
       <div className="dashboard-content">
 
         <h2 style={{ color: "#438e23", marginBottom: "20px" }}>
-          🧪 Visor de Moléculas
+          Visor de Moléculas
         </h2>
 
-                <div className="visor-controles">
+        <div className="visor-controles">
 
-        {/* 🔙 VOLVER */}
         <button onClick={() => navigate("/dashboard")}>
             ⬅ Volver
         </button>
 
-        {/* 🔄 RECARGAR */}
         <button onClick={() => window.location.reload()}>
           Recargar
         </button>
 
-        {/* 📂 SELECTOR */}
         <button onClick={() => setMostrarSelector(true)}>
             Seleccionar archivo
         </button>
 
-        {/* 📄 NOMBRE */}
         {archivoSeleccionado && (
             <span style={{ color: "#aaa" }}>
             {archivoSeleccionado.nombre}

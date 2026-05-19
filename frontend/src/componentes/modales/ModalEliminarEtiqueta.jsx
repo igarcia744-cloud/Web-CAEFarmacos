@@ -12,7 +12,7 @@ function ModalEliminarEtiqueta({ isOpen, onClose, etiqueta, actualizar }) {
 
       await api.delete(`/etiquetas/${etiqueta.id}`);
 
-      actualizar(); // recargar lista
+      actualizar();
 
       onClose();
 

@@ -1,5 +1,4 @@
-// combines inchi-web.js and inchi1.js from the inchi-SwingJS project
-
+﻿
 var inchiModule = (() => {
   var _scriptName = typeof document != 'undefined' ? document.currentScript?.src : undefined;
   
@@ -7,46 +6,22 @@ var inchiModule = (() => {
 async function(moduleArg = {}) {
   var moduleRtn;
 
-// include: shell.js
-// The Module object: Our interface to the outside world. We import
-// and export values on it. There are various ways Module can be used:
-// 1. Not defined. We create it here
-// 2. A function parameter, function(moduleArg) => Promise<Module>
-// 3. pre-run appended it, var Module = {}; ..generated code..
-// 4. External script tag defines var Module.
-// We need to check if Module already exists (e.g. case 3 above).
-// Substitution will be replaced with actual code on later stage of the build,
-// this way Closure Compiler will not mangle it (e.g. case 4. above).
-// Note that if you want to run closure, and also to use Module
-// after the generated code, you will need to define   var Module = {};
-// before the code. Then that object will be used in the code, and you
-// can continue to use Module afterwards as well.
 var Module = moduleArg;
 
-// Set up the promise that indicates the Module is initialized
 var readyPromiseResolve, readyPromiseReject;
 var readyPromise = new Promise((resolve, reject) => {
   readyPromiseResolve = resolve;
   readyPromiseReject = reject;
 });
 
-// Determine the runtime environment we are in. You can customize this by
-// setting the ENVIRONMENT setting at compile time (see settings.js).
 
 var ENVIRONMENT_IS_WEB = true;
 var ENVIRONMENT_IS_WORKER = false;
 var ENVIRONMENT_IS_NODE = false;
 var ENVIRONMENT_IS_SHELL = false;
 
-// --pre-jses are emitted after the Module integration code, so that they can
-// refer to Module (if they choose; they can also define Module)
 
 
-// Sometimes an existing Module object exists with properties
-// meant to overwrite the default module functionality. Here
-// we collect those properties and reapply _after_ we configure
-// the current environment's defaults to avoid having to be so
-// defensive during initialization.
 var moduleOverrides = Object.assign({}, Module);
 
 var arguments_ = [];
@@ -55,7 +30,6 @@ var quit_ = (status, toThrow) => {
   throw toThrow;
 };
 
-// `/` should be present at the end if `scriptDirectory` is not empty
 var scriptDirectory = '';
 function locateFile(path) {
   if (Module['locateFile']) {
@@ -64,7 +38,6 @@ function locateFile(path) {
   return scriptDirectory + path;
 }
 
-// Hooks that are implemented differently in different runtime environments.
 var readAsync, readBinary;
 
 if (ENVIRONMENT_IS_SHELL) {
@@ -73,26 +46,15 @@ if (ENVIRONMENT_IS_SHELL) {
 
 } else
 
-// Note that this includes Node.js workers when relevant (pthreads is enabled).
-// Node.js workers are detected as a combination of ENVIRONMENT_IS_WORKER and
-// ENVIRONMENT_IS_NODE.
 if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
   if (ENVIRONMENT_IS_WORKER) { // Check worker, not web, since window could be polyfilled
     scriptDirectory = self.location.href;
   } else if (typeof document != 'undefined' && document.currentScript) { // web
     scriptDirectory = document.currentScript.src;
   }
-  // When MODULARIZE, this JS may be executed later, after document.currentScript
-  // is gone, so we saved it, and we use it here instead of any other info.
   if (_scriptName) {
     scriptDirectory = _scriptName;
   }
-  // blob urls look like blob:http://site.com/etc/etc and we cannot infer anything from them.
-  // otherwise, slice off the final part of the url to find the script directory.
-  // if scriptDirectory does not contain a slash, lastIndexOf will return -1,
-  // and scriptDirectory will correctly be replaced with an empty string.
-  // If scriptDirectory contains a query (starting with ?) or a fragment (starting with #),
-  // they are removed because they could contain a slash.
   if (scriptDirectory.startsWith('blob:')) {
     scriptDirectory = '';
   } else {
@@ -102,7 +64,6 @@ if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
   if (!(typeof window == 'object' || typeof WorkerGlobalScope != 'undefined')) throw new Error('not compiled for this environment (did you build to HTML and try to run it not on the web, or set ENVIRONMENT to something - like node - and run it someplace else - like on the web?)');
 
   {
-// include: web_or_worker_shell_read.js
 readAsync = async (url) => {
     assert(!isFileURI(url), "readAsync does not work with file:// URLs");
     var response = await fetch(url, { credentials: 'same-origin' });
@@ -111,7 +72,6 @@ readAsync = async (url) => {
     }
     throw new Error(response.status + ' : ' + response.url);
   };
-// end include: web_or_worker_shell_read.js
   }
 } else
 {
@@ -121,24 +81,15 @@ readAsync = async (url) => {
 var out = Module['print'] || console.log.bind(console);
 var err = Module['printErr'] || console.error.bind(console);
 
-// Merge back in the overrides
 Object.assign(Module, moduleOverrides);
-// Free the object hierarchy contained in the overrides, this lets the GC
-// reclaim data used.
 moduleOverrides = null;
 checkIncomingModuleAPI();
 
-// Emit code to handle expected values on the Module object. This applies Module.x
-// to the proper local x. This has two benefits: first, we only emit it if it is
-// expected to arrive, and second, by using a local everywhere else that can be
-// minified.
 
 if (Module['arguments']) arguments_ = Module['arguments'];legacyModuleProp('arguments', 'arguments_');
 
 if (Module['thisProgram']) thisProgram = Module['thisProgram'];legacyModuleProp('thisProgram', 'thisProgram');
 
-// perform assertions in shell.js after we set up out() and err(), as otherwise if an assertion fails it cannot print the message
-// Assertions on removed incoming Module JS APIs.
 assert(typeof Module['memoryInitializerPrefixURL'] == 'undefined', 'Module.memoryInitializerPrefixURL option was removed, use Module.locateFile instead');
 assert(typeof Module['pthreadMainPrefixURL'] == 'undefined', 'Module.pthreadMainPrefixURL option was removed, use Module.locateFile instead');
 assert(typeof Module['cdInitializerPrefixURL'] == 'undefined', 'Module.cdInitializerPrefixURL option was removed, use Module.locateFile instead');
@@ -168,18 +119,8 @@ assert(!ENVIRONMENT_IS_NODE, 'node environment detected but not enabled at build
 
 assert(!ENVIRONMENT_IS_SHELL, 'shell environment detected but not enabled at build time.  Add `shell` to `-sENVIRONMENT` to enable.');
 
-// end include: shell.js
 
-// include: preamble.js
-// === Preamble library stuff ===
 
-// Documentation for the public APIs defined in this file must be updated in:
-//    site/source/docs/api_reference/preamble.js.rst
-// A prebuilt local version of the documentation is available at:
-//    site/build/text/docs/api_reference/preamble.js.txt
-// You can also build docs locally as HTML or other formats in site/
-// An online HTML version (which may be of a different version of Emscripten)
-//    is up at http://kripken.github.io/emscripten-site/docs/api_reference/preamble.js.html
 
 var wasmBinary = Module['wasmBinary'];legacyModuleProp('wasmBinary', 'wasmBinary');
 
@@ -187,106 +128,55 @@ if (typeof WebAssembly != 'object') {
   err('no native wasm support detected');
 }
 
-// Wasm globals
 
 var wasmMemory;
 
-//========================================
-// Runtime essentials
-//========================================
 
-// whether we are quitting the application. no code should run after this.
-// set in exit() and abort()
 var ABORT = false;
 
-// set by exit() and abort().  Passed to 'onExit' handler.
-// NOTE: This is also used as the process return code code in shell environments
-// but only when noExitRuntime is false.
 var EXITSTATUS;
 
-// In STRICT mode, we only define assert() when ASSERTIONS is set.  i.e. we
-// don't define it at all in release modes.  This matches the behaviour of
-// MINIMAL_RUNTIME.
-// TODO(sbc): Make this the default even without STRICT enabled.
-/** @type {function(*, string=)} */
 function assert(condition, text) {
   if (!condition) {
     abort('Assertion failed' + (text ? ': ' + text : ''));
   }
 }
 
-// We used to include malloc/free by default in the past. Show a helpful error in
-// builds with assertions.
 
-// Memory management
 
 var HEAP,
-/** @type {!Int8Array} */
   HEAP8,
-/** @type {!Uint8Array} */
   HEAPU8,
-/** @type {!Int16Array} */
   HEAP16,
-/** @type {!Uint16Array} */
   HEAPU16,
-/** @type {!Int32Array} */
   HEAP32,
-/** @type {!Uint32Array} */
   HEAPU32,
-/** @type {!Float32Array} */
   HEAPF32,
-/* BigInt64Array type is not correctly defined in closure
-/** not-@type {!BigInt64Array} */
   HEAP64,
-/* BigUint64Array type is not correctly defined in closure
-/** not-t@type {!BigUint64Array} */
   HEAPU64,
-/** @type {!Float64Array} */
   HEAPF64;
 
 var runtimeInitialized = false;
 
-// include: URIUtils.js
-// Prefix of data URIs emitted by SINGLE_FILE and related options.
 var dataURIPrefix = 'data:application/octet-stream;base64,';
 
-/**
- * Indicates whether filename is a base64 data URI.
- * @noinline
- */
 var isDataURI = (filename) => filename.startsWith(dataURIPrefix);
 
-/**
- * Indicates whether filename is delivered via file protocol (as opposed to http/https)
- * @noinline
- */
 var isFileURI = (filename) => filename.startsWith('file://');
-// end include: URIUtils.js
-// include: runtime_shared.js
-// include: runtime_stack_check.js
-// Initializes the stack cookie. Called at the startup of main and at the startup of each thread in pthreads mode.
 function writeStackCookie() {
   var max = _emscripten_stack_get_end();
   assert((max & 3) == 0);
-  // If the stack ends at address zero we write our cookies 4 bytes into the
-  // stack.  This prevents interference with SAFE_HEAP and ASAN which also
-  // monitor writes to address zero.
   if (max == 0) {
     max += 4;
   }
-  // The stack grow downwards towards _emscripten_stack_get_end.
-  // We write cookies to the final two words in the stack and detect if they are
-  // ever overwritten.
   HEAPU32[((max)>>2)] = 0x02135467;
   HEAPU32[(((max)+(4))>>2)] = 0x89BACDFE;
-  // Also test the global address 0 for integrity.
   HEAPU32[((0)>>2)] = 1668509029;
 }
 
 function checkStackCookie() {
   if (ABORT) return;
   var max = _emscripten_stack_get_end();
-  // See writeStackCookie().
   if (max == 0) {
     max += 4;
   }
@@ -295,16 +185,10 @@ function checkStackCookie() {
   if (cookie1 != 0x02135467 || cookie2 != 0x89BACDFE) {
     abort(`Stack overflow! Stack cookie has been overwritten at ${ptrToString(max)}, expected hex dwords 0x89BACDFE and 0x2135467, but received ${ptrToString(cookie2)} ${ptrToString(cookie1)}`);
   }
-  // Also test the global address 0 for integrity.
   if (HEAPU32[((0)>>2)] != 0x63736d65 /* 'emsc' */) {
     abort('Runtime error: The application has corrupted its heap memory area (address zero)!');
   }
 }
-// end include: runtime_stack_check.js
-// include: runtime_exceptions.js
-// end include: runtime_exceptions.js
-// include: runtime_debug.js
-// Endianness check
 (() => {
   var h16 = new Int16Array(1);
   var h8 = new Int8Array(h16.buffer);
@@ -335,32 +219,18 @@ function ignoredModuleProp(prop) {
   }
 }
 
-// forcing the filesystem exports a few things by default
 function isExportedByForceFilesystem(name) {
   return name === 'FS_createPath' ||
          name === 'FS_createDataFile' ||
          name === 'FS_createPreloadedFile' ||
          name === 'FS_unlink' ||
          name === 'addRunDependency' ||
-         // The old FS has some functionality that WasmFS lacks.
          name === 'FS_createLazyFile' ||
          name === 'FS_createDevice' ||
          name === 'removeRunDependency';
 }
 
-/**
- * Intercept access to a global symbol.  This enables us to give informative
- * warnings/errors when folks attempt to use symbols they did not include in
- * their build, or no symbols that no longer exist.
- */
 function hookGlobalSymbolAccess(sym, func) {
-  // In MODULARIZE mode the generated code runs inside a function scope and not
-  // the global scope, and JavaScript does not provide access to function scopes
-  // so we cannot dynamically modify the scrope using `defineProperty` in this
-  // case.
-  //
-  // In this mode we simply ignore requests for `hookGlobalSymbolAccess`. Since
-  // this is a debug-only feature, skipping it is not major issue.
 }
 
 function missingGlobal(sym, msg) {
@@ -374,12 +244,7 @@ missingGlobal('asm', 'Please use wasmExports instead');
 
 function missingLibrarySymbol(sym) {
   hookGlobalSymbolAccess(sym, () => {
-    // Can't `abort()` here because it would break code that does runtime
-    // checks.  e.g. `if (typeof SDL === 'undefined')`.
     var msg = `\`${sym}\` is a library symbol and not included by default; add it to your library.js __deps or to DEFAULT_LIBRARY_FUNCS_TO_INCLUDE on the command line`;
-    // DEFAULT_LIBRARY_FUNCS_TO_INCLUDE requires the name as it appears in
-    // library.js, which means $name for a JS name with no prefix, or name
-    // for a JS name like _name.
     var librarySymbol = sym;
     if (!librarySymbol.startsWith('_')) {
       librarySymbol = '$' + sym;
@@ -391,8 +256,6 @@ function missingLibrarySymbol(sym) {
     warnOnce(msg);
   });
 
-  // Any symbol that is not included from the JS library is also (by definition)
-  // not exported on the Module object.
   unexportedRuntimeSymbol(sym);
 }
 
@@ -411,15 +274,9 @@ function unexportedRuntimeSymbol(sym) {
   }
 }
 
-// Used by XXXXX_DEBUG settings to output debug messages.
 function dbg(...args) {
-  // TODO(sbc): Make this configurable somehow.  Its not always convenient for
-  // logging to show up as warnings.
   console.warn(...args);
 }
-// end include: runtime_debug.js
-// include: memoryprofiler.js
-// end include: memoryprofiler.js
 
 
 function updateMemoryViews() {
@@ -436,13 +293,11 @@ function updateMemoryViews() {
   Module['HEAPU64'] = HEAPU64 = new BigUint64Array(b);
 }
 
-// end include: runtime_shared.js
 assert(!Module['STACK_SIZE'], 'STACK_SIZE can no longer be set at runtime.  Use -sSTACK_SIZE at link time')
 
 assert(typeof Int32Array != 'undefined' && typeof Float64Array !== 'undefined' && Int32Array.prototype.subarray != undefined && Int32Array.prototype.set != undefined,
        'JS engine does not provide full typed array support');
 
-// If memory is defined in wasm, the user can't provide it, or set INITIAL_MEMORY
 assert(!Module['wasmMemory'], 'Use of `wasmMemory` detected.  Use -sIMPORTED_MEMORY to define wasmMemory externally');
 assert(!Module['INITIAL_MEMORY'], 'Detected runtime INITIAL_MEMORY setting.  Use -sIMPORTED_MEMORY to define wasmMemory dynamically');
 
@@ -504,13 +359,6 @@ function addOnPostRun(cb) {
   __ATPOSTRUN__.unshift(cb);
 }
 
-// A counter of dependencies for calling run(). If we need to
-// do asynchronous work before running, increment this and
-// decrement it. Incrementing must happen in a place like
-// Module.preRun (used by emcc to add file preloading).
-// Note that you can add dependencies in preRun, even though
-// it happens right before run - run will be postponed until
-// the dependencies are met.
 var runDependencies = 0;
 var dependenciesFulfilled = null; // overridden to take different actions when all run dependencies are fulfilled
 var runDependencyTracking = {};
@@ -533,7 +381,6 @@ function addRunDependency(id) {
     assert(!runDependencyTracking[id]);
     runDependencyTracking[id] = 1;
     if (runDependencyWatcher === null && typeof setInterval != 'undefined') {
-      // Check for missing dependencies every few seconds
       runDependencyWatcher = setInterval(() => {
         if (ABORT) {
           clearInterval(runDependencyWatcher);
@@ -582,37 +429,18 @@ function removeRunDependency(id) {
   }
 }
 
-/** @param {string|number=} what */
 function abort(what) {
   Module['onAbort']?.(what);
 
   what = 'Aborted(' + what + ')';
-  // TODO(sbc): Should we remove printing and leave it up to whoever
-  // catches the exception?
   err(what);
 
   ABORT = true;
 
-  // Use a wasm runtime error, because a JS error might be seen as a foreign
-  // exception, which means we'd run destructors on it. We need the error to
-  // simply make the program stop.
-  // FIXME This approach does not work in Wasm EH because it currently does not assume
-  // all RuntimeErrors are from traps; it decides whether a RuntimeError is from
-  // a trap or not based on a hidden field within the object. So at the moment
-  // we don't have a way of throwing a wasm trap from JS. TODO Make a JS API that
-  // allows this in the wasm spec.
 
-  // Suppress closure compiler warning here. Closure compiler's builtin extern
-  // definition for WebAssembly.RuntimeError claims it takes no arguments even
-  // though it can.
-  // TODO(https://github.com/google/closure-compiler/pull/3913): Remove if/when upstream closure gets fixed.
-  /** @suppress {checkTypes} */
   var e = new WebAssembly.RuntimeError(what);
 
   readyPromiseReject(e);
-  // Throw the error whether or not MODULARIZE is set because abort is used
-  // in code paths apart from instantiation where an exception is expected
-  // to be thrown when abort is called.
   throw e;
 }
 
@@ -621,7 +449,6 @@ function createExportWrapper(name, nargs) {
     assert(runtimeInitialized, `native function \`${name}\` called before runtime initialization`);
     var f = wasmExports[name];
     assert(f, `exported native function \`${name}\` not found`);
-    // Only assert for too many arguments. Too few can be valid since the missing arguments will be zero filled.
     assert(args.length <= nargs, `native function \`${name}\` called with ${args.length} args but expects ${nargs}`);
     return f(...args);
   };
@@ -647,19 +474,15 @@ function getBinarySync(file) {
 }
 
 async function getWasmBinary(binaryFile) {
-  // If we don't have the binary yet, load it asynchronously using readAsync.
   if (!wasmBinary
       ) {
-    // Fetch the binary using readAsync
     try {
       var response = await readAsync(binaryFile);
       return new Uint8Array(response);
     } catch {
-      // Fall back to getBinarySync below;
     }
   }
 
-  // Otherwise, getBinarySync should be able to get it synchronously
   return getBinarySync(binaryFile);
 }
 
@@ -671,7 +494,6 @@ async function instantiateArrayBuffer(binaryFile, imports) {
   } catch (reason) {
     err(`failed to asynchronously prepare wasm: ${reason}`);
 
-    // Warn on some common problems.
     if (isFileURI(wasmBinaryFile)) {
       err(`warning: Loading from a file URI (${wasmBinaryFile}) is not supported in most browsers. See https://emscripten.org/docs/getting_started/FAQ.html#how-do-i-run-a-local-webserver-for-testing-why-does-my-program-stall-in-downloading-or-preparing`);
     }
@@ -689,31 +511,21 @@ async function instantiateAsync(binary, binaryFile, imports) {
       var instantiationResult = await WebAssembly.instantiateStreaming(response, imports);
       return instantiationResult;
     } catch (reason) {
-      // We expect the most common failure cause to be a bad MIME type for the binary,
-      // in which case falling back to ArrayBuffer instantiation should work.
       err(`wasm streaming compile failed: ${reason}`);
       err('falling back to ArrayBuffer instantiation');
-      // fall back of instantiateArrayBuffer below
     };
   }
   return instantiateArrayBuffer(binaryFile, imports);
 }
 
 function getWasmImports() {
-  // prepare imports
   return {
     'env': wasmImports,
     'wasi_snapshot_preview1': wasmImports,
   }
 }
 
-// Create the wasm instance.
-// Receives the wasm imports, returns the exports.
 async function createWasm() {
-  // Load the wasm module and create an instance of using native support in the JS engine.
-  // handle a generated wasm instance, receiving its exports and
-  // performing other necessary setup
-  /** @param {WebAssembly.Module=} module*/
   function receiveInstance(instance, module) {
     wasmExports = instance.exports;
 
@@ -729,38 +541,22 @@ async function createWasm() {
     removeRunDependency('wasm-instantiate');
     return wasmExports;
   }
-  // wait for the pthread pool (if any)
   addRunDependency('wasm-instantiate');
 
-  // Prefer streaming instantiation if available.
-  // Async compilation can be confusing when an error on the page overwrites Module
-  // (for example, if the order of elements is wrong, and the one defining Module is
-  // later), so we save Module and check it later.
   var trueModule = Module;
   function receiveInstantiationResult(result) {
-    // 'result' is a ResultObject object which has both the module and instance.
-    // receiveInstance() will swap in the exports (to Module.asm) so they can be called
     assert(Module === trueModule, 'the Module object should not be replaced during async compilation - perhaps the order of HTML elements is wrong?');
     trueModule = null;
-    // TODO: Due to Closure regression https://github.com/google/closure-compiler/issues/3193, the above line no longer optimizes out down to the following line.
-    // When the regression is fixed, can restore the above PTHREADS-enabled path.
     return receiveInstance(result['instance']);
   }
 
   var info = getWasmImports();
 
-  // User shell pages can write their own Module.instantiateWasm = function(imports, successCallback) callback
-  // to manually instantiate the Wasm module themselves. This allows pages to
-  // run the instantiation parallel to any other async startup actions they are
-  // performing.
-  // Also pthreads and wasm workers initialize the wasm instance through this
-  // path.
   if (Module['instantiateWasm']) {
     try {
       return Module['instantiateWasm'](info, receiveInstance);
     } catch(e) {
       err(`Module.instantiateWasm callback failed with error: ${e}`);
-        // If instantiation fails, reject the module ready promise.
         readyPromiseReject(e);
     }
   }
@@ -772,20 +568,17 @@ async function createWasm() {
     var exports = receiveInstantiationResult(result);
     return exports;
   } catch (e) {
-    // If instantiation fails, reject the module ready promise.
     readyPromiseReject(e);
     return Promise.reject(e);
   }
 }
 
-// === Body ===
 
 function to_json_inchi(return_code,inchi,auxinfo,message,log) { const json = JSON.stringify({ "return_code": return_code, "inchi": Module.UTF8ToString(inchi), "auxinfo": Module.UTF8ToString(auxinfo), "message": Module.UTF8ToString(message), "log": Module.UTF8ToString(log) }); const byteCount = Module.lengthBytesUTF8(json) + 1; const jsonPtr = Module._malloc(byteCount); Module.stringToUTF8(json, jsonPtr, byteCount); return jsonPtr; }
 function to_json_inchikey(return_code,inchikey,message) { const json = JSON.stringify({ "return_code": return_code, "inchikey": Module.UTF8ToString(inchikey), "message": Module.UTF8ToString(message) }); const byteCount = Module.lengthBytesUTF8(json) + 1; const jsonPtr = Module._malloc(byteCount); Module.stringToUTF8(json, jsonPtr, byteCount); return jsonPtr; }
 function to_json_molfile(return_code,molfile,message,log) { const json = JSON.stringify({ "return_code": return_code, "molfile": Module.UTF8ToString(molfile), "message": Module.UTF8ToString(message), "log": Module.UTF8ToString(log) }); const byteCount = Module.lengthBytesUTF8(json) + 1; const jsonPtr = Module._malloc(byteCount); Module.stringToUTF8(json, jsonPtr, byteCount); return jsonPtr; }
 function to_json_model(return_code,model,message,log) { const json = JSON.stringify({ "return_code": return_code, "model": Module.UTF8ToString(model), "message": Module.UTF8ToString(message), "log": Module.UTF8ToString(log) }); const byteCount = Module.lengthBytesUTF8(json) + 1; const jsonPtr = Module._malloc(byteCount); Module.stringToUTF8(json, jsonPtr, byteCount); return jsonPtr; }
 
-// end include: preamble.js
 
 
   class ExitStatus {
@@ -798,16 +591,11 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
 
   var callRuntimeCallbacks = (callbacks) => {
       while (callbacks.length > 0) {
-        // Pass the module as the first argument.
         callbacks.shift()(Module);
       }
     };
 
   
-    /**
-     * @param {number} ptr
-     * @param {string} type
-     */
   function getValue(ptr, type = 'i8') {
     if (type.endsWith('*')) type = '*';
     switch (type) {
@@ -827,17 +615,11 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
 
   var ptrToString = (ptr) => {
       assert(typeof ptr === 'number');
-      // With CAN_ADDRESS_2GB or MEMORY64, pointers are already unsigned.
       ptr >>>= 0;
       return '0x' + ptr.toString(16).padStart(8, '0');
     };
 
   
-    /**
-     * @param {number} ptr
-     * @param {number} value
-     * @param {string} type
-     */
   function setValue(ptr, value, type = 'i8') {
     if (type.endsWith('*')) type = '*';
     switch (type) {
@@ -888,7 +670,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         return 28;
       }
       var now;
-      // all wasi clocks but realtime are monotonic
       if (clk_id === 0) {
         now = _emscripten_date_now();
       } else if (nowIsMonotonic) {
@@ -896,7 +677,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
       } else {
         return 52;
       }
-      // "now" is in ms, and wasi times are in ns.
       var nsec = Math.round(now * 1000 * 1000);
       HEAP64[((ptime)>>3)] = BigInt(nsec);
       return 0;
@@ -916,7 +696,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
     };
   var _emscripten_resize_heap = (requestedSize) => {
       var oldSize = HEAPU8.length;
-      // With CAN_ADDRESS_2GB or MEMORY64, pointers are already unsigned.
       requestedSize >>>= 0;
       abortOnCannotGrowMemory(requestedSize);
     };
@@ -928,7 +707,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         return splitPathRe.exec(filename).slice(1);
       },
   normalizeArray:(parts, allowAboveRoot) => {
-        // if the path tries to go above the root, `up` ends up > 0
         var up = 0;
         for (var i = parts.length - 1; i >= 0; i--) {
           var last = parts[i];
@@ -942,7 +720,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
             up--;
           }
         }
-        // if the path is allowed to go above the root, restore leading ..s
         if (allowAboveRoot) {
           for (; up; up--) {
             parts.unshift('..');
@@ -953,7 +730,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   normalize:(path) => {
         var isAbsolute = PATH.isAbs(path),
             trailingSlash = path.substr(-1) === '/';
-        // Normalize the path
         path = PATH.normalizeArray(path.split('/').filter((p) => !!p), !isAbsolute).join('/');
         if (!path && !isAbsolute) {
           path = '.';
@@ -968,11 +744,9 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
             root = result[0],
             dir = result[1];
         if (!root && !dir) {
-          // No dirname whatsoever
           return '.';
         }
         if (dir) {
-          // It has a dirname, strip trailing slash
           dir = dir.substr(0, dir.length - 1);
         }
         return root + dir;
@@ -987,7 +761,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
       return (view) => crypto.getRandomValues(view);
     };
   var randomFill = (view) => {
-      // Lazily init on the first invocation.
       (randomFill = initRandomFill())(view);
     };
   
@@ -999,7 +772,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           resolvedAbsolute = false;
         for (var i = args.length - 1; i >= -1 && !resolvedAbsolute; i--) {
           var path = (i >= 0) ? args[i] : FS.cwd();
-          // Skip empty and invalid entries
           if (typeof path != 'string') {
             throw new TypeError('Arguments to path.resolve must be strings');
           } else if (!path) {
@@ -1008,8 +780,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           resolvedPath = path + '/' + resolvedPath;
           resolvedAbsolute = PATH.isAbs(path);
         }
-        // At this point the path should be resolved to a full absolute path, but
-        // handle relative paths to be safe (might happen when process.cwd() fails)
         resolvedPath = PATH.normalizeArray(resolvedPath.split('/').filter((p) => !!p), !resolvedAbsolute).join('/');
         return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
       },
@@ -1050,36 +820,16 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   
   var UTF8Decoder = typeof TextDecoder != 'undefined' ? new TextDecoder() : undefined;
   
-    /**
-     * Given a pointer 'idx' to a null-terminated UTF8-encoded string in the given
-     * array that contains uint8 values, returns a copy of that string as a
-     * Javascript String object.
-     * heapOrArray is either a regular array, or a JavaScript typed array view.
-     * @param {number=} idx
-     * @param {number=} maxBytesToRead
-     * @return {string}
-     */
   var UTF8ArrayToString = (heapOrArray, idx = 0, maxBytesToRead = NaN) => {
       var endIdx = idx + maxBytesToRead;
       var endPtr = idx;
-      // TextDecoder needs to know the byte length in advance, it doesn't stop on
-      // null terminator by itself.  Also, use the length info to avoid running tiny
-      // strings through TextDecoder, since .subarray() allocates garbage.
-      // (As a tiny code save trick, compare endPtr against endIdx using a negation,
-      // so that undefined/NaN means Infinity)
       while (heapOrArray[endPtr] && !(endPtr >= endIdx)) ++endPtr;
   
       if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
         return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
       }
       var str = '';
-      // If building with TextDecoder, we have already computed the string length
-      // above, so test loop end condition against that
       while (idx < endPtr) {
-        // For UTF8 byte structure, see:
-        // http://en.wikipedia.org/wiki/UTF-8#Description
-        // https://www.ietf.org/rfc/rfc2279.txt
-        // https://tools.ietf.org/html/rfc3629
         var u0 = heapOrArray[idx++];
         if (!(u0 & 0x80)) { str += String.fromCharCode(u0); continue; }
         var u1 = heapOrArray[idx++] & 63;
@@ -1107,10 +857,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   var lengthBytesUTF8 = (str) => {
       var len = 0;
       for (var i = 0; i < str.length; ++i) {
-        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
-        // unit, not a Unicode code point of the character! So decode
-        // UTF16->UTF32->UTF8.
-        // See http://unicode.org/faq/utf_bom.html#utf16-3
         var c = str.charCodeAt(i); // possibly a lead surrogate
         if (c <= 0x7F) {
           len++;
@@ -1127,21 +873,12 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   
   var stringToUTF8Array = (str, heap, outIdx, maxBytesToWrite) => {
       assert(typeof str === 'string', `stringToUTF8Array expects a string (got ${typeof str})`);
-      // Parameter maxBytesToWrite is not optional. Negative values, 0, null,
-      // undefined and false each don't write out any bytes.
       if (!(maxBytesToWrite > 0))
         return 0;
   
       var startIdx = outIdx;
       var endIdx = outIdx + maxBytesToWrite - 1; // -1 for string null terminator.
       for (var i = 0; i < str.length; ++i) {
-        // Gotcha: charCodeAt returns a 16-bit word that is a UTF-16 encoded code
-        // unit, not a Unicode code point of the character! So decode
-        // UTF16->UTF32->UTF8.
-        // See http://unicode.org/faq/utf_bom.html#utf16-3
-        // For UTF8 byte structure, see http://en.wikipedia.org/wiki/UTF-8#Description
-        // and https://www.ietf.org/rfc/rfc2279.txt
-        // and https://tools.ietf.org/html/rfc3629
         var u = str.charCodeAt(i); // possibly a lead surrogate
         if (u >= 0xD800 && u <= 0xDFFF) {
           var u1 = str.charCodeAt(++i);
@@ -1168,11 +905,9 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           heap[outIdx++] = 0x80 | (u & 63);
         }
       }
-      // Null-terminate the pointer to the buffer.
       heap[outIdx] = 0;
       return outIdx - startIdx;
     };
-  /** @type {function(string, boolean=, number=)} */
   function intArrayFromString(stringy, dontAddNull, length) {
     var len = length > 0 ? length : lengthBytesUTF8(stringy)+1;
     var u8array = new Array(len);
@@ -1185,7 +920,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         var result = null;
         if (typeof window != 'undefined' &&
           typeof window.prompt == 'function') {
-          // Browser.
           result = window.prompt('Input: ');  // returns null on cancel
           if (result !== null) {
             result += '\n';
@@ -1202,25 +936,8 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   var TTY = {
   ttys:[],
   init() {
-        // https://github.com/emscripten-core/emscripten/pull/1555
-        // if (ENVIRONMENT_IS_NODE) {
-        //   // currently, FS.init does not distinguish if process.stdin is a file or TTY
-        //   // device, it always assumes it's a TTY device. because of this, we're forcing
-        //   // process.stdin to UTF8 encoding to at least make stdin reading compatible
-        //   // with text files until FS.init can be refactored.
-        //   process.stdin.setEncoding('utf8');
-        // }
       },
   shutdown() {
-        // https://github.com/emscripten-core/emscripten/pull/1555
-        // if (ENVIRONMENT_IS_NODE) {
-        //   // inolen: any idea as to why node -e 'process.stdin.read()' wouldn't exit immediately (with process.stdin being a tty)?
-        //   // isaacs: because now it's reading from the stream, you've expressed interest in it, so that read() kicks off a _read() which creates a ReadReq operation
-        //   // inolen: I thought read() in that case was a synchronous operation that just grabbed some amount of buffered data if it exists?
-        //   // isaacs: it is. but it also triggers a _read() call, which calls readStart() on the handle
-        //   // isaacs: do process.stdin.pause() and i'd think it'd probably close the pending call
-        //   process.stdin.pause();
-        // }
       },
   register(dev, ops) {
         TTY.ttys[dev] = { input: [], output: [], ops: ops };
@@ -1236,7 +953,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           stream.seekable = false;
         },
   close(stream) {
-          // flush any pending line data
           stream.tty.ops.fsync(stream.tty);
         },
   fsync(stream) {
@@ -1302,7 +1018,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           }
         },
   ioctl_tcgets(tty) {
-          // typical setting
           return {
             c_iflag: 25856,
             c_oflag: 5,
@@ -1316,7 +1031,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           };
         },
   ioctl_tcsets(tty, optional_actions, data) {
-          // currently just ignore
           return 0;
         },
   ioctl_tiocgwinsz(tty) {
@@ -1356,7 +1070,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
       },
   createNode(parent, name, mode, dev) {
         if (FS.isBlkdev(mode) || FS.isFIFO(mode)) {
-          // no supported
           throw new FS.ErrnoError(63);
         }
         MEMFS.ops_table ||= {
@@ -1415,9 +1128,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           node.node_ops = MEMFS.ops_table.file.node;
           node.stream_ops = MEMFS.ops_table.file.stream;
           node.usedBytes = 0; // The actual number of bytes used in the typed array, as opposed to contents.length which gives the whole capacity.
-          // When the byte data of the file is populated, this will point to either a typed array, or a normal JS array. Typed arrays are preferred
-          // for performance, and used by default. However, typed arrays are not resizable like normal JS arrays are, so there is a small disk size
-          // penalty involved for appending file writes that continuously grow a file similar to std::vector capacity vs used -scheme.
           node.contents = null; 
         } else if (FS.isLink(node.mode)) {
           node.node_ops = MEMFS.ops_table.link.node;
@@ -1427,7 +1137,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           node.stream_ops = MEMFS.ops_table.chrdev.stream;
         }
         node.atime = node.mtime = node.ctime = Date.now();
-        // add the new node to the parent
         if (parent) {
           parent.contents[name] = node;
           parent.atime = parent.mtime = parent.ctime = node.atime;
@@ -1442,9 +1151,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   expandFileStorage(node, newCapacity) {
         var prevCapacity = node.contents ? node.contents.length : 0;
         if (prevCapacity >= newCapacity) return; // No need to expand, the storage was already large enough.
-        // Don't expand strictly to the given requested limit if it's only a very small increase, but instead geometrically grow capacity.
-        // For small filesizes (<1MB), perform size*2 geometric increase, but for large sizes, do a much more conservative size*1.125 increase to
-        // avoid overshooting the allocation cap by a very large margin.
         var CAPACITY_DOUBLING_MAX = 1024 * 1024;
         newCapacity = Math.max(newCapacity, (prevCapacity * (prevCapacity < CAPACITY_DOUBLING_MAX ? 2.0 : 1.125)) >>> 0);
         if (prevCapacity != 0) newCapacity = Math.max(newCapacity, 256); // At minimum allocate 256b for each file when expanding.
@@ -1469,7 +1175,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   node_ops:{
   getattr(node) {
           var attr = {};
-          // device numbers reuse inode numbers.
           attr.dev = FS.isChrdev(node.mode) ? node.id : 1;
           attr.ino = node.id;
           attr.mode = node.mode;
@@ -1489,8 +1194,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           attr.atime = new Date(node.atime);
           attr.mtime = new Date(node.mtime);
           attr.ctime = new Date(node.ctime);
-          // NOTE: In our implementation, st_blocks = Math.ceil(st_size/st_blksize),
-          //       but this is not required by the standard.
           attr.blksize = 4096;
           attr.blocks = Math.ceil(attr.size / attr.blksize);
           return attr;
@@ -1518,14 +1221,12 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           } catch (e) {}
           if (new_node) {
             if (FS.isDir(old_node.mode)) {
-              // if we're overwriting a directory at new_name, make sure it's empty.
               for (var i in new_node.contents) {
                 throw new FS.ErrnoError(55);
               }
             }
             FS.hashRemoveNode(new_node);
           }
-          // do the internal rewiring
           delete old_node.parent.contents[old_node.name];
           new_dir.contents[new_name] = old_node;
           old_node.name = new_name;
@@ -1572,7 +1273,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           return size;
         },
   write(stream, buffer, offset, length, position, canOwn) {
-          // The data buffer should be a typed array view
           assert(!(buffer instanceof ArrayBuffer));
   
           if (!length) return 0;
@@ -1595,10 +1295,8 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
             }
           }
   
-          // Appending to an existing file and we need to reallocate, or source data did not come as a typed array.
           MEMFS.expandFileStorage(node, position+length);
           if (node.contents.subarray && buffer.subarray) {
-            // Use typed array write which is available.
             node.contents.set(buffer.subarray(offset, offset + length), position);
           } else {
             for (var i = 0; i < length; i++) {
@@ -1633,10 +1331,7 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           var ptr;
           var allocated;
           var contents = stream.node.contents;
-          // Only make a new copy when MAP_PRIVATE is specified.
           if (!(flags & 2) && contents && contents.buffer === HEAP8.buffer) {
-            // We can't emulate MAP_SHARED when the file is not backed by the
-            // buffer we're mapping to (e.g. the HEAP buffer).
             allocated = false;
             ptr = contents.byteOffset;
           } else {
@@ -1646,7 +1341,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
               throw new FS.ErrnoError(48);
             }
             if (contents) {
-              // Try to avoid unnecessary slices.
               if (position > 0 || position + length < contents.length) {
                 if (contents.subarray) {
                   contents = contents.subarray(position, position + length);
@@ -1661,7 +1355,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         },
   msync(stream, buffer, offset, length, mmapFlags) {
           MEMFS.stream_ops.write(stream, buffer, 0, length, offset, false);
-          // should we check if bytesWritten and length are the same?
           return 0;
         },
   },
@@ -1680,7 +1373,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   
   var preloadPlugins = Module['preloadPlugins'] || [];
   var FS_handledByPreloadPlugin = (byteArray, fullname, finish, onerror) => {
-      // Ensure plugins are ready.
       if (typeof Browser != 'undefined') Browser.init();
   
       var handled = false;
@@ -1694,8 +1386,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
       return handled;
     };
   var FS_createPreloadedFile = (parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish) => {
-      // TODO we should allow people to just pass in a complete filename instead
-      // of parent and name being that we just join them anyways
       var fullname = name ? PATH_FS.resolve(PATH.join2(parent, name)) : parent;
       var dep = getUniqueRunDependency(`cp ${fullname}`); // might have several active requests for the same fullname
       function processData(byteArray) {
@@ -1751,21 +1441,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   
   
   
-    /**
-     * Given a pointer 'ptr' to a null-terminated UTF8-encoded string in the
-     * emscripten HEAP, returns a copy of that string as a Javascript String object.
-     *
-     * @param {number} ptr
-     * @param {number=} maxBytesToRead - An optional length that specifies the
-     *   maximum number of bytes to read. You can omit this parameter to scan the
-     *   string until the first 0 byte. If maxBytesToRead is passed, and the string
-     *   at [ptr, ptr+maxBytesToReadr[ contains a null byte in the middle, then the
-     *   string will cut short at that byte index (i.e. maxBytesToRead will not
-     *   produce a string of exact length [ptr, ptr+maxBytesToRead[) N.B. mixing
-     *   frequent uses of UTF8ToString() with and without maxBytesToRead may throw
-     *   JS JIT optimizations off, so it is worth to consider consistently using one
-     * @return {string}
-     */
   var UTF8ToString = (ptr, maxBytesToRead) => {
       assert(typeof ptr == 'number', `UTF8ToString expects a number (got ${typeof ptr})`);
       return ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : '';
@@ -1909,12 +1584,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   ignorePermissions:true,
   ErrnoError:class extends Error {
         name = 'ErrnoError';
-        // We set the `name` property to be able to identify `FS.ErrnoError`
-        // - the `name` is a standard ECMA-262 property of error objects. Kind of good to have it anyway.
-        // - when using PROXYFS, an error can come from an underlying FS
-        // as different FS objects have their own FS.ErrnoError each,
-        // the test `err instanceof FS.ErrnoError` won't detect an error coming from another filesystem, causing bugs.
-        // we'll use the reliable test `err.name == "ErrnoError"` instead
         constructor(errno) {
           super(runtimeInitialized ? strError(errno) : '');
           this.errno = errno;
@@ -2007,19 +1676,15 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           path = FS.cwd() + '/' + path;
         }
   
-        // limit max consecutive symlinks to 40 (SYMLOOP_MAX).
         linkloop: for (var nlinks = 0; nlinks < 40; nlinks++) {
-          // split the absolute path
           var parts = path.split('/').filter((p) => !!p);
   
-          // start at the root
           var current = FS.root;
           var current_path = '/';
   
           for (var i = 0; i < parts.length; i++) {
             var islast = (i === parts.length-1);
             if (islast && opts.parent) {
-              // stop resolving
               break;
             }
   
@@ -2037,22 +1702,16 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
             try {
               current = FS.lookupNode(current, parts[i]);
             } catch (e) {
-              // if noent_okay is true, suppress a ENOENT in the last component
-              // and return an object with an undefined node. This is needed for
-              // resolving symlinks in the path when creating a file.
               if ((e?.errno === 44) && islast && opts.noent_okay) {
                 return { path: current_path };
               }
               throw e;
             }
   
-            // jump to the mount's root node if this is a mountpoint
             if (FS.isMountpoint(current) && (!islast || opts.follow_mount)) {
               current = current.mounted.root;
             }
   
-            // by default, lookupPath will not follow a symlink if it is the final path component.
-            // setting opts.follow = true will override this behavior.
             if (FS.isLink(current.mode) && (!islast || opts.follow)) {
               if (!current.node_ops.readlink) {
                 throw new FS.ErrnoError(52);
@@ -2121,7 +1780,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
             return node;
           }
         }
-        // if we failed to find it in the cache, call into the VFS
         return FS.lookup(parent, name);
       },
   createNode(parent, name, mode, rdev) {
@@ -2173,7 +1831,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         if (FS.ignorePermissions) {
           return 0;
         }
-        // return 0 if any user, group or owner bits are set.
         if (perms.includes('r') && !(node.mode & 292)) {
           return 2;
         } else if (perms.includes('w') && !(node.mode & 146)) {
@@ -2266,7 +1923,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   createStream(stream, fd = -1) {
         assert(fd >= -1);
   
-        // clone it, so we can return an instance of FSStream
         stream = Object.assign(new FS.FSStream(), stream);
         if (fd == -1) {
           fd = FS.nextfd();
@@ -2286,9 +1942,7 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   chrdev_stream_ops:{
   open(stream) {
           var device = FS.getDevice(stream.node.rdev);
-          // override node's stream ops with the device's
           stream.stream_ops = device.stream_ops;
-          // forward the open call
           stream.stream_ops.open?.(stream);
         },
   llseek() {
@@ -2350,7 +2004,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           }
         };
   
-        // sync all mounts
         mounts.forEach((mount) => {
           if (!mount.type.syncfs) {
             return done(null);
@@ -2360,8 +2013,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
       },
   mount(type, opts, mountpoint) {
         if (typeof type == 'string') {
-          // The filesystem was not included, and instead we have an error
-          // message stored in the variable.
           throw type;
         }
         var root = mountpoint === '/';
@@ -2392,7 +2043,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           mounts: []
         };
   
-        // create a root node for the fs
         var mountRoot = type.mount(mount);
         mountRoot.mount = mount;
         mount.root = mountRoot;
@@ -2400,10 +2050,8 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         if (root) {
           FS.root = mountRoot;
         } else if (node) {
-          // set as a mountpoint
           node.mounted = mount;
   
-          // add the new mount to the current mount's children
           if (node.mount) {
             node.mount.mounts.push(mount);
           }
@@ -2418,7 +2066,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           throw new FS.ErrnoError(28);
         }
   
-        // destroy the nodes for this mount, and all its child mounts
         var node = lookup.node;
         var mount = node.mounted;
         var mounts = FS.getMounts(mount);
@@ -2437,10 +2084,8 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           }
         });
   
-        // no longer a mountpoint
         node.mounted = null;
   
-        // remove this mount from the child mounts
         var idx = node.mount.mounts.indexOf(mount);
         assert(idx !== -1);
         node.mount.mounts.splice(idx, 1);
@@ -2471,15 +2116,9 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         return FS.statfsNode(FS.lookupPath(path, {follow: true}).node);
       },
   statfsStream(stream) {
-        // We keep a separate statfsStream function because noderawfs overrides
-        // it. In noderawfs, stream.node is sometimes null. Instead, we need to
-        // look at stream.path.
         return FS.statfsNode(stream.node);
       },
   statfsNode(node) {
-        // NOTE: None of the defaults here are true. We're just returning safe and
-        //       sane values. Currently nodefs and rawfs replace these defaults,
-        //       other file systems leave them alone.
         var rtn = {
           bsize: 4096,
           frsize: 4096,
@@ -2553,51 +2192,39 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         var new_dirname = PATH.dirname(new_path);
         var old_name = PATH.basename(old_path);
         var new_name = PATH.basename(new_path);
-        // parents must exist
         var lookup, old_dir, new_dir;
   
-        // let the errors from non existent directories percolate up
         lookup = FS.lookupPath(old_path, { parent: true });
         old_dir = lookup.node;
         lookup = FS.lookupPath(new_path, { parent: true });
         new_dir = lookup.node;
   
         if (!old_dir || !new_dir) throw new FS.ErrnoError(44);
-        // need to be part of the same mount
         if (old_dir.mount !== new_dir.mount) {
           throw new FS.ErrnoError(75);
         }
-        // source must exist
         var old_node = FS.lookupNode(old_dir, old_name);
-        // old path should not be an ancestor of the new path
         var relative = PATH_FS.relative(old_path, new_dirname);
         if (relative.charAt(0) !== '.') {
           throw new FS.ErrnoError(28);
         }
-        // new path should not be an ancestor of the old path
         relative = PATH_FS.relative(new_path, old_dirname);
         if (relative.charAt(0) !== '.') {
           throw new FS.ErrnoError(55);
         }
-        // see if the new path already exists
         var new_node;
         try {
           new_node = FS.lookupNode(new_dir, new_name);
         } catch (e) {
-          // not fatal
         }
-        // early out if nothing needs to change
         if (old_node === new_node) {
           return;
         }
-        // we'll need to delete the old entry
         var isdir = FS.isDir(old_node.mode);
         var errCode = FS.mayDelete(old_dir, old_name, isdir);
         if (errCode) {
           throw new FS.ErrnoError(errCode);
         }
-        // need delete permissions if we'll be overwriting.
-        // need create permissions if new doesn't already exist.
         errCode = new_node ?
           FS.mayDelete(new_dir, new_name, isdir) :
           FS.mayCreate(new_dir, new_name);
@@ -2610,26 +2237,19 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         if (FS.isMountpoint(old_node) || (new_node && FS.isMountpoint(new_node))) {
           throw new FS.ErrnoError(10);
         }
-        // if we are going to change the parent, check write permissions
         if (new_dir !== old_dir) {
           errCode = FS.nodePermissions(old_dir, 'w');
           if (errCode) {
             throw new FS.ErrnoError(errCode);
           }
         }
-        // remove the node from the lookup hash
         FS.hashRemoveNode(old_node);
-        // do the underlying fs rename
         try {
           old_dir.node_ops.rename(old_node, new_dir, new_name);
-          // update old node (we do this here to avoid each backend
-          // needing to)
           old_node.parent = new_dir;
         } catch (e) {
           throw e;
         } finally {
-          // add the node back to the hash (in case node_ops.rename
-          // changed its name)
           FS.hashAddNode(old_node);
         }
       },
@@ -2667,9 +2287,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         var node = FS.lookupNode(parent, name);
         var errCode = FS.mayDelete(parent, name, false);
         if (errCode) {
-          // According to POSIX, we should map EISDIR to EPERM, but
-          // we instead do what Linux does (and we must, as we use
-          // the musl linux libc).
           throw new FS.ErrnoError(errCode);
         }
         if (!parent.node_ops.unlink) {
@@ -2735,7 +2352,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         setattr(node, {
           timestamp: Date.now(),
           dontFollow
-          // we ignore the uid / gid for now
         });
       },
   lchown(path, uid, gid) {
@@ -2804,9 +2420,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           node = path;
         } else {
           isDirPath = path.endsWith("/");
-          // noent_okay makes it so that if the final component of the path
-          // doesn't exist, lookupPath returns `node: undefined`. `path` will be
-          // updated to point to the target of all symlinks.
           var lookup = FS.lookupPath(path, {
             follow: !(flags & 131072),
             noent_okay: true
@@ -2814,21 +2427,15 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           node = lookup.node;
           path = lookup.path;
         }
-        // perhaps we need to create the node
         var created = false;
         if ((flags & 64)) {
           if (node) {
-            // if O_CREAT and O_EXCL are set, error out if the node already exists
             if ((flags & 128)) {
               throw new FS.ErrnoError(20);
             }
           } else if (isDirPath) {
             throw new FS.ErrnoError(31);
           } else {
-            // node doesn't exist, try to create it
-            // Ignore the permission bits here to ensure we can `open` this new
-            // file below. We use chmod below the apply the permissions once the
-            // file is open.
             node = FS.mknod(path, mode | 0o777, 0);
             created = true;
           }
@@ -2836,31 +2443,23 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         if (!node) {
           throw new FS.ErrnoError(44);
         }
-        // can't truncate a device
         if (FS.isChrdev(node.mode)) {
           flags &= ~512;
         }
-        // if asked only for a directory, then this must be one
         if ((flags & 65536) && !FS.isDir(node.mode)) {
           throw new FS.ErrnoError(54);
         }
-        // check permissions, if this is not a file we just created now (it is ok to
-        // create and write to a file with read-only permissions; it is read-only
-        // for later use)
         if (!created) {
           var errCode = FS.mayOpen(node, flags);
           if (errCode) {
             throw new FS.ErrnoError(errCode);
           }
         }
-        // do truncation if necessary
         if ((flags & 512) && !created) {
           FS.truncate(node, 0);
         }
-        // we've already handled these, don't pass down to the underlying vfs
         flags &= ~(128 | 512 | 131072);
   
-        // register the stream with the filesystem
         var stream = FS.createStream({
           node,
           path: FS.getPath(node),  // we want the absolute path to the node
@@ -2868,11 +2467,9 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           seekable: true,
           position: 0,
           stream_ops: node.stream_ops,
-          // used by the file family libc calls (fopen, fwrite, ferror, etc.)
           ungotten: [],
           error: false
         });
-        // call the new stream's open function
         if (stream.stream_ops.open) {
           stream.stream_ops.open(stream);
         }
@@ -2964,7 +2561,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           throw new FS.ErrnoError(28);
         }
         if (stream.seekable && stream.flags & 1024) {
-          // seek to the end before writing in append mode
           FS.llseek(stream, 0, 2);
         }
         var seeking = typeof position != 'undefined';
@@ -2996,12 +2592,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         stream.stream_ops.allocate(stream, offset, length);
       },
   mmap(stream, length, position, prot, flags) {
-        // User requests writing to file (prot & PROT_WRITE != 0).
-        // Checking if we have permissions to write to the file unless
-        // MAP_PRIVATE flag is set. According to POSIX spec it is possible
-        // to write to file opened in read-only mode with MAP_PRIVATE flag,
-        // as all modifications will be visible only in the memory of
-        // the current process.
         if ((prot & 2) !== 0
             && (flags & 2) === 0
             && (stream.flags & 2097155) !== 2) {
@@ -3086,24 +2676,17 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         FS.mkdir('/home/web_user');
       },
   createDefaultDevices() {
-        // create /dev
         FS.mkdir('/dev');
-        // setup /dev/null
         FS.registerDevice(FS.makedev(1, 3), {
           read: () => 0,
           write: (stream, buffer, offset, length, pos) => length,
           llseek: () => 0,
         });
         FS.mkdev('/dev/null', FS.makedev(1, 3));
-        // setup /dev/tty and /dev/tty1
-        // stderr needs to print output using err() rather than out()
-        // so we register a second tty just for it.
         TTY.register(FS.makedev(5, 0), TTY.default_tty_ops);
         TTY.register(FS.makedev(6, 0), TTY.default_tty1_ops);
         FS.mkdev('/dev/tty', FS.makedev(5, 0));
         FS.mkdev('/dev/tty1', FS.makedev(6, 0));
-        // setup /dev/[u]random
-        // use a buffer to avoid overhead of individual crypto calls per byte
         var randomBuffer = new Uint8Array(1024), randomLeft = 0;
         var randomByte = () => {
           if (randomLeft === 0) {
@@ -3114,14 +2697,10 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         };
         FS.createDevice('/dev', 'random', randomByte);
         FS.createDevice('/dev', 'urandom', randomByte);
-        // we're not going to emulate the actual shm device,
-        // just create the tmp dirs that reside in it commonly
         FS.mkdir('/dev/shm');
         FS.mkdir('/dev/shm/tmp');
       },
   createSpecialDirectories() {
-        // create /proc/self/fd which allows /proc/self/fd/6 => readlink gives the
-        // name of the stream for fd 6 (see test_unistd_ttyname)
         FS.mkdir('/proc');
         var proc_self = FS.mkdir('/proc/self');
         FS.mkdir('/proc/self/fd');
@@ -3155,14 +2734,7 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         }, {}, '/proc/self/fd');
       },
   createStandardStreams(input, output, error) {
-        // TODO deprecate the old functionality of a single
-        // input / output callback and that utilizes FS.createDevice
-        // and instead require a unique set of stream ops
   
-        // by default, we symlink the standard streams to the
-        // default tty devices. however, if the standard streams
-        // have been overwritten we create a unique device for
-        // them instead.
         if (input) {
           FS.createDevice('/dev', 'stdin', input);
         } else {
@@ -3179,7 +2751,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           FS.symlink('/dev/tty1', '/dev/stderr');
         }
   
-        // open default streams for the stdin, stdout and stderr devices
         var stdin = FS.open('/dev/stdin', 0);
         var stdout = FS.open('/dev/stdout', 1);
         var stderr = FS.open('/dev/stderr', 1);
@@ -3204,7 +2775,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         assert(!FS.initialized, 'FS.init was previously called. If you want to initialize later with custom parameters, remove any earlier calls (note that one is automatically added to the generated code)');
         FS.initialized = true;
   
-        // Allow Module.stdin etc. to provide defaults, if none explicitly passed to us here
         input ??= Module['stdin'];
         output ??= Module['stdout'];
         error ??= Module['stderr'];
@@ -3213,9 +2783,7 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
       },
   quit() {
         FS.initialized = false;
-        // force-flush all streams, so we get musl std streams printed out
         _fflush(0);
-        // close all of our streams
         for (var i = 0; i < FS.streams.length; i++) {
           var stream = FS.streams[i];
           if (!stream) {
@@ -3232,7 +2800,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         return ret.object;
       },
   analyzePath(path, dontResolveLastLink) {
-        // operate from within the context of the symlink's target
         try {
           var lookup = FS.lookupPath(path, { follow: !dontResolveLastLink });
           path = lookup.path;
@@ -3269,7 +2836,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           try {
             FS.mkdir(current);
           } catch (e) {
-            // ignore EEXIST
           }
           parent = current;
         }
@@ -3294,7 +2860,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
             for (var i = 0, len = data.length; i < len; ++i) arr[i] = data.charCodeAt(i);
             data = arr;
           }
-          // make sure we can write to the file
           FS.chmod(node, mode | 146);
           var stream = FS.open(node, 577);
           FS.write(stream, data, 0, data.length, 0, canOwn);
@@ -3307,14 +2872,11 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         var mode = FS_getMode(!!input, !!output);
         FS.createDevice.major ??= 64;
         var dev = FS.makedev(FS.createDevice.major++, 0);
-        // Create a fake device that a set of stream ops to emulate
-        // the old behavior.
         FS.registerDevice(dev, {
           open(stream) {
             stream.seekable = false;
           },
           close(stream) {
-            // flush any pending line data
             if (output?.buffer?.length) {
               output(10);
             }
@@ -3370,8 +2932,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         }
       },
   createLazyFile(parent, name, url, canRead, canWrite) {
-        // Lazy chunked Uint8Array (implements get and length from Uint8Array).
-        // Actual getting is abstracted away for eventual reuse.
         class LazyUint8Array {
           lengthKnown = false;
           chunks = []; // Loaded chunks. Index is the chunk number
@@ -3387,7 +2947,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
             this.getter = getter;
           }
           cacheLength() {
-            // Find length
             var xhr = new XMLHttpRequest();
             xhr.open('HEAD', url, false);
             xhr.send(null);
@@ -3401,17 +2960,14 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   
             if (!hasByteServing) chunkSize = datalength;
   
-            // Function to get a range from the remote URL.
             var doXHR = (from, to) => {
               if (from > to) throw new Error("invalid range (" + from + ", " + to + ") or no bytes requested!");
               if (to > datalength-1) throw new Error("only " + datalength + " bytes available! programmer error!");
   
-              // TODO: Use mozResponseArrayBuffer, responseStream, etc. if available.
               var xhr = new XMLHttpRequest();
               xhr.open('GET', url, false);
               if (datalength !== chunkSize) xhr.setRequestHeader("Range", "bytes=" + from + "-" + to);
   
-              // Some hints to the browser that we want binary data.
               xhr.responseType = 'arraybuffer';
               if (xhr.overrideMimeType) {
                 xhr.overrideMimeType('text/plain; charset=x-user-defined');
@@ -3437,7 +2993,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
             });
   
             if (usesGzip || !datalength) {
-              // if the server uses gzip or doesn't supply the length, we have to download the whole file to get the (uncompressed) length
               chunkSize = datalength = 1; // this will force getter(0)/doXHR do download the whole file
               datalength = this.getter(0).length;
               chunkSize = datalength;
@@ -3471,22 +3026,17 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         }
   
         var node = FS.createFile(parent, name, properties, canRead, canWrite);
-        // This is a total hack, but I want to get this lazy file code out of the
-        // core of MEMFS. If we want to keep this lazy file concept I feel it should
-        // be its own thin LAZYFS proxying calls to MEMFS.
         if (properties.contents) {
           node.contents = properties.contents;
         } else if (properties.url) {
           node.contents = null;
           node.url = properties.url;
         }
-        // Add a function that defers querying the file size until it is asked the first time.
         Object.defineProperties(node, {
           usedBytes: {
             get: function() { return this.contents.length; }
           }
         });
-        // override each stream op with one that tries to force load the lazy file first
         var stream_ops = {};
         var keys = Object.keys(node.stream_ops);
         keys.forEach((key) => {
@@ -3513,12 +3063,10 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           }
           return size;
         }
-        // use a custom read function
         stream_ops.read = (stream, buffer, offset, length, position) => {
           FS.forceLoadFile(node);
           return writeChunks(stream, buffer, offset, length, position)
         };
-        // use a custom mmap function
         stream_ops.mmap = (stream, length, position, prot, flags) => {
           FS.forceLoadFile(node);
           var ptr = mmapAlloc(length);
@@ -3557,7 +3105,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         if (PATH.isAbs(path)) {
           return path;
         }
-        // relative path
         var dir;
         if (dirfd === -100) {
           dir = FS.cwd();
@@ -3612,7 +3159,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
           throw new FS.ErrnoError(43);
         }
         if (flags & 2) {
-          // MAP_PRIVATE calls need not to be synced back to underlying fs
           return 0;
         }
         var buffer = HEAPU8.slice(addr, addr + len);
@@ -3640,7 +3186,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   }
   }
 
-  /** @param {number=} offset */
   var doReadv = (stream, iov, iovcnt, offset) => {
       var ret = 0;
       for (var i = 0; i < iovcnt; i++) {
@@ -3691,7 +3236,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   ;
   }
 
-  /** @param {number=} offset */
   var doWritev = (stream, iov, iovcnt, offset) => {
       var ret = 0;
       for (var i = 0; i < iovcnt; i++) {
@@ -3702,7 +3246,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
         if (curr < 0) return -1;
         ret += curr;
         if (curr < len) {
-          // No more space to write.
           break;
         }
         if (typeof offset != 'undefined') {
@@ -3754,14 +3297,7 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
   
   
   
-    /**
-     * @param {string|null=} returnType
-     * @param {Array=} argTypes
-     * @param {Arguments|Array=} args
-     * @param {Object=} opts
-     */
   var ccall = (ident, returnType, argTypes, args, opts) => {
-      // For fast lookup of conversion functions
       var toC = {
         'string': (str) => {
           var ret = 0;
@@ -3812,11 +3348,6 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
 
   
   
-    /**
-     * @param {string=} returnType
-     * @param {Array=} argTypes
-     * @param {Object=} opts
-     */
   var cwrap = (ident, returnType, argTypes, opts) => {
       return (...args) => ccall(ident, returnType, argTypes, args, opts);
     };
@@ -3826,33 +3357,21 @@ function to_json_model(return_code,model,message,log) { const json = JSON.string
 
   FS.createPreloadedFile = FS_createPreloadedFile;
   FS.staticInit();
-  // Set module methods based on EXPORTED_RUNTIME_METHODS
   ;
 function checkIncomingModuleAPI() {
   ignoredModuleProp('fetchSettings');
 }
 var wasmImports = {
-  /** @export */
   _abort_js: __abort_js,
-  /** @export */
   clock_time_get: _clock_time_get,
-  /** @export */
   emscripten_resize_heap: _emscripten_resize_heap,
-  /** @export */
   fd_close: _fd_close,
-  /** @export */
   fd_read: _fd_read,
-  /** @export */
   fd_seek: _fd_seek,
-  /** @export */
   fd_write: _fd_write,
-  /** @export */
   to_json_inchi,
-  /** @export */
   to_json_inchikey,
-  /** @export */
   to_json_model,
-  /** @export */
   to_json_molfile
 };
 var wasmExports = await createWasm();
@@ -3875,8 +3394,6 @@ var __emscripten_stack_alloc = wasmExports['_emscripten_stack_alloc']
 var _emscripten_stack_get_current = wasmExports['emscripten_stack_get_current']
 
 
-// include: postamble.js
-// === Auto-generated postamble setup entry stuff ===
 
 Module['ccall'] = ccall;
 Module['cwrap'] = cwrap;
@@ -4173,11 +3690,7 @@ unexportedSymbols.forEach(unexportedRuntimeSymbol);
 var calledRun;
 
 function stackCheckInit() {
-  // This is normally called automatically during __wasm_call_ctors but need to
-  // get these values before even running any of the ctors so we call it redundantly
-  // here.
   _emscripten_stack_init();
-  // TODO(sbc): Move writeStackCookie to native to to avoid this.
   writeStackCookie();
 }
 
@@ -4192,15 +3705,12 @@ function run() {
 
   preRun();
 
-  // a preRun added a dependency, run will be called later
   if (runDependencies > 0) {
     dependenciesFulfilled = run;
     return;
   }
 
   function doRun() {
-    // run may have just been called through dependencies being fulfilled just in this very frame,
-    // or while the async setStatus time below was happening
     assert(!calledRun);
     calledRun = true;
     Module['calledRun'] = true;
@@ -4231,17 +3741,6 @@ function run() {
 }
 
 function checkUnflushedContent() {
-  // Compiler settings do not allow exiting the runtime, so flushing
-  // the streams is not possible. but in ASSERTIONS mode we check
-  // if there was something to flush, and if so tell the user they
-  // should request that the runtime be exitable.
-  // Normally we would not even include flush() at all, but in ASSERTIONS
-  // builds we do so just for this check, and here we see if there is any
-  // content to flush, that is, we check if there would have been
-  // something a non-ASSERTIONS build would have not seen.
-  // How we flush the streams depends on whether we are in SYSCALLS_REQUIRE_FILESYSTEM=0
-  // mode (which has its own special function for this; otherwise, all
-  // the code is inside libc)
   var oldOut = out;
   var oldErr = err;
   var has = false;
@@ -4250,7 +3749,6 @@ function checkUnflushedContent() {
   }
   try { // it doesn't matter if it fails
     _fflush(0);
-    // also flush in the JS FS layer
     ['stdout', 'stderr'].forEach((name) => {
       var info = FS.analyzePath('/dev/' + name);
       if (!info) return;
@@ -4278,22 +3776,10 @@ if (Module['preInit']) {
 
 run();
 
-// end include: postamble.js
 
-// include: postamble_modularize.js
-// In MODULARIZE mode we wrap the generated code in a factory function
-// and return either the Module itself, or a promise of the module.
-//
-// We assign to the `moduleRtn` global here and configure closure to see
-// this as and extern so it won't get minified.
 
 moduleRtn = readyPromise;
 
-// Assertion for attempting to access module properties on the incoming
-// moduleArg.  In the past we used this object as the prototype of the module
-// and assigned properties to it, but now we return a distinct object.  This
-// keeps the instance private until it is ready (i.e the promise has been
-// resolved).
 for (const prop of Object.keys(Module)) {
   if (!(prop in moduleArg)) {
     Object.defineProperty(moduleArg, prop, {
@@ -4304,7 +3790,6 @@ for (const prop of Object.keys(Module)) {
     });
   }
 }
-// end include: postamble_modularize.js
 
 
 
@@ -4313,8 +3798,6 @@ for (const prop of Object.keys(Module)) {
 );
 })();
 (() => {
-  // Create a small, never-async wrapper around inchiModule which
-  // checks for callers incorrectly using it with `new`.
   var real_inchiModule = inchiModule;
   inchiModule = function(arg) {
     if (new.target) throw new Error("inchiModule() should not be called with `new inchiModule()`");
@@ -4323,8 +3806,6 @@ for (const prop of Object.keys(Module)) {
 })();
 if (typeof exports === 'object' && typeof module === 'object') {
   module.exports = inchiModule;
-  // This default export looks redundant, but it allows TS to import this
-  // commonjs style module.
   module.exports.default = inchiModule;
 } else if (typeof define === 'function' && define['amd'])
   define([], () => inchiModule);
@@ -4336,27 +3817,10 @@ if (typeof exports === 'object' && typeof module === 'object') {
 self.Jmol || (self.Jmol = {});
 
 var inchiModule;
-/*
- * singleton asynchronous WASM module(s) initialization required 
- * BEFORE processing any query.
- * 
- * In Jmol we will need to do this before the actual command script is executed.
- *
- * Calling the factory function returns a Promise which resolves to the module object.
- * See https://github.com/emscripten-core/emscripten/blob/fa339b76424ca9fbe5cf15faea0295d2ac8d58cc/src/settings.js#L1183
- */
  (async function getInchiModule() {
 	 inchiModule = await inchiModule();
  })();
  
-/*
- * Glue code to invoke the C functions in inchi_web.c
- *
- * Char pointers returned by inchi_from_molfile, inchikey_from_inchi,
- * molfile_from_inchi and molfile_from_auxinfo need to be freed here.
- * See https://github.com/emscripten-core/emscripten/issues/6484 (Emscripten does
- * not do this on its own when using "string" as return type.)
- */
 Jmol.inchiFromMolfile = function(molfile, options) {
   const ptr = inchiModule.ccall("inchi_from_molfile", "number", ["string", "string"], [molfile, options]);
   const result = inchiModule.UTF8ToString(ptr);

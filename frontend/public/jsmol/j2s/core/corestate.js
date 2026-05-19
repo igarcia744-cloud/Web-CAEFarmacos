@@ -1,4 +1,4 @@
-(function(Clazz
+﻿(function(Clazz
 ,Clazz_getClassName
 ,Clazz_newLongArray
 ,Clazz_doubleToByte
@@ -56,11 +56,9 @@
 ,Clazz_defineMethod
 ,Clazz_overrideMethod
 ,Clazz_declareAnonymous
-//,Clazz_checkPrivateMethod
 ,Clazz_cloneFinals
 ){
 var $t$;
-//var c$;
 Clazz_declarePackage("JV");
 (function(){
 var c$ = Clazz_declareType(JV, "JmolStateCreator", null);
@@ -1279,6 +1277,5 @@ this.undoWorking = !clearRedo;
 ,Clazz.defineMethod
 ,Clazz.overrideMethod
 ,Clazz.declareAnonymous
-//,Clazz.checkPrivateMethod
 ,Clazz.cloneFinals
 );

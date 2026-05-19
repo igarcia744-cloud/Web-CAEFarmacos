@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import api from "../api/api";
 import "../css/TablaDatos.css"
 
@@ -76,12 +76,10 @@ function TablaDatos({ filtros }) {
 
   let libreriasFiltradas = librerias
 
-    // 🔍 búsqueda
     .filter(lib =>
       lib.nombre.toLowerCase().includes(filtros.busquedaLibrerias.toLowerCase())
     )
 
-    // 🏷 etiquetas
     .filter(lib => {
       if (!filtros.etiquetas || filtros.etiquetas.length === 0) return true;
 
@@ -91,9 +89,7 @@ function TablaDatos({ filtros }) {
     });
 
 
-  // 🔥 FILTRO ATRIBUTOS
 
-  // nº compuestos
   if (filtros.filtroTipo === "num_compuestos") {
     libreriasFiltradas = libreriasFiltradas.filter(lib =>
       lib.numero_compuestos >= filtros.minCompuestos &&
@@ -101,7 +97,6 @@ function TablaDatos({ filtros }) {
     );
   }
 
-  // 🔄 ORDEN
   if (filtros.orden === "nombre_asc") {
     libreriasFiltradas.sort((a, b) =>
       a.nombre.localeCompare(b.nombre)
@@ -118,12 +113,10 @@ function TablaDatos({ filtros }) {
 
   let compuestosFiltrados = compuestos
 
-    // 🔍 búsqueda
     .filter(comp =>
       comp.nombre_archivo.toLowerCase().includes(filtros.busquedaCompuestos.toLowerCase())
     )
 
-    // 🏷 etiquetas
     .filter(comp => {
       if (!filtros.etiquetas || filtros.etiquetas.length === 0) return true;
 
@@ -133,9 +126,7 @@ function TablaDatos({ filtros }) {
     });
 
 
-  // 🔥 FILTRO ATRIBUTOS
 
-  // librería
   if (filtros.filtroTipo === "libreria_nombre") {
     compuestosFiltrados = compuestosFiltrados.filter(comp =>
       comp.libreria_nombre
@@ -144,7 +135,6 @@ function TablaDatos({ filtros }) {
     );
   }
 
-  // 🔄 ORDEN
   if (filtros.orden === "nombre_asc") {
     compuestosFiltrados.sort((a, b) =>
       a.nombre_archivo.localeCompare(b.nombre_archivo)
@@ -171,7 +161,6 @@ function TablaDatos({ filtros }) {
 
     </div>
 
-    {/* 📁 LIBRERÍAS */}
     {filtros.mostrarLibrerias && (
 
       <div className="tabla-bloque">
@@ -229,7 +218,6 @@ function TablaDatos({ filtros }) {
 
     )}
 
-    {/* 🧪 COMPUESTOS */}
     {filtros.mostrarCompuestos && (
 
       <div className="tabla-bloque">

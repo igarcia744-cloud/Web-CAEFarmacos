@@ -1,4 +1,4 @@
-(function(Clazz
+﻿(function(Clazz
 ,Clazz_getClassName
 ,Clazz_newLongArray
 ,Clazz_doubleToByte
@@ -56,11 +56,9 @@
 ,Clazz_defineMethod
 ,Clazz_overrideMethod
 ,Clazz_declareAnonymous
-//,Clazz_checkPrivateMethod
 ,Clazz_cloneFinals
 ){
 var $t$;
-//var c$;
 Clazz_declarePackage("J.popup");
 Clazz_load(["J.api.GenericMenuInterface", "java.util.Hashtable", "JU.Lst"], "J.popup.GenericPopup", ["java.util.StringTokenizer", "JU.PT", "$.SB", "JU.Logger"], function(){
 var c$ = Clazz_decorateAsClass(function(){
@@ -1561,6 +1559,5 @@ this.popup = null;
 ,Clazz.defineMethod
 ,Clazz.overrideMethod
 ,Clazz.declareAnonymous
-//,Clazz.checkPrivateMethod
 ,Clazz.cloneFinals
 );

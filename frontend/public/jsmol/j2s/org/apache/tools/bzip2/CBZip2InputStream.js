@@ -1,4 +1,4 @@
-Clazz.declarePackage("org.apache.tools.bzip2");
+﻿Clazz.declarePackage("org.apache.tools.bzip2");
 Clazz.load(["java.io.InputStream", "org.apache.tools.bzip2.BZip2Constants", "$.CRC"], "org.apache.tools.bzip2.CBZip2InputStream", null, function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.last = 0;
@@ -642,50 +642,6 @@ c$.reportCRCError = Clazz.defineMethod(c$, "reportCRCError",
 function(){
 System.err.println("BZip2 CRC error");
 });
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.inUse = null;
-this.seqToUnseq = null;
-this.selector = null;
-this.selectorMtf = null;
-this.unzftab = null;
-this.limit = null;
-this.base = null;
-this.perm = null;
-this.minLens = null;
-this.cftab = null;
-this.getAndMoveToFrontDecode_yy = null;
-this.temp_charArray2d = null;
-this.recvDecodingTables_pos = null;
-this.tt = null;
-this.ll8 = null;
-Clazz.instantialize(this, arguments);}, org.apache.tools.bzip2.CBZip2InputStream, "Data", null);
-Clazz.prepareFields (c$, function(){
-this.inUse =  Clazz.newBooleanArray(256, false);
-this.seqToUnseq =  Clazz.newByteArray (256, 0);
-this.selector =  Clazz.newByteArray (18002, 0);
-this.selectorMtf =  Clazz.newByteArray (18002, 0);
-this.unzftab =  Clazz.newIntArray (256, 0);
-this.limit =  Clazz.newIntArray (6, 258, 0);
-this.base =  Clazz.newIntArray (6, 258, 0);
-this.perm =  Clazz.newIntArray (6, 258, 0);
-this.minLens =  Clazz.newIntArray (6, 0);
-this.cftab =  Clazz.newIntArray (257, 0);
-this.getAndMoveToFrontDecode_yy =  Clazz.newCharArray (256, '\0');
-this.temp_charArray2d =  Clazz.newCharArray (6, 258, '\0');
-this.recvDecodingTables_pos =  Clazz.newByteArray (6, 0);
-});
-Clazz.makeConstructor(c$, 
-function(blockSize100k){
-this.ll8 =  Clazz.newByteArray (blockSize100k * 100000, 0);
-}, "~N");
-Clazz.defineMethod(c$, "initTT", 
-function(length){
-var ttShadow = this.tt;
-if ((ttShadow == null) || (ttShadow.length < length)) {
-this.tt = ttShadow =  Clazz.newIntArray (length, 0);
-}return ttShadow;
-}, "~N");
-/*eoif3*/})();
+})();
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

@@ -29,7 +29,7 @@ async def explorar(ruta: str = "librerias", db: AsyncSession = Depends(get_db)):
                 "id": l.id,
                 "nombre": l.nombre,
                 "tipo": "carpeta",
-                "etiquetas": [e.nombre for e in l.etiquetas]  # 🔥 CLAVE
+                "etiquetas": [e.nombre for e in l.etiquetas]
             }
             for l in librerias
         ]

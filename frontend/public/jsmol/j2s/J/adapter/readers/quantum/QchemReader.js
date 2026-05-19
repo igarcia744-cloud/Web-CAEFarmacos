@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.adapter.readers.quantum");
+﻿Clazz.declarePackage("J.adapter.readers.quantum");
 Clazz.load(["J.adapter.readers.quantum.MOReader"], "J.adapter.readers.quantum.QchemReader", ["java.util.Hashtable", "JU.AU", "$.Lst", "$.PT", "J.adapter.readers.quantum.BasisFunctionReader", "J.api.JmolAdapter", "J.quantum.QS", "JU.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.calculationNumber = 1;
@@ -300,13 +300,7 @@ nMOs += nMO;
 return nMOs;
 }, "~B,~A");
 c$.$QchemReader$MOInfo$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.ne = 0;
-this.moSymmetry = "";
-Clazz.instantialize(this, arguments);}, J.adapter.readers.quantum.QchemReader, "MOInfo", null);
-/*eoif4*/})();
+})();
 };
 c$.$DC_LIST = "DXX   DYY   DZZ   DXY   DXZ   DYZ";
 c$.$DS_LIST = "D3    D4    D2    D5    D1";

@@ -1,4 +1,4 @@
-Clazz.declarePackage("JSV.export");
+﻿Clazz.declarePackage("JSV.export");
 Clazz.load(["java.util.Hashtable", "JU.Lst"], "JSV.export.FormContext", ["JU.DF", "$.PT", "JU.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.tokens = null;
@@ -237,82 +237,7 @@ i += strValue.length;
 return data;
 }, "~S");
 c$.$FormContext$FormToken$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.hasVariable = false;
-this.cmdType = 0;
-this.cmdPtr = -1;
-this.endPtr = -1;
-this.ptr = 0;
-this.$var = null;
-this.vc = null;
-this.pointCount = 0;
-this.data = null;
-Clazz.instantialize(this, arguments);}, JSV["export"].FormContext, "FormToken", null);
-Clazz.makeConstructor(c$, 
-function(token, firstChar){
-this.hasVariable = token.indexOf("$") >= 0;
-this.data = token;
-if (token.indexOf("#") != firstChar) {
-this.b$["JSV.export.FormContext"].formTokens.addLast(this);
-return;
-}this.ptr = this.b$["JSV.export.FormContext"].formTokens.size();
-var checkIf = false;
-if (token.indexOf("#end") == firstChar) {
-this.cmdType = 4;
-this.endPtr = this.ptr;
-this.b$["JSV.export.FormContext"].commandLevel--;
-if (this.b$["JSV.export.FormContext"].commandLevel < 0) {
-this.b$["JSV.export.FormContext"].strError = "misplaced #end";
-return;
-}this.cmdPtr = this.b$["JSV.export.FormContext"].cmds.removeItemAt(0).intValue();
-this.b$["JSV.export.FormContext"].formTokens.get(this.cmdPtr).endPtr = this.ptr;
-} else {
-this.b$["JSV.export.FormContext"].commandLevel++;
-if (token.indexOf("#if") == firstChar) {
-this.cmdType = 1;
-this.b$["JSV.export.FormContext"].cmds.add(0,  new Integer(this.ptr));
-} else if (token.indexOf("#foreach") == firstChar) {
-this.cmdType = 5;
-this.b$["JSV.export.FormContext"].cmds.add(0,  new Integer(this.ptr));
-this.cmdPtr = this.ptr;
-if (token.indexOf("#end") > 0) {
-var pt = token.indexOf(")") + 1;
-this.data = token.substring(0, pt);
-this.b$["JSV.export.FormContext"].formTokens.addLast(this);
-Clazz.innerTypeInstance(JSV["export"].FormContext.FormToken, this, null, token.substring(pt, token.indexOf("#end")), 0);
-Clazz.innerTypeInstance(JSV["export"].FormContext.FormToken, this, null, "#end", 0);
-return;
-}} else if (token.indexOf("#elseif") == firstChar) {
-if (this.b$["JSV.export.FormContext"].cmds.size() == 0) {
-this.b$["JSV.export.FormContext"].strError = "misplaced #elseif";
-return;
-}this.cmdType = 3;
-this.cmdPtr = this.b$["JSV.export.FormContext"].cmds.removeItemAt(0).intValue();
-var vt = this.b$["JSV.export.FormContext"].formTokens.get(this.cmdPtr);
-checkIf = true;
-vt.endPtr = this.ptr;
-this.b$["JSV.export.FormContext"].cmds.add(0,  new Integer(this.ptr));
-} else if (token.indexOf("#else") == firstChar) {
-if (this.b$["JSV.export.FormContext"].cmds.size() == 0) {
-this.b$["JSV.export.FormContext"].strError = "misplaced #else";
-return;
-}this.cmdType = 2;
-checkIf = true;
-this.cmdPtr = this.b$["JSV.export.FormContext"].cmds.removeItemAt(0).intValue();
-this.b$["JSV.export.FormContext"].formTokens.get(this.cmdPtr).endPtr = this.ptr;
-this.b$["JSV.export.FormContext"].cmds.add(0,  new Integer(this.ptr));
-} else {
-JU.Logger.warn("??? " + token);
-}if (checkIf) {
-var vt = this.b$["JSV.export.FormContext"].formTokens.get(this.cmdPtr);
-if (vt.cmdType != 1 && vt.cmdType != 3) {
-this.b$["JSV.export.FormContext"].strError = "misplaced " + token.trim();
-return;
-}}}this.b$["JSV.export.FormContext"].formTokens.addLast(this);
-}, "~S,~N");
-/*eoif4*/})();
+})();
 };
 c$.ops =  Clazz.newArray(-1, ["==", "!=", "="]);
 });

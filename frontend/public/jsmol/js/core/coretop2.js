@@ -1,4 +1,4 @@
-(function(Clazz
+﻿(function(Clazz
 ,Clazz_getClassName
 ,Clazz_newLongArray
 ,Clazz_doubleToByte
@@ -56,8 +56,6 @@
 ,Clazz_defineMethod
 ,Clazz_overrideMethod
 ,Clazz_declareAnonymous
-//,Clazz_checkPrivateMethod
 ,Clazz_cloneFinals
 ){
 var $t$;
-//var c$;

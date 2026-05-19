@@ -57,12 +57,10 @@ function ModalGestionarEtiquetas({ isOpen, onClose, item, tipo, actualizar }) {
 
     <Modal isOpen={isOpen} onClose={onClose} title="Gestionar etiquetas">
 
-      {/* 🔹 SUBTÍTULO */}
       <p className="modal-subtitle">
         Etiquetas de: {item?.nombre || item?.nombre_archivo}
       </p>
 
-      {/* 🔹 GRID ETIQUETAS ACTUALES */}
       <div className="etiquetas-seleccionadas">
 
         {seleccionadas.map(id => {
@@ -86,10 +84,8 @@ function ModalGestionarEtiquetas({ isOpen, onClose, item, tipo, actualizar }) {
 
       </div>
 
-      {/* 🔹 SEPARADOR */}
       <div className="modal-separador"></div>
 
-      {/* 🔹 BUSCAR */}
       <p className="modal-subtitle">Elegir etiquetas</p>
 
       <input
@@ -99,7 +95,6 @@ function ModalGestionarEtiquetas({ isOpen, onClose, item, tipo, actualizar }) {
         onChange={(e) => setBusqueda(e.target.value)}
       />
 
-      {/* 🔹 LISTA */}
       <div className="etiquetas-grid-selector">
 
         {etiquetasFiltradas.map(et => {
@@ -125,7 +120,6 @@ function ModalGestionarEtiquetas({ isOpen, onClose, item, tipo, actualizar }) {
 
       </div>
 
-      {/* 🔹 BOTÓN */}
       <div className="modal-buttons">
         <button onClick={guardar}>
           Guardar

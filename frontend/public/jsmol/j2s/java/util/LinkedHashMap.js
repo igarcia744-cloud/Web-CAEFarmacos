@@ -1,4 +1,4 @@
-Clazz.load(["java.util.HashMap"], "java.util.LinkedHashMap", ["java.util.AbstractCollection", "$.AbstractSet", "java.util.MapEntry.Type"], function(){
+﻿Clazz.load(["java.util.HashMap"], "java.util.LinkedHashMap", ["java.util.AbstractCollection", "$.AbstractSet", "java.util.MapEntry.Type"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.accessOrder = false;
 this.head = null;
@@ -170,169 +170,25 @@ function(){
 this.__m = null;
 });
 c$.$LinkedHashMap$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "LinkedHashMap$1", java.util.AbstractSet);
-Clazz.overrideMethod(c$, "contains", 
-function(object){
-return this.b$["java.util.LinkedHashMap"].containsKey(object);
-}, "~O");
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.b$["java.util.LinkedHashMap"].size();
-});
-Clazz.overrideMethod(c$, "clear", 
-function(){
-this.b$["java.util.LinkedHashMap"].clear();
-});
-Clazz.overrideMethod(c$, "remove", 
-function(key){
-if (this.b$["java.util.LinkedHashMap"].containsKey(key)) {
-this.b$["java.util.LinkedHashMap"].remove(key);
-return true;
-}return false;
-}, "~O");
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return  new java.util.LinkedHashMap.LinkedHashIterator(((Clazz.isClassDefined("java.util.LinkedHashMap$1$1") ? 0 : java.util.LinkedHashMap.$LinkedHashMap$1$1$ ()), Clazz.innerTypeInstance(java.util.LinkedHashMap$1$1, this, null)), this.b$["java.util.LinkedHashMap"]);
-});
-/*eoif5*/})();
+})();
 };
 c$.$LinkedHashMap$1$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "LinkedHashMap$1$1", null, java.util.MapEntry.Type);
-Clazz.overrideMethod(c$, "get", 
-function(entry){
-return entry.key;
-}, "java.util.MapEntry");
-/*eoif5*/})();
+})();
 };
 c$.$LinkedHashMap$2$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "LinkedHashMap$2", java.util.AbstractCollection);
-Clazz.overrideMethod(c$, "contains", 
-function(object){
-return this.b$["java.util.LinkedHashMap"].containsValue(object);
-}, "~O");
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.b$["java.util.LinkedHashMap"].size();
-});
-Clazz.overrideMethod(c$, "clear", 
-function(){
-this.b$["java.util.LinkedHashMap"].clear();
-});
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return  new java.util.LinkedHashMap.LinkedHashIterator(((Clazz.isClassDefined("java.util.LinkedHashMap$2$1") ? 0 : java.util.LinkedHashMap.$LinkedHashMap$2$1$ ()), Clazz.innerTypeInstance(java.util.LinkedHashMap$2$1, this, null)), this.b$["java.util.LinkedHashMap"]);
-});
-/*eoif5*/})();
+})();
 };
 c$.$LinkedHashMap$2$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "LinkedHashMap$2$1", null, java.util.MapEntry.Type);
-Clazz.overrideMethod(c$, "get", 
-function(entry){
-return entry.value;
-}, "java.util.MapEntry");
-/*eoif5*/})();
+})();
 };
-/*if3*/;(function(){
-var c$ = Clazz.declareType(java.util.LinkedHashMap, "LinkedHashIterator", java.util.HashMap.HashMapIterator);
-Clazz.makeConstructor(c$, 
-function(value, hm){
-Clazz.superConstructor(this, java.util.LinkedHashMap.LinkedHashIterator, [value, hm]);
-this.entry = hm.head;
-}, "java.util.MapEntry.Type,java.util.LinkedHashMap");
-Clazz.overrideMethod(c$, "hasNext", 
-function(){
-return (this.entry != null);
-});
-Clazz.overrideMethod(c$, "next", 
-function(){
-this.checkConcurrentMod();
-if (!this.hasNext()) {
-throw  new java.util.NoSuchElementException();
-}var result = this.type.get(this.entry);
-this.lastEntry = this.entry;
-this.entry = (this.entry).chainForward;
-this.canRemove = true;
-return result;
-});
-Clazz.overrideMethod(c$, "remove", 
-function(){
-this.checkConcurrentMod();
-if (!this.canRemove) {
-throw  new IllegalStateException();
-}this.canRemove = false;
-this.associatedMap.modCount++;
-var index = this.associatedMap.getModuloHash(this.lastEntry.key);
-var m = this.associatedMap.elementData[index];
-if (m === this.lastEntry) {
-this.associatedMap.elementData[index] = this.lastEntry.next;
-} else {
-while (m.next != null) {
-if (m.next === this.lastEntry) {
-break;
-}m = m.next;
-}
-m.next = this.lastEntry.next;
-}var lhme = this.lastEntry;
-var p = lhme.chainBackward;
-var n = lhme.chainForward;
-var lhm = this.associatedMap;
-if (p != null) {
-p.chainForward = n;
-if (n != null) {
-n.chainBackward = p;
-} else {
-lhm.tail = p;
-}} else {
-lhm.head = n;
-if (n != null) {
-n.chainBackward = null;
-} else {
-lhm.tail = null;
-}}this.associatedMap.elementCount--;
-this.expectedModCount++;
-});
-/*eoif3*/})();
-/*if3*/;(function(){
-var c$ = Clazz.declareType(java.util.LinkedHashMap, "LinkedHashMapEntrySet", java.util.HashMap.HashMapEntrySet);
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return  new java.util.LinkedHashMap.LinkedHashIterator(((Clazz.isClassDefined("java.util.LinkedHashMap$LinkedHashMapEntrySet$1") ? 0 : java.util.LinkedHashMap.LinkedHashMapEntrySet.$LinkedHashMap$LinkedHashMapEntrySet$1$ ()), Clazz.innerTypeInstance(java.util.LinkedHashMap$LinkedHashMapEntrySet$1, this, null)), this.hashMap());
-});
-c$.$LinkedHashMap$LinkedHashMapEntrySet$1$=function(){
-/*if5*/;(function(){
+})();
+;(function(){
 var c$ = Clazz.declareAnonymous(java.util, "LinkedHashMap$LinkedHashMapEntrySet$1", null, java.util.MapEntry.Type);
 Clazz.overrideMethod(c$, "get", 
 function(entry){
 return entry;
 }, "java.util.MapEntry");
-/*eoif5*/})();
-};
-/*eoif3*/})();
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.chainForward = null;
-this.chainBackward = null;
-Clazz.instantialize(this, arguments);}, java.util.LinkedHashMap, "LinkedHashMapEntry", java.util.HashMap.Entry);
-Clazz.makeConstructor(c$, 
-function(theKey, theValue){
-Clazz.superConstructor(this, java.util.LinkedHashMap.LinkedHashMapEntry, [theKey, theValue]);
-this.chainForward = null;
-this.chainBackward = null;
-}, "~O,~O");
-Clazz.defineMethod(c$, "clone", 
-function(){
-var entry = Clazz.superCall(this, java.util.LinkedHashMap.LinkedHashMapEntry, "clone", []);
-entry.chainBackward = this.chainBackward;
-entry.chainForward = this.chainForward;
-var lnext = entry.next;
-if (lnext != null) {
-entry.next = lnext.clone();
-}return entry;
-});
-/*eoif3*/})();
+})();
+})();
 });
 ;//5.0.1-v7 Mon May 12 23:42:45 CDT 2025

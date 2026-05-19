@@ -1,170 +1,20 @@
-// JSmolCore.js -- Jmol core capability 
-
-// allows Jmol applets to be created on a page with more flexibility and extendability
-// provides an object-oriented interface for JSpecView and syncing of Jmol/JSpecView
-
-// see JSmolApi.js for public user-interface. All these are private functions
-
-// BH 2026.02.05 fixes issue allowing only one Jmol/JSV pair per page
-// BH 2025.09.04 enables contentType application/json in getFileData
-// BH 2024.02.20 fixes dragging should not stop when mouse leaves applet
-// BH 2024.02.07 adding binary types BCIF 
-// BH 2023.01.19 Jmol._allowKeyboardFocus = true; can be set to false if page jumping is a problem.
-// BH 8/25/2022 fixes getFileData response "" from empty file returning "OK" instead of ""
-// BH 8/15/2022 adds .lut for binary
-// BH 6/23/2022 implements Jmol._lastAppletID via setMouseOwner
-// BH 5/12/2022 adds setting file type option for drag drop
-// BH 4/30/2019 fixes write xyz "https://...."
-// BH 7/6/2017 2:22:07 AM adds BZ2 as binary
-// BH 4/13/2017 11:23:05 PM adds "binary pmesh" .pmb extension
-// BH 1/14/2017 6:28:07 AM adds &debugCore
-// BH 10/20/2016 10:00:43 AM JmolTracker.php
-// BH 9/19/2016 8:22:48 AM drag-drop broken for https (imageDrop.htm)
-// BH 9/18/2016 btoa() does not work with UTF-8 data (set language es;write menu t.mnu)
-// BH 8/26/2016 11:29:48 AM RCSB ligand 
-// BH 8/26/2016 11:29:48 AM generic fixProtocol for .gov/ to https
-// BH 8/26/2016 6:56:31 AM chemapps.stolaf.edu exclusively https
-// BH 8/25/2016 9:47:26 PM bug fix: NCI/CADD now requires "get3d=true" not "get3d=True"
-// BH 7/31/2016 6:42:06 AM changes mouse wheel from -1 to 507
-// BH 6/27/2016 1:16:57 AM adds Jmol.playAudio(fname)
-// BH 4/26/2016 4:16:07 PM adds Jmol.loadFileFromDialog(applet)
-// BH 4/21/2016 9:25:39 AM adds [URL] button to file load option
-// BH 4/20/2016 2:44:50 PM fixes async load problem with Safari
-// BH 4/18/2016 10:25:08 PM adds preliminary =xxxx.mmtf reader
-// BH 4/13/2016 9:12:31 PM  url.indexOf("http://www.rcsb.org/pdb/files/") == 0 && url.indexOf("/ligand/") < 0 ? 
-// BH 4/11/2016 5:34:16 PM adds direct conversion to http://files.rcsb.org/view from http://www.rcsb.org/pdb/files/1xpb.pdb
-// BH 4/3/2016 9:10:31 PM adding materialsproject.org for AJAX.
-// BH 3/23/2016 1:21:39 PM adding http://files.rcsb.org/view/%FILE.pdb as default RCSB site for "="
-
-// BH 2/29/2016 3:59:55 PM broken cursor_wait image path when Info.j2sPath is not "j2s"
-// BH 2/19/2016 10:32:18 AM typo fixed for makeLiveImage
-// BH 2/14/2016 12:31:02 PM fixed local reader not disappearing after script call
-// BH 2/14/2016 12:30:41 PM Info.appletLoadingImage: "j2s/img/JSmol_spinner.gif", 
-   // can be set to "none" or some other image; see Jmol._hideLoadingSpinner(applet)
-   // implemented only for JSmolApplet, not others
-// BH 2/14/2016 12:27:09 PM Jmol.setCursor 
-// BH 2/14/2016 6:48:33 AM _setCursor() and cursor_wait   http://ajaxload.info/
-// BH 1/15/2016 4:23:14 PM adding Info.makeLiveImage
-// BH 12/30/2015 8:18:42 PM adding AMS call to database list; allowing for ?ALLOWSORIGIN? to override settings here
-// BH 12/17/2015 4:43:05 PM adding Jmol._requestRepaint to allow for MSIE9 not having requestAnimationFrame
-// BH 12/16/2015 3:01:06 PM adding $.ajaxSetup({ mimeType: "text/plain" });
-// BH 12/14/2015 6:42:03 PM adding check for MS Edge browser, which does not support dataURI
-// BH 12/2/2015 1:18:15 PM adding .dcd as binary file type
-// BH 12/1/2015 10:05:55 AM loading identical HTML5 page after Java page causes bad NPObject error 
-// BH 10/26/2015 12:47:16 PM adding two rcsb sites for direct access
-// BH 10/23/2015 9:20:39 PM minor coding adjustment
-// BH 10/13/2015 9:32:08 PM adding Jmol.__$ as jquery object used 
-// BH 15/09/2015 18:06:39 fixing mouse check for swingjs-ui since SVG element className is not a string 
-// BH 8/12/2015 11:43:52 PM adding isHttps2Http forcing call to server proxy
-// BH 8/9/2015 6:33:33 PM correcting bug in load ASYNC for x-domain access
-// BH 7/7/2015 1:42:31 PM Jmol._persistentMenu
-// BH 6/29/2015 10:14:47 AM adds Jmol.$getSize(obj)
-// BH 5/30/2015 9:33:12 AM adds class swingjs-ui to ignore 
-// BH 5/9/2015 3:38:52 PM adds data-ignoreMouse attribute for JTextField
-// BH 3/30/2015 9:46:53 PM adds JSAppletPanel for ready callback
-// BH 12/6/2014 3:32:54 PM Jmol.setAppletCss() broken
-// BH 9/13/2014 2:15:51 PM embedded JSME loads from SEARCH when Jmol should 
-// BH 8/14/2014 2:52:38 PM drag-drop cache should not be cleared if SPT file is dropped
-// BH 8/5/2014 6:39:54 AM unnecessary messages about binary for PDB finally removed
-// BH 8/4/2014 5:30:00 AM automatically switch to no document after page loading
-// BH 8/2/2014 5:22:40 PM drag-drop broken in JSmol/HTML5 
-// BH 7/23/2014 5:34:08 PM setting a parameter such as readyFunction to null stops file loading
-// BH 7/3/2014 12:30:28 AM lost drag-drop of models
-// BH 7/2/2014 4:47:55 AM adding pdbe.org to direct database calls
-// BH 5/30/2014 7:20:07 AM better dragging for console and menu
-// BH 4/27/2014 6:31:52 PM allows _USE=SIGNED HTML5 as well as _USE=JAVA HTML5
-// BH 3/8/2014 5:50:51 PM adds support for dataURI download in FF and Chrome
-// BH 3/8/2014 8:43:10 AM moves PubChem access to https
-// BH 3/4/2014 8:40:15 PM adds Jmol.Cache for JSV/Jmol sharing files
-// BH 2/10/2014 10:07:14 AM added Info.z and Info.zIndexBase
-// BH 2/9/2014 9:56:06 PM updated JSmolCore.js with option to extend Viewer with code PRIOR to loading Viewer classes
-// BH 2/6/2014 8:46:25 AM disabled Jmol._tracker for localhost and 127.x.x.x 
-// BH 1/29/2014 8:02:23 AM Jmol.View and Info.viewSet
-// BH 1/21/2014 12:06:59 PM adding Jmol.Info.cacheFiles (applet, true/false) and applet._cacheFiles and Jmol._fileCache
-// BH 1/13/2014 2:12:38 PM adding "http://www.nmrdb.org/tools/jmol/predict.php":"%URL", to _DirectDatabaseCalls
-// BH 12/21/2013 6:38:35 PM applet sync broken
-// BH 12/6/2013 6:18:32 PM cover.htm and coverImage fix
-// BH 12/4/2013 7:44:26 PM fix for JME independent search box
-// BH 12/3/2013 6:30:08 AM fix for ready function returning Boolean instead of boolean in HTML5 version
-// BH 11/30/2013 10:31:37 AM added type:"GET" for jQuery.ajax() requests instead of using defaults
-// BH 11/30/2013 10:31:37 AM added cache:true for jQuery.ajax() requests; can override with cache:"NO", not cache:false
-// BH 11/28/2013 11:09:27 AM added Jmol._alertNoBinary:true
-// BH 11/26/2013 8:19:55 PM fix !xxxx search commmand entry and stop MSIE from duplicating command
-// BH 11/25/2013 7:38:31 AM adds Jmol._tracker: option for GoogleAnalytics tracking
-// BH 11/25/2013 7:39:03 AM adds URL options _J2S=  _JAR=  _USE=
-// BH 11/23/2013 10:51:37 PM  adds JNLP support for local applet
-// BH 11/2/2013 12:05:11 PM JSmolJSME fixes; https access fixed
-// BH 10/31/2013 7:50:06 PM Jmol.Dialog as SwingController; Jmol._mouseOwner added
-// BH 10/19/2013 7:05:04 AM adding Jmol._ajaxCall for Error Contacting Server; database POST method enabled
-// BH 10/17/2013 1:40:51 PM  adding javajs/swing and Jmol.Dialog
-// BH 9/30/2013 6:42:24 PM: pdb.gz switch  pdb should only be for www.rcsb.org
-// BH 9/17/2013 10:17:51 AM: asynchronous file reading and saving
-// BH 8/16/2013 12:02:20 PM: JSmoljQueryExt.js pulled out
-// BH 8/16/2013 12:02:20 PM: Jmol._touching used properly
-
-// BH 3/22/2013 5:53:02 PM: Adds noscript option, JSmol.min.core.js
-// BH 1/17/2013 5:20:44 PM: Fixed problem with console not getting initial position if no first click
-// 1/13/2013 BH: Fixed MSIE not-reading-local-files problem.
-// 11/28/2012 BH: Fixed MacOS Safari binary ArrayBuffer problem
-// 11/21/2012 BH: restructuring of files as JS... instead of J...
-// 11/20/2012 BH: MSIE9 cannot do a synchronous file load cross-domain. See Jmol._getFileData
-// 11/4/2012 BH: RCSB REST format change "<structureId>" to "<dimStructure.structureId>"
-// 9/13/2012 BH: JmolCore.js changes for JSmol doAjax() method -- _3ata()
-// 6/12/2012 BH: JmolApi.js: adds Jmol.setInfo(applet, info, isShown) -- third parameter optional 
-// 6/12/2012 BH: JmolApi.js: adds Jmol.getInfo(applet) 
-// 6/12/2012 BH: JmolApplet.js: Fixes for MSIE 8
-// 6/5/2012  BH: fixes problem with Jmol "javascript" command not working and getPropertyAsArray not working
-// 6/4/2012  BH: corrects problem with MSIE requiring mouse-hover to activate applet
-// 5/31/2012 BH: added JSpecView interface and api -- see JmolJSV.js
-//               also changed "jmolJarPath" to just "jarPath"
-//               jmolJarFile->jarFile, jmolIsSigned->isSigned, jmolReadyFunction->readyFunction
-//               also corrects a double-loading issue
-// 5/14/2012 BH: added AJAX queue for ChemDoodle option with multiple canvases 
-// 8/12/2012 BH: adds support for MSIE xdr cross-domain request (jQuery.iecors.js)
-
-	// BH 4/25 -- added text option. setAppletCss(null, "style=\"xxxx\"")
-	// note that since you must add the style keyword, this can be used to add any attribute to these tags, not just css. 
-
-// required/optional libraries (preferably in the following order):
-
-//    jquery/jquery.js     -- at least jQuery.1.9
-//    js/JSmoljQueryext.js -- required for binary file transfer; otherwise standard jQuery should be OK
-//    js/JSmolCore.js      -- required
-//    js/j2sjmol.js        -- required
-//    js/JSmol.js          -- required
-//    js/JSmolApplet.js    -- required; internal functions for _Applet and _Image; must be after JSmolCore
-//    js/JSmolControls.js  -- optional; internal functions for buttons, links, menus, etc.; must be after JSmolCore
-//    js/JSmolConsole.js   -- optional; for the pop-up console
-//    js/JSmolApi.js       -- required; all user functions; must be after JSmolCore
-//    js/JSmolTHREE.js     -- optional; WebGL library required for JSmolGLmol.js
-//    js/JSmolGLmol.js     -- optional; WebGL version of JSmol.
-//    js/JSmolJME.js       -- optional; JSME (2D editor)
-//    jsme/jsme/jsme.nocache.js   --  required for JSME 
-//    js/JSmolMenu.js      -- optional; required for menuing in JSV
-//    js/JSmolJSV.js       -- optional; for creating and interacting with a JSpecView applet 
-
-// most of these will be loaded automatically, and for most installations, all you need is JSmol.min.js
+﻿
 
 
-// Allows Jmol-like objects to be displayed on Java-challenged (iPad/iPhone)
-// or applet-challenged (Android/iPhone) platforms, with automatic switching to 
 
-// For your installation, you should consider putting JmolData.jar and jsmol.php 
-// on your own server. Nothing more than these two files is needed on the server, and this 
-// allows more options for MSIE and Chrome when working with cross-domain files (such as RCSB or pubChem) 
 
-// The NCI and RCSB databases are accessed via direct AJAX if available (xhr2/xdr).
+
+
+
+
+
+
+
+
 
 
 if(typeof(jQuery)=="undefined") alert ("Note -- JSmoljQuery is required for JSmol, but it's not defined.")
 
-// An example of how to extend Jmol with code PRIOR to JSmolCore.js or JSmol.min.js follows:
-//
-// 
-//	Jmol = {
-//  	z:3000,
-//		extend: function(what, obj) {if (what == "viewer") { obj._testing = true } }
-//	}
 
 self.Jmol || (Jmol = {});
 
@@ -190,12 +40,7 @@ Jmol = (function(document) {
 	var j = {
 		_version: "$Date: 2022-06-24 05:54:49 -0500 (Fri, 24 Jun 2022) $", // svn.keywords:lastUpdated
 		_alertNoBinary: true,
-		// this url is used to Google Analytics tracking of Jmol use. You may remove it or modify it if you wish. 
 		_allowedJmolSize: [25, 2048, 300],   // min, max, default (pixels)
-		/*  By setting the Jmol.allowedJmolSize[] variable in the webpage
-				before calling Jmol.getApplet(), limits for applet size can be overriden.
-				2048 standard for GeoWall (http://geowall.geo.lsa.umich.edu/home.html)
-		*/
 		_allowKeyboardFocus: true, // set false on page if mouse moves and clicks cause too much scrolling of window
 		_appletCssClass: "",
 		_appletCssText: "",
@@ -218,8 +63,6 @@ Jmol = (function(document) {
 			_nciLoadScript: ";n = ({molecule=1}.length < {molecule=2}.length ? 2 : 1); select molecule=n;display selected;center selected;",
 			_pubChemLoadScript: "",
 			_DirectDatabaseCalls:{
-				// these sites are known to implement access-control-allow-origin *
-        // null here means no conversion necessary 
 				"cactus.nci.nih.gov": null,
         ".x3dna.org": null,
         "rruff.geo.arizona.edu": null, 
@@ -258,7 +101,6 @@ Jmol = (function(document) {
 	
 	var ref = document.location.href.toLowerCase();
 	j._debugCore = (ref.indexOf("j2sdebugcore") >= 0);
-	// j._debugCode is set by the JmolDebugOff.js script fragment
 	j._httpProto = (ref.indexOf("https") == 0 ? "https://" : "http://"); 
 	j._isFile = (ref.indexOf("file:") == 0);
 	if (j._isFile) // ensure no attempt to read XML in local request:
@@ -282,49 +124,30 @@ Jmol = (function(document) {
 (function (Jmol, $) {
 
   Jmol.clazzAlert = function(msg) {
-	  //TODO
   }
   Jmol.__$ = $; // local jQuery object -- important if any other module needs to access it (JSmolMenu, for example)
 
-// this library is organized into the following sections:
-
-	// jQuery interface 
-	// protected variables
-	// feature detection
-	// AJAX-related core functionality
-	// applet start-up functionality
-	// misc core functionality
-	// mouse events
 
 
-	////////////////////// jQuery interface ///////////////////////
 
-	// hooks to jQuery -- if you have a different AJAX tool, feel free to adapt.
-	// There should be no other references to jQuery in all the JSmol libraries.
 
-	// automatically switch to returning HTML after the page is loaded
+
 	$(document).ready(function(){ Jmol._document = null });
 
 	Jmol.$ = function(objectOrId, subdiv) {
-		// if a subdiv, then return $("#objectOrId._id_subdiv") 
-		// or if no subdiv, then just $(objectOrId)
 		if (objectOrId == null)alert (subdiv + arguments.callee.caller.toString());
 			return $(subdiv ? "#" + objectOrId._id + "_" + subdiv : objectOrId);
 	} 
 
 	Jmol._$ = function(id) {
-		// either the object or $("#" + id)
 		return (typeof id == "string" ? $("#" + id) : id);
 	}
 
-	/// special functions:
 
 	Jmol.$ajax = function(info) {
 		Jmol._ajaxCall = info.url;
 		info.cache = (info.cache != "NO");
     info.url = Jmol._fixProtocol(info.url);
-		// don't let jQuery add $_=... to URL unless we 
-		// use cache:"NO"; other packages might use $.ajaxSetup() to set this to cache:false
 		return $.ajax(info);
 	}
 
@@ -354,7 +177,6 @@ Jmol = (function(document) {
 		return $(window).resize(f);
 	}
 
-	//// full identifier expected (could be "body", for example):
 
 	Jmol.$after = function (what, s) {
 		return $(what).after(s);
@@ -376,7 +198,6 @@ Jmol = (function(document) {
 	return $(what).get(i);
 	}
  
-	// element id expected
 			 
 	Jmol.$documentOff = function(evt, id) {
 		return $(document).off(evt, "#" + id);
@@ -394,7 +215,6 @@ Jmol = (function(document) {
 		return $.support.iecors;
 	}
 
-	//// element id or jQuery object expected:
 
 	Jmol.$attr = function (id, a, val) {
 		return Jmol._$(id).attr(a, val);
@@ -469,11 +289,9 @@ Jmol = (function(document) {
 		return (arguments.length == 1 ? o.val() : o.val(v));
 	}
 
-	////////////// protected variables ///////////
 
 
 	Jmol._clearVars = function() {
-		// only on page closing -- appears to improve garbage collection
 
 		delete jQuery;
 		delete $;
@@ -491,7 +309,6 @@ Jmol = (function(document) {
 		delete c$; // used in p0p; could be gotten rid of
 	}
 
-	////////////// feature detection ///////////////
 
 	Jmol.featureDetection = (function(document, window) {
 
@@ -539,7 +356,6 @@ Jmol = (function(document) {
 	};
 
 	features.supportsLocalization = function() {
-		//<meta charset="utf-8">                                     
 		var metas = document.getElementsByTagName('meta'); 
 		for (var i= metas.length; --i >= 0;) 
 			if (metas[i].outerHTML.toLowerCase().indexOf("utf-8") >= 0) return true;
@@ -552,7 +368,6 @@ Jmol = (function(document) {
 				if (!navigator.javaEnabled()) {
 					Jmol.featureDetection._javaEnabled = -1;
 				} else {
-					//more likely -- would take huge testing
 					Jmol.featureDetection._javaEnabled = 1;
 				}
 			} else {
@@ -565,7 +380,6 @@ Jmol = (function(document) {
 	features.compliantBrowser = function() {
 		var a = !!document.getElementById;
 		var os = features.os;
-		// known exceptions (old browsers):
 		if (features.browserName == "opera" && features.browserVersion <= 7.54 && os == "mac"
 			|| features.browserName == "webkit" && features.browserVersion < 125.12
 			|| features.browserName == "msie" && os == "mac"
@@ -590,7 +404,6 @@ Jmol = (function(document) {
 })(document, window);
 
 
-		////////////// AJAX-related core functionality //////////////
 
 	Jmol._ajax = function(info) {
 		if (!info.async) {
@@ -613,7 +426,6 @@ Jmol = (function(document) {
 	];
 
 	Jmol._getGrabberOptions = function(applet) {
-		// feel free to adjust this look to anything you want
 		if (Jmol._grabberOptions.length == 0)
 			return ""
 
@@ -639,7 +451,6 @@ Jmol = (function(document) {
 		return (database == "$" ? Jmol.db._nciLoadScript : database == ":" ? Jmol.db._pubChemLoadScript : Jmol.db._fileLoadScript);
 	}
 
-	 //   <dataset><record><structureId>1BLU</structureId><structureTitle>STRUCTURE OF THE 2[4FE-4S] FERREDOXIN FROM CHROMATIUM VINOSUM</structureTitle></record><record><structureId>3EUN</structureId><structureTitle>Crystal structure of the 2[4Fe-4S] C57A ferredoxin variant from allochromatium vinosum</structureTitle></record></dataset>
 
 	Jmol._setInfo = function(applet, database, data) {
 		var info = [];
@@ -693,9 +504,7 @@ Jmol = (function(document) {
 		var db = query.substring(0,pt)
 		var call = Jmol.db._DirectDatabaseCalls[db] || Jmol.db._DirectDatabaseCalls[db = query.substring(0,--pt)];
 		if (call) {
-      // one of the special set :, =, $, ==
 			if (db == ":") {
-        // PubChem
 				var ql = query.toLowerCase();
 				if (!isNaN(parseInt(query.substring(1)))) {
 					query = "cid/" + query.substring(1);
@@ -727,9 +536,6 @@ Jmol = (function(document) {
 	}
 
 	Jmol._getRawDataFromServer = function(database,query,fSuccess,fError,asBase64,noScript){
-	  // note that this method is now only enabled for "_"
-	  // server-side processing of database queries was too slow and only useful for 
-	  // the IMAGE option, which has been abandoned.
 		var s = 
 			"?call=getRawDataFromDatabase&database=" + database + (query.indexOf("?POST?") >= 0 ? "?POST?" : "")
 				+ "&query=" + encodeURIComponent(query)
@@ -744,7 +550,6 @@ Jmol = (function(document) {
 				Jmol._setQueryTerm(applet, fileName);
 			fileName = Jmol._getDirectDatabaseCall(fileName, true);
 			if (Jmol._isDatabaseCall(fileName)) {
-				// xhr2 not supported (MSIE)
 				fileName = Jmol._getDirectDatabaseCall(fileName, false);
 				isRawRet && (isRawRet[0] = true);
 			}
@@ -912,8 +717,6 @@ Jmol = (function(document) {
 		Jmol._setQueryTerm(applet, query);
 		query || (query = Jmol.$val(Jmol.$(applet, "query")))
 		if (query.indexOf("!") == 0) {
-		// command prompt in this box as well
-		// remove exclamation point "immediate" indicator
 			applet._script(query.substring(1));
 			return;
 		} 
@@ -997,11 +800,9 @@ Jmol = (function(document) {
 	}
 
 	Jmol._getFileData = function(fileName, fSuccess, doProcess) {
-		// use host-server PHP relay if not from this host
 		var isBinary = Jmol.isBinaryUrl(fileName);
 		var isPDB = (fileName.indexOf(".gz") >= 0 && fileName.indexOf("rcsb.org") >= 0);
 		if (isPDB) {
-			// avoid unnecessary binary transfer
 			fileName = fileName.replace(/\.gz/,"");
 			isBinary = false;
 		}
@@ -1015,7 +816,6 @@ Jmol = (function(document) {
     if (fileName.indexOf("?ALLOWSORIGIN?") >= 0) {
 			fileName = fileName.replace(/\?ALLOWSORIGIN\?/,"");
     }
-		//if (fileName.indexOf("http://pubchem.ncbi.nlm.nih.gov/") == 0)isDirectCall = false;
 
 		var cantDoSynchronousLoad = (!isMyHost && Jmol.$supportsIECrossDomainScripting());
 		var data = null;
@@ -1057,7 +857,6 @@ Jmol = (function(document) {
 	
 	Jmol._xhrReturn = function(xhr){
 		if (!xhr.responseText && xhr.responseText !== '' || self.Clazz && Clazz.instanceOf(xhr.response, self.ArrayBuffer)) {
-			// Safari or error 
 			return xhr.response || xhr.statusText;
 		} 
 		return xhr.responseText;
@@ -1089,7 +888,6 @@ Jmol = (function(document) {
 			return "MOL";
 		if (database == "=")
 			return (name.substring(1,2) == "=" ? "LCIF" : "PDB");
-		// just the extension, which must be PDB, XYZ..., CIF, or MOL
 		name = name.split('.').pop().toUpperCase();
 		return name.substring(0, Math.min(name.length, 3));
 	};
@@ -1114,7 +912,6 @@ Jmol = (function(document) {
   
 	Jmol.loadFileAsynchronously = function(fileLoadThread, applet, fileName, appData) {
 		if (fileName && fileName.indexOf("?") != 0) {
-			// LOAD ASYNC command
 			var fileName0 = fileName;
 			fileName = Jmol._checkFileName(applet, fileName);
 			var fSuccess = function(data) {Jmol._setData(fileLoadThread, fileName, fileName0, data, appData, applet)};
@@ -1123,7 +920,6 @@ Jmol = (function(document) {
 				fileName = fileName.split("|")[0];
 			return (fSuccess == null ? null : Jmol._getFileData(fileName, fSuccess));		
 		}
-		// we actually cannot suggest a fileName, I believe.
 		if (!Jmol.featureDetection.hasFileReader) {
         var msg = "Local file reading is not enabled in your browser";
 				return (fileLoadThread ? fileLoadThread.setData(msg, null, null, appData, applet) : alert(msg));
@@ -1178,7 +974,6 @@ Jmol = (function(document) {
   }
 
 	Jmol.doAjax = function(url, postOut, dataOut) {
-		// called by org.jmol.awtjs2d.JmolURLConnection.doAjax()
 		url = url.toString();
 		if (dataOut) {
 
@@ -1194,7 +989,6 @@ Jmol = (function(document) {
 		return Jmol._getFileData(url, null, true);
 	}
 
-	// Jmol._localFileSaveFunction --  // do something local here; Maybe try the FileSave interface? return true if successful
 	 
 	Jmol._saveFile = function(filename, data, mimetype, encoding) {
 		if (Jmol._localFileSaveFunction && Jmol._localFileSaveFunction(filename, data))
@@ -1216,8 +1010,6 @@ Jmol = (function(document) {
 		var url = Jmol._serverUrl;
 		url && url.indexOf("your.server") >= 0 && (url = "");
 		if (Jmol._useDataURI || !url) {
-			// Asynchronous output generated using an anchor tag
-			// btoa does not work with UTF-8 data///encoding || (data = btoa(data));
 			var a = document.createElement("a");
 			a.href = "data:" + mimetype + ";base64," + data;
 			a.type = mimetype || (mimetype = "text/plain;charset=utf-8");	
@@ -1227,7 +1019,6 @@ Jmol = (function(document) {
 			a.click();
 			a.remove();		
 		} else {
-		// Asynchronous outputto be reflected as a download
 			if (!Jmol._formdiv) {
 					var sform = '<div id="__jsmolformdiv__" style="display:none">\
 						<form id="__jsmolform__" method="post" target="_blank" action="">\
@@ -1262,7 +1053,6 @@ Jmol = (function(document) {
 		return b;
 	}
 
-	////////////// applet start-up functionality //////////////
 
 	Jmol._setConsoleDiv = function (d) {
 		if (!self.Clazz)return;
@@ -1277,10 +1067,7 @@ Jmol = (function(document) {
 		appId = appId.split("_object")[0];
     var applet = Jmol._applets[appId];
 		isReady = (isReady.booleanValue ? isReady.booleanValue() : isReady);
-		// necessary for MSIE in strict mode -- apparently, we can't call 
-		// jmol._readyCallback, but we can call Jmol._readyCallback. Go figure...
     if (isReady) {
-      // when leaving page, Java applet may be dead 
       applet._appletPanel = (javaAppletPanel || javaApplet);
       applet._applet = javaApplet;
     }
@@ -1289,26 +1076,9 @@ Jmol = (function(document) {
 
 	Jmol._getWrapper = function(applet, isHeader) {
 
-			// id_appletinfotablediv
-			//     id_appletdiv
-			//     id_coverdiv
-			//     id_infotablediv
-			//       id_infoheaderdiv
-			//          id_infoheaderspan
-			//          id_infocheckboxspan
-			//       id_infodiv
 
 
-			// for whatever reason, without DOCTYPE, with MSIE, "height:auto" does not work, 
-			// and the text scrolls off the page.
-			// So I'm using height:95% here.
-			// The table was a fix for MSIE with no DOCTYPE tag to fix the miscalculation
-			// in height of the div when using 95% for height. 
-			// But it turns out the table has problems with DOCTYPE tags, so that's out. 
-			// The 95% is a compromise that we need until the no-DOCTYPE MSIE solution is found. 
-			// (100% does not work with the JME linked applet)
 		var s;
-		// ... here are just for clarification in this code; they are removed immediately
 		if (isHeader) {
 			var img = ""; 
 			if (applet._coverImage){
@@ -1386,70 +1156,11 @@ Jmol = (function(document) {
 
 	Jmol._getDomElement = function(data, Ptr, closetag, lvel) {
 
-		// there is no "document.write" in XHTML
 
 		var e = document.createElement("span");
 		e.innerHTML = data;
 		Ptr[0] = data.length;
 
-/*
-	// unnecessary ?  
-
-		closetag || (closetag = "");
-		lvel || (lvel = 0);
-		var pt0 = Ptr[0];
-		var pt = pt0;
-		while (pt < data.length && data.charAt(pt) != "<") 
-			pt++
-		if (pt != pt0) {
-			var text = data.substring(pt0, pt);
-			Ptr[0] = pt;
-			return document.createTextNode(text);
-		}
-		pt0 = ++pt;
-		var ch;
-		while (pt < data.length && "\n\r\t >".indexOf(ch = data.charAt(pt)) < 0) 
-			pt++;
-		var tagname = data.substring(pt0, pt);
-		var e = (tagname == closetag  || tagname == "/" ? ""
-			: document.createElementNS ? document.createElementNS('http://www.w3.org/1999/xhtml', tagname)
-			: document.createElement(tagname));
-		if (ch == ">") {
-			Ptr[0] = ++pt;
-			return e;
-		}
-		while (pt < data.length && (ch = data.charAt(pt)) != ">") {
-			while (pt < data.length && "\n\r\t ".indexOf(ch = data.charAt(pt)) >= 0) 
-				pt++;
-			pt0 = pt;
-			while (pt < data.length && "\n\r\t =/>".indexOf(ch = data.charAt(pt)) < 0) 
-				pt++;
-			var attrname = data.substring(pt0, pt).toLowerCase();
-			if (attrname && ch != "=")
-				e.setAttribute(attrname, "true");
-			while (pt < data.length && "\n\r\t ".indexOf(ch = data.charAt(pt)) >= 0) 
-				pt++;
-			if (ch == "/") {
-				Ptr[0] = pt + 2;
-				return e;
-			} else if (ch == "=") {
-				var quote = data.charAt(++pt);
-				pt0 = ++pt;
-				while (pt < data.length && (ch = data.charAt(pt)) != quote) 
-					pt++;
-				var attrvalue = data.substring(pt0, pt);
-				e.setAttribute(attrname, attrvalue);
-				pt++;
-			}
-		}
-		Ptr[0] = ++pt;
-		while (Ptr[0] < data.length) {
-			var child = Jmol._getDomElement(data, Ptr, "/" + tagname, lvel+1);
-			if (!child)
-				break;
-			e.appendChild(child);
-		}
-*/
 		return e;    
 	}
 
@@ -1542,7 +1253,6 @@ Jmol = (function(document) {
 	}
 
 	Jmol._setDestroy = function(applet) {
-		//MSIE bug responds to any link click even if it is just a JavaScript call
 
 		if (Jmol.featureDetection.allowDestroy)
 			Jmol.$windowOn('beforeunload', function () { Jmol._destroy(applet); } );
@@ -1567,12 +1277,10 @@ Jmol = (function(document) {
 		} catch(e){}
 	}
 
-	////////////// misc core functionality //////////////
 
 	Jmol._setSyncReady = function() {
 		Jmol._syncReady = true;
 		if (Jmol._isJmolJSVSync) {
-			// pairs of Jmol and JSV applets here
 			var applets = Jmol._syncedApplets;
 			for (var i = 0; i < applets.length - 1; i += 2) {
 				applets[i]._linkedApplet = applets[i + 1];
@@ -1589,8 +1297,6 @@ Jmol = (function(document) {
 	Jmol._mySyncCallback = function(appFullName,msg) {
 		app = Jmol._applets[appFullName];
 		if (app._viewSet) {
-			// when can we do this?
-//			if (app._viewType == "JSV" && !app._currentView.JMOL)
 				Jmol.View.updateFromSync(app, msg);
 			return;
 		}
@@ -1627,9 +1333,6 @@ Jmol = (function(document) {
 	}
 
 	Jmol._sortMessages = function(A){
-		/*
-		 * private function
-		 */
 		function _sortKey0(a,b){
 			return (a[0]<b[0]?1:a[0]>b[0]?-1:0);
 		}
@@ -1646,7 +1349,6 @@ Jmol = (function(document) {
 		return B;
 	}
 
-	//////////////////// mouse events //////////////////////
 
 	Jmol._setMouseOwner = function(who, tf) {
 		if (who == null || tf) {
@@ -1682,11 +1384,9 @@ Jmol = (function(document) {
 	Jmol._jsGetXY = function(canvas, ev) {
 		if (!canvas.applet._ready || Jmol._touching && ev.type.indexOf("touch") < 0)
 			return false;
-		//ev.preventDefault(); // removed 5/9/2015 -- caused loss of focus on text-box clicking in SwingJS
 		var offsets = Jmol.$offset(canvas.id);
 		var x, y;
 		var oe = ev.originalEvent;
-		// drag-drop jQuery event is missing pageX
 		ev.pageX || (ev.pageX = oe.pageX);
 		ev.pageY || (ev.pageY = oe.pageY);
 		Jmol._mousePageX = ev.pageX;
@@ -1817,8 +1517,6 @@ Jmol = (function(document) {
         return true;
       if (Jmol._allowKeyboardFocus)	
     	  canvas.focus(); //in Chrome and Edge, this forces a jump 
-      // if the Jmol window is not within viewing bounds
-		  // defer to console or menu when dragging within this canvas
 			if (Jmol._mouseOwner && Jmol._mouseOwner != canvas && Jmol._mouseOwner.isDragging) {
         if (!Jmol._mouseOwner.mouseMove)
           return true;
@@ -1865,7 +1563,6 @@ Jmol = (function(document) {
         return true;
 			ev.stopPropagation();
 			ev.preventDefault();
-			// Webkit or Firefox
 			canvas.isDragging = false;
 			var oe = ev.originalEvent;
 			var scroll = (oe.detail ? oe.detail : (Jmol.featureDetection.os == "mac" ? 1 : -1) * oe.wheelDelta); // Mac and PC are reverse; but 
@@ -1874,7 +1571,6 @@ Jmol = (function(document) {
 			return false;
 		});
 
-		// context menu is fired on mouse down, not up, and it's handled already anyway.
 
 		Jmol.$bind(canvas, "contextmenu", function() {return false;});
 
@@ -1885,12 +1581,9 @@ Jmol = (function(document) {
         Jmol._setMouseOwner(null);
 			if (canvas.applet._appletPanel)
 				canvas.applet._appletPanel.startHoverWatcher(false);
-			//canvas.isDragging = false;
 			var xym = Jmol._jsGetXY(canvas, ev);
 			if (!xym)
 				return false;
-			//canvas.applet._processEvent(502, xym);//J.api.Event.MOUSE_UP
-			//canvas.applet._processEvent(505, xym);//J.api.Event.MOUSE_EXITED
 			return false;
 		});
 
@@ -1942,10 +1635,8 @@ Jmol = (function(document) {
 	}
 
 
-////// Jmol.Swing interface  for Javascript implementation of Swing dialogs and menus
 
 Jmol.Swing = {
-	// a static class
 	count:0,
 	menuInitialized:0,
 	menuCounter:0,
@@ -1962,7 +1653,6 @@ Swing.setDraggable = function(Obj) {
 	if (proto.setContainer)
 		return;
 	
-	// for menus, console, and 
 	proto.setContainer = function(container) {
 		this.container = container;
 		container.obj = this;
@@ -2045,14 +1735,12 @@ Swing.setDraggable = function(Obj) {
 	};
 }
 
-// Dialog //
 
 Swing.JSDialog = function () {
 }
 
 Swing.setDraggable(Swing.JSDialog);
 
-///// calls from javajs and other Java-derived packages /////
 
 Swing.getScreenDimensions = function(d) {
 	d.width = $(window).width();
@@ -2063,27 +1751,20 @@ Swing.dispose = function(dialog) {
 	Jmol.$remove(dialog.id + "_mover");
 	delete Swing.htDialogs[dialog.id]
 	dialog.container.obj.dragBind(false);
-//  var btns = $("#" + dialog.id + " *[id^='J']"); // add descendents with id starting with "J"
-//  for (var i = btns.length; --i >= 0;)
-//    delete Dialog.htDialogs[btns[i].id]
-	//System.out.println("JSmolCore.js: dispose " + dialog.id)
 }
  
 Swing.register = function(dialog, type) {
 	dialog.id = type + (++Swing.count);
 	Swing.htDialogs[dialog.id] = dialog;
-	//System.out.println("JSmolCore.js: register " + dialog.id)
 
 }
 
 Swing.setDialog = function(dialog) {
 	Jmol._setMouseOwner(null);
 	Jmol.$remove(dialog.id);
-	//System.out.println("removed " + dialog.id)
 	var id = dialog.id + "_mover";
 	var container = Jmol._$(id);
 	var jd;
-	//System.out.println("JSmolCore.js: setDialog " + dialog.id);
 	if (container[0]) {
 		container.html(dialog.html);
 		jd = container[0].jd;
@@ -2129,14 +1810,11 @@ Swing.setEnabled = function(c) {
 	Jmol.$setEnabled(c.id, c.enabled);
 }
 
-/// callbacks from the HTML elements ////
  
 Swing.click = function(element, keyEvent) {
 	var component = Swing.htDialogs[element.id];
 	if (component) {
-		//System.out.println("click " + element + " " + component)
 		var info = component.toString();
-		// table cells will have an id but are not registered
 		if (info.indexOf("JCheck") >= 0) {
 				component.selected = element.checked;
 		} else if (info.indexOf("JCombo") >= 0) {
@@ -2149,7 +1827,6 @@ Swing.click = function(element, keyEvent) {
 	}
 	var dialog = Swing.htDialogs[Jmol.$getAncestorDiv(element.id, "JDialog").id];
 	var key = (component ? component.name :  dialog.registryKey + "/" + element.id);
-	//System.out.println("JSmolCore.js: click " + key); 
 	dialog.manager.actionPerformed(key);
 }
 
@@ -2161,7 +1838,6 @@ Swing.setFront = function(dialog) {
 }
 
 Swing.hideMenus = function(applet) {
-	// called from LEFT-DOWN mouse event
 	var menus = applet._menus;
 	if (menus)
 		for (var i in menus)
@@ -2172,10 +1848,8 @@ Swing.hideMenus = function(applet) {
 Swing.windowClosing = function(element) {
 	var dialog = Swing.htDialogs[Jmol.$getAncestorDiv(element.id, "JDialog").id];
 	if (dialog.registryKey) {
-		//System.out.println("JSmolCore.js: windowClosing " + dialog.registryKey); 
 		dialog.manager.processWindowClosing(dialog.registryKey);
 	} else {
-		//System.out.println("JSmolCore.js: windowClosing " + dialog.title); 
 		dialog.dispose();
 	}
 }
@@ -2183,14 +1857,6 @@ Swing.windowClosing = function(element) {
 })(Jmol.Swing);
 
 Jmol._track = function(applet) {
-	// this function inserts an iFrame that can be used to track your page's applet use. 
-	// By default it tracks to a page at St. Olaf College, but you can change that. 
-	// and you can use
-	//
-	// delete Jmol._tracker
-	//
-	// yourself to not have you page execute this 
-	//
 	if (Jmol._tracker){
 		try {  
 			var url = Jmol._tracker + "&applet=" + applet._jmolType + "&version=" + Jmol._version 
@@ -2198,7 +1864,6 @@ Jmol._track = function(applet) {
 			var s = '<iframe style="display:none" width="0" height="0" frameborder="0" tabindex="-1" src="' + url + '"></iframe>'
 			Jmol.$after("body", s);
 		} catch (e) {
-			// ignore
 		}
 		delete Jmol._tracker;
 	}
@@ -2233,24 +1898,6 @@ Jmol.User = {
 
 Jmol.View = {
 
-// The objective of Jmol.View is to coordinate
-// asynchronous applet loading and atom/peak picking
-// among any combination of Jmol, JME, and JSV.
-// 
-// basic element is a view object:
-//   view = {
-//     viewType1: viewRecord1,
-//     viewType2: viewRecord2,
-//     viewType3: viewRecord3
-//   }
-// where viewType is one of (Jmol, JME, JSV)
-// and a viewRecord is an object
-// with elements .chemID, .applet, .data, .script
-//
-// Jmol.View.sets is a list of cached views[0..n]
-// for a given group of applet objects with common Info.viewSet
-//
-// Bob Hanson 1/22/2014 7:05:38 AM
 
 	count: 0,
 	applets: {},
@@ -2259,7 +1906,6 @@ Jmol.View = {
 
 (function(View) {
 
-// methods called from other modules have no "_" in their name
 
 View.resetView = function(applet, appletNot) {
   debugger;
@@ -2281,8 +1927,6 @@ View.resetView = function(applet, appletNot) {
 }
 
 View.updateView = function(applet, Info, _View_updateView) {
-	// Info.chemID, Info.data, possibly Info.viewID if no chemID
-	// return from applet after asynchronous download of new data
 	if (applet._viewSet == null)
 		return;
   Info || (Info = {});
@@ -2354,7 +1998,6 @@ View.dumpViews = function(setID) {
 }
 
 
-// methods starting with "__" are "private" to JSmolCore.js
 
 View.__init = function(applet) {
   var set = applet._viewSet;
@@ -2401,11 +2044,6 @@ View.__createViewSet = function(set, chemID, viewID, _createViewSet) {
 }
 
 View.__setView = function(view, applet, isSwitch, _setView) {
-	// called from Jmol._searchMol and Jmol.View.setCurrentView 
-	// to notify the applets in the set that there may be new data for them
-	// skip the originating applet itself and cases where the data has not changed.
-	// stop at first null data, because that will initiate some sort of asynchronous
-	// call that will be back here afterward.
 
 	for (var viewType in view) {
 			if (viewType == "info") 
@@ -2426,10 +2064,6 @@ View.__setView = function(view, applet, isSwitch, _setView) {
 			break;
 	}
 
-	// Either all are taken care of or one was null,
-	// in which case we have started an asynchronous
-	// process to get the data, and we can quit here.
-	// In either case, we are done.
 }
 
 }) (Jmol.View);
@@ -2457,8 +2091,6 @@ Jmol.Cache.put = function(filename, data) {
 			oe.preventDefault();
 			var file = oe.dataTransfer.files[0];
 			if (file == null) {
-				// FF and Chrome will drop an image here
-				// but it will be only a URL, not an actual file. 
 				try {
 				  file = "" + oe.dataTransfer.getData("text");
 				  if (file.indexOf("file:/") == 0 || file.indexOf("http:/") == 0 || file.indexOf("https:/") == 0) {
@@ -2468,10 +2100,8 @@ Jmol.Cache.put = function(filename, data) {
 				} catch(e) {
 				  return;
 				}
-			  // some other format
 			  return;
 			}
-			// MSIE will drop an image this way, though, and load it!
 			var reader = new FileReader();
 			reader.onloadend = function(evt) {
 				if (evt.target.readyState == FileReader.DONE) {

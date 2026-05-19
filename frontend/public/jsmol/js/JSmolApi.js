@@ -1,35 +1,9 @@
-// JmolApi.js -- Jmol user functions  Bob Hanson hansonr@stolaf.edu
+﻿
 
-// BH 1/19/2017 8:05:05 AM <br>
-// BH 4/1/2016 12:59:45 PM fix applet_or_identifier reference in Jmol.getChemicalInfo
-// BH 5/29/2014 8:14:06 AM added default command for command input box
-// BH 3/10/2014 10:35:25 AM adds Jmol.saveImage(applet)
-// BH 1/22/2014 7:31:59 AM Jmol._Image removed -- just never found useful to have
-//    a server-side process with only a client-side image. Response time is too slow.
-// BH 12/13/2013 8:39:00 AM Jmol.evaulate is DEPRECATED -- use Jmol.evaluateVar
-// BH 11/25/2013 6:55:53 AM adds URL flags _USE=, _JAR=, _J2S=
-// BH 9/3/2013 5:48:03 PM simplification of Jmol.getAppletHTML()
-// BH 5/16/2013 9:01:41 AM checkbox group fix
-// BH 1/15/2013 10:55:06 AM updated to default to HTML5 not JAVA
 
-// This file is part of JSmol.min.js. 
-// If you do not use that, then along with this file you need several other files. See JSmolCore.js for details.
 
-// default settings are below. Generally you would do something like this:
 
-// jmol = "jmol"
-// Info = {.....your settings if not default....}
-// Jmol.jmolButton(jmol,....)
-// jmol = Jmol.getApplet(jmol, Info)
-// Jmol.script(jmol,"....")
-// Jmol.jmolLink(jmol,....)
-// etc. 
-// first parameter is always the applet id, either the string "jmol" or the object defined by Jmol.getApplet()
-// no need for waiting to start giving script commands. You can also define a callback function as part of Info.
 
-// see JmolCore.js for details
-
-// BH 8/12/2012 5:15:11 PM added Jmol.getAppletHtml()
 
 ;(function (Jmol) {
 	var getField = function(key) {
@@ -37,101 +11,24 @@
 		return decodeURI(("&" + document.location.search.substring(1) + key).split(key)[1].split("&")[0]);
 	}
 	Jmol._j2sPath = getField("_J2S");
-		// allows URL-line setting of Info.j2sPath
 	Jmol._jarFile = getField("_JAR");
-		// allows URL-line setting of Info.jarPath and Info.jarFile
 	Jmol._use = getField("_USE");
-		// allows URL-line setting of Info.use
-		// defaults to "HTML5"
-		// looking for "_USE=xxxx" 
-		// _USE=SIGNED implies JAVA, sets Info.isSigned, and adds "Signed" to applet jar name if necessary
 
 	Jmol.getVersion = function(){return Jmol._jmolInfo.version};
 
 	Jmol.getApplet = function(id, Info, checkOnly) {
-		// requires JmolApplet.js and, if JAVA, java/JmolApplet*.jar
-		// or if HTML5, then j2s/ subdirectory (core, java, JZ, J)
-		/*
-		var DefaultInfo = {
-			color: "#FFFFFF", // applet object background color, as for older jmolSetBackgroundColor(s)
-			width: 300,
-			height: 300,
-			addSelectionOptions: false,
-			serverURL: "http://your.server.here/jsmol.php",
-	 console: null,  // div for where the JavaScript console will be.
-			defaultModel: "",
-			script: null,
-			src: null,
-			readyFunction: null,
-			use: "HTML5",//other options include JAVA, WEBGL//, and IMAGE (removed)
-			jarPath: "java",
-			jarFile: "JmolApplet0.jar",
-			isSigned: false,
-			j2sPath: "j2s",
-			coverImage: null,     // URL for image to display
-			coverTitle: "",       // tip that is displayed before model starts to load
-			coverCommand: "",     // Jmol command executed upon clicking image
-			deferApplet: false,   // true == the model should not be loaded until the image is clicked
-			deferUncover: false,  // true == the image should remain until command execution is complete 
-			disableJ2SLoadMonitor: false,
-			disableInitialConsole: false,
-			debug: false
-		};	 
-
-		*/
 		return Jmol._Applet._get(id, Info, checkOnly);
 	}
 
 	Jmol.getJMEApplet = function(id, Info, linkedApplet, checkOnly) {
-		// Java Molecular Editor
-		// requires JmolJME.js and jme/ subdirectory
-		/*
-		var DefaultInfo = {
-			width: 300,
-			height: 300,
-			jarPath: "jme",
-			jarFile: "JME.jar",
-			use: "HTML", // or JAVA
-			options: "autoez"
-			// see http://www2.chemie.uni-erlangen.de/services/fragment/editor/jme_functions.html
-			// rbutton, norbutton - show / hide R button
-			// hydrogens, nohydrogens - display / hide hydrogens
-			// query, noquery - enable / disable query features
-			// autoez, noautoez - automatic generation of SMILES with E,Z stereochemistry
-			// nocanonize - SMILES canonicalization and detection of aromaticity supressed
-			// nostereo - stereochemistry not considered when creating SMILES
-			// reaction, noreaction - enable / disable reaction input
-			// multipart - possibility to enter multipart structures
-			// number - possibility to number (mark) atoms
-			// depict - the applet will appear without editing butons,this is used for structure display only
-		};		    
-		*/
 		return Jmol._JMEApplet._get(id, Info, linkedApplet, checkOnly);
 	}
 
 	Jmol.getJSVApplet = function(id, Info, checkOnly) {
-		// JSpecView
-		// requires JmolJSV.js and, if JAVA, either JSpecViewApplet.jar or JSpecViewAppletSigned.jar
-		// or if HTML5, then j2s/ subdirectory (core, java, JZ, J, JSV)
-		/*
-		var DefaultInfo = {
-			width: 500,
-			height: 300,
-			debug: false,
-			jarPath: ".",
-			jarFile: "JSpecViewApplet.jar", // or "JSpecViewAppletSigned.jar"
-			uee: "HTML5", // or JAVA
-			isSigned: false,
-			initParams: null,
-			readyFunction: null,
-			script: null
-		};
-		*/
 		return Jmol._JSVApplet._get(id, Info, checkOnly);
 	}	
 
 
-////////////////// scripting ///////////////////
 
 	Jmol.setCallback = function(applet, name, func) {
 		applet._setCallback(name, func);
@@ -147,9 +44,6 @@
 		applet._script(script);
 	}
 
-/**
- * returns false if cannot check, empty string if OK, or error message if not OK
- */	
 	Jmol.scriptCheck = function(applet, script) {
 		return applet && applet._scriptCheck && applet._ready && applet._scriptCheck(script);
 	}
@@ -178,19 +72,16 @@
 		applet._search(query, script);
 	}
 
-////////////////// "get" methods ///////////////////
 
 
 	Jmol.evaluateVar = function(applet,expr) {
 		return applet._evaluate(expr);
 	}
 
-	// DEPRECATED -- use Jmol.evaluateVar
 	Jmol.evaluate = function(applet,molecularMath) {
 		return applet._evaluateDEPRECATED(molecularMath);
 	}
 
-	// optional Info here	
 	Jmol.getAppletHtml = function(applet, Info) {
 		if (Info) {
 			var d = Jmol._document;
@@ -222,7 +113,6 @@
 	}
 
 
-////////////////// general methods ///////////////////
 
 	Jmol.resizeApplet = function(applet,size) {
 		return applet._resizeApplet(size);
@@ -244,7 +134,6 @@
 		alert(msg);
 	}
 
-//////////// console functions /////////////
 
 	Jmol.clearConsole = function(applet) {
 		applet._clearConsole();
@@ -265,12 +154,10 @@
 	}
 
 	Jmol.show2d = function(applet, tf) {
-		// only when JME or JSME is synced with Jmol
 		applet._show2d(tf);
 	}
 
 
-//////////// controls and HTML /////////////
 
 
 	Jmol.jmolBr = function() {
@@ -313,29 +200,11 @@
 	}
 
 	Jmol.setCheckboxGroup = function(chkMaster, chkBoxes) {
-		// chkBoxes can be an array or any number of additional string arguments
 		Jmol.controls._cbSetCheckboxGroup(chkMaster, chkBoxes, arguments);
 	}
 
 	Jmol.setDocument = function(doc) {
 
-		// If doc is null or 0, Jmol.getApplet() will still return an Object, but the HTML will
-		// put in applet._code and not written to the page. This can be nice, because then you 
-		// can still refer to the applet, but place it on the page after the controls are made. 
-		//
-		// This really isn't necessary, though, because there is a simpler way: Just define the 
-		// applet variable like this:
-		//
-		// jmolApplet0 = "jmolApplet0"
-		//
-		// and then, in the getApplet command, use
-		//
-		// jmolapplet0 = Jmol.getApplet(jmolApplet0,....)
-		// 
-		// prior to this, "jmolApplet0" will suffice, and after it, the Object will work as well
-		// in any button creation 
-		//		 
-		//  Bob Hanson 25.04.2012
 
 		Jmol._document = doc;
 	}
@@ -350,12 +219,7 @@
 		}
 	}
 
-	////////////////////////////////////////////////////////////////
-	// Cascading Style Sheet Class support
-	////////////////////////////////////////////////////////////////
 
-	// BH 4/25 -- added text option. setAppletCss(null, "style=\"xxxx\"")
-	// note that since you must add the style keyword, this can be used to add any attribute to these tags, not just css. 
 
 	Jmol.setAppletCss = function(cssClass, text) {
 		cssClass != null && (Jmol._appletCssClass = cssClass);
@@ -394,13 +258,6 @@
 		Jmol._isJmolJSVSync = isJmolJSV;
 	}
 
-	/*
-	Jmol._grabberOptions = [
-		["$", "NCI(small molecules)"],
-		[":", "PubChem(small molecules)"],
-		["=", "RCSB(macromolecules)"]
-	];
-	*/
 
 	Jmol.setGrabberOptions = function(options) {
 		Jmol._grabberOptions = options;
@@ -443,10 +300,6 @@
 	}
 
 	Jmol.saveImage = function(app, type, fname) {
-		// see: https://svgopen.org/2010/papers/62-From_SVG_to_Canvas_and_Back/index.html
-		// From SVG to Canvas and Back
-		// Samuli Kaipiainen University of Helsinki, Department of Computer Science samuli.kaipiainen@cs.helsinki.fi
-		// Matti Paksula University of Helsinki, Department of Computer Science matti.paksula@cs.helsinki.fi
 		type = (type || "png").toLowerCase();
 		fname || (fname = app.id + "." + type.toLowerCase());
 		if (fname.indexOf(".") < 0) fname += "." + type;

@@ -1,7 +1,4 @@
-
-// 2022.09.13 add CBSE curriculum nacl,graphite,diamond,quartz,bcc,fcc,hcp stack
-// 10/19/2016 5:19:50 PM
-// 10/21/2016 5:19:04 AM
+﻿
 
 		Jmol.Info.jarPath = "../java"
 		Jmol.Info.j2sPath = "../j2s"
@@ -41,20 +38,7 @@ sebi0105c.ccdc.cif {1 1 1}|P 21 21 21\
 var modelSelectHtml
 var defaultScript = ""
 
-/*
 
-  http://chemapps.stolaf.edu/jmol/docs/examples-11/showsym.htm
-  Jmol Crystal Symmetry Explorer
-  Bob Hanson, 8/21/2009
-  for the 238th American Chemical Society National Meeting, Washington, D.C.
-
-  This page graphically displays symmetry operators for a model. 
-  You can load any of the examples here or any file of your own.
-
-
-*/
-
-/// initial HTML for the page
 
 selectedModel = ""
 
@@ -109,7 +93,6 @@ function getModelSelectHtml() {
 
 }getModelSelectHtml()
 
-//// user actions from selections
 
 function getModel(justCheck) {
 	var d = document.getElementById("modelselect")
@@ -176,7 +159,6 @@ function doarrow(x) {
 	getSelect()
 }
 
-/// Jmol callbacks
 
 function errorCallback(a, b, msg) {
  alert(msg)
@@ -200,7 +182,6 @@ SymInfo = {}
 
 function getSymInfo() {
 
-	// update all of the model-specific page items
 
 	SymInfo = {}
 	var s = ""

@@ -1,4 +1,4 @@
-Clazz.declarePackage("JSV.common");
+﻿Clazz.declarePackage("JSV.common");
 Clazz.load(["java.lang.Enum", "JSV.common.Coordinate"], "JSV.common.Annotation", ["JU.CU"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.text = "";
@@ -104,14 +104,6 @@ throw e;
 }
 }
 }, "J.api.GenericGraphics,JSV.common.Spectrum,JU.Lst,JSV.common.Annotation");
-/*if2*/;(function(){
-var c$ = Clazz.declareType(JSV.common.Annotation, "AType", Enum);
-Clazz.defineEnumConstant(c$, "Integration", 0, []);
-Clazz.defineEnumConstant(c$, "PeakList", 1, []);
-Clazz.defineEnumConstant(c$, "Measurements", 2, []);
-Clazz.defineEnumConstant(c$, "OverlayLegend", 3, []);
-Clazz.defineEnumConstant(c$, "Views", 4, []);
-Clazz.defineEnumConstant(c$, "NONE", 5, []);
-/*eoif2*/})();
+})();
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

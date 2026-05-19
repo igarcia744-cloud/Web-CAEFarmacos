@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.inchi");
+﻿Clazz.declarePackage("J.inchi");
 Clazz.load(["JU.Lst"], "J.inchi.InchiToSmilesConverter", ["java.util.Hashtable", "JU.BS", "JS.SmilesAtom", "$.SmilesBond", "JU.BSUtil", "$.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.mapTet = null;
@@ -273,21 +273,7 @@ return 1;
 }
 }, "~S");
 c$.$InchiToSmilesConverter$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(J.inchi, "InchiToSmilesConverter$1", JS.SmilesAtom);
-Clazz.overrideMethod(c$, "definesStereo", 
-function(){
-return true;
-});
-Clazz.overrideMethod(c$, "getStereoAtAt", 
-function(nodes){
-return this.b$["J.inchi.InchiToSmilesConverter"].decodeInchiStereo(nodes);
-}, "~A");
-Clazz.overrideMethod(c$, "isStereoOpposite", 
-function(i2, iA, iB){
-return this.b$["J.inchi.InchiToSmilesConverter"].isInchiOpposite(this.getIndex(), i2, iA, iB);
-}, "~N,~N,~N");
-/*eoif5*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

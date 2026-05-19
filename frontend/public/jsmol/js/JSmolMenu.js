@@ -1,19 +1,7 @@
-// JSmolMenu.js
-// author: Bob Hanson, hansonr@stolaf.edu
+﻿
 
-// BH 10/17/2015 6:18:38 PM wraps with Jmol.__$ to use same version of jQuery as Jmol is using
-// BH 5/27/2014 11:01:46 PM frank menu fix; better event handling
-// BH 5/26/2014 allow for a user callback for customization of menu
-//    using Jmol._showMenuCallback(menu, x, y);
 
-// BH 2/17/2014 7:52:18 AM Jmol.Menu folded into Jmol.Swing
 
-// BH 1/16/2014 9:20:15 AM allowing second attempt to initiate this library to gracefully skip processing
-
-//! jQuery UI - v1.9.2 - 2012-12-17
-// http://jqueryui.com
-// Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.position.js, jquery.ui.menu.js
-// Copyright (c) 2012 jQuery Foundation and other contributors Licensed MIT 
 
 ;(function(jQuery) {
 
@@ -46,11 +34,6 @@ try{
 	System.out.println("coremenu failed to load jQuery.ui.position -- jQuery version conflict?");
 }
 
-//! jQuery UI - v1.9.2 - 2012-12-17
-//http://jqueryui.com
-//Includes: jquery.ui.core.css, jquery.ui.menu.css
-//To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Lucida%20Grande%2CLucida%20Sans%2CArial%2Csans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=5px&bgColorHeader=5c9ccc&bgTextureHeader=12_gloss_wave.png&bgImgOpacityHeader=55&borderColorHeader=4297d7&fcHeader=ffffff&iconColorHeader=d8e7f3&bgColorContent=fcfdfd&bgTextureContent=06_inset_hard.png&bgImgOpacityContent=100&borderColorContent=a6c9e2&fcContent=222222&iconColorContent=469bdd&bgColorDefault=dfeffc&bgTextureDefault=03_highlight_soft.png&bgImgOpacityDefault=85&borderColorDefault=c5dbec&fcDefault=2e6e9e&iconColorDefault=6da8d5&bgColorHover=d0e5f5&bgTextureHover=03_highlight_soft.png&bgImgOpacityHover=75&borderColorHover=79b7e7&fcHover=1d5987&iconColorHover=217bc0&bgColorActive=f5f8f9&bgTextureActive=06_inset_hard.png&bgImgOpacityActive=100&borderColorActive=79b7e7&fcActive=e17009&iconColorActive=f9bd01&bgColorHighlight=fbec88&bgTextureHighlight=01_flat.png&bgImgOpacityHighlight=55&borderColorHighlight=fad42e&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=fef1ec&bgTextureError=02_glass.png&bgImgOpacityError=95&borderColorError=cd0a0a&fcError=cd0a0a&iconColorError=cd0a0a&bgColorOverlay=aaaaaa&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=8px
-//Copyright (c) 2012 jQuery Foundation and other contributors Licensed MIT
 
 if (!jQuery.ui.menu)
 try{
@@ -70,9 +53,6 @@ try{
 
 
 
-//Jmol.Swing methods to coordinate with org.jmol.awtjs.swing.JPopupMenu && org.jmol.awtjs.swing.AbstractButton
-//classes, which call SwingController (aka Jmol.Swing in this case)
-//@author: Bob Hanson 2/17/2014 8:21:10 AM
 
 
 if (Swing.menuInitialized)return;
@@ -109,8 +89,6 @@ Swing.__getMenuStyle = function(applet) { return '\
 	.jmolPopupMenu .ui-state-disabled .ui-icon{filter:Alpha(Opacity=35)}'};
 
 Swing.setMenu = function(menu) {
-  // called by org.jmol.awtjs.swing.JPopupMenu
-  // note that the z-index is only set by the FIRST applet accessing this method
 	Swing.__getMenuStyle && Jmol.$after("head", '<style>'+Swing.__getMenuStyle(menu.applet)+'</style>');  
 	Swing.__getStyle = null; // once only
 	menu.tainted = true;
@@ -124,8 +102,6 @@ Swing.setMenu = function(menu) {
 }
 
 Swing.showMenu = function(menu, x, y) {
-  // called by org.jmol.awtjs.swing.JPopupMenu
-  // allow for a user callback for customization of menu
   if (Jmol._showMenuCallback)
 		Jmol._showMenuCallback(menu, x, y);
 	if (menu.tainted) {
@@ -148,7 +124,6 @@ Swing.showMenu = function(menu, x, y) {
 }
 
 Swing.disposeMenu = function(menu) {
-  // called by org.jmol.awtjs.swing.JPopupMenu
   if (Jmol._persistentMenu)
   	return
   Swing.hideMenu(menu);
@@ -157,22 +132,18 @@ Swing.disposeMenu = function(menu) {
 }
 
 Swing.initMenuItem = function(item) {
-  // called by org.jmol.awtjs.swing.AbstractButton
   item.applet = item.popupMenu.applet;
   item.id = Swing.getMenuID(item);
   item.icon && (item.icon = '<img src="' + item.applet._j2sPath + '/' + item.icon + '" style="max-height: 20px;" />')
 }
 
 Swing.getMenuID = function(item) {
-  // called internally
   var popup = item.popupMenu;
 	return popup.applet._id + '_' + popup.name + "_" + item.id + '_' + (++Swing.menuCounter);
 }
 
 Swing.hideMenu = function(menu) {
-  // called internally
 	if (!menu._visible)return;
-	//menu.container.unbind('clickoutjsmol');
 	menu.dragBind(false);
 	menu.container.hide();
 	menu._visible = menu.isDragging = false;
@@ -183,7 +154,6 @@ var delayHide = function(menu, f) {
 }
 
 Swing.bindMenuActionCommands = function(menu, isBind) {
-  // called internally
 	var n = menu.getComponentCount();
 	for(var i = 0; i < n; i++)
 		Swing.bindMenuActionCommands(menu.getComponent(i), isBind);

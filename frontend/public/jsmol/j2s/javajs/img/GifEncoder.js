@@ -1,4 +1,4 @@
-Clazz.declarePackage("javajs.img");
+﻿Clazz.declarePackage("javajs.img");
 Clazz.load(["javajs.img.ImageEncoder", "JU.Lst", "$.P3"], "javajs.img.GifEncoder", ["java.util.Hashtable", "JU.CU", "$.M3"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.params = null;
@@ -512,108 +512,10 @@ this.byteCount += this.bufPt;
 this.bufPt = 0;
 }});
 c$.$GifEncoder$ColorItem$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.isBackground = false;
-Clazz.instantialize(this, arguments);}, javajs.img.GifEncoder, "ColorItem", JU.P3);
-Clazz.makeConstructor(c$, 
-function(rgb, isBackground){
-Clazz.superConstructor (this, javajs.img.GifEncoder.ColorItem, []);
-this.isBackground = isBackground;
-this.setT(this.b$["javajs.img.GifEncoder"].toLABnorm(rgb));
-}, "~N,~B");
-/*eoif4*/})();
+})();
 };
 c$.$GifEncoder$ColorCell$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.index = 0;
-this.center = null;
-this.volume = 0;
-Clazz.instantialize(this, arguments);}, javajs.img.GifEncoder, "ColorCell", JU.Lst);
-Clazz.makeConstructor(c$, 
-function(index){
-Clazz.superConstructor (this, javajs.img.GifEncoder.ColorCell, []);
-this.index = index;
-}, "~N");
-Clazz.defineMethod(c$, "getVolume", 
-function(doVisualize){
-if (this.volume != 0) return this.volume;
-if (this.size() < 2) return -1;
-var maxx = -2147483647;
-var minx = 2147483647;
-var maxy = -2147483647;
-var miny = 2147483647;
-var maxz = -2147483647;
-var minz = 2147483647;
-var n = this.size();
-for (var i = n; --i >= 0; ) {
-var xyz = this.get(i);
-if (xyz.x < minx) minx = xyz.x;
-if (xyz.y < miny) miny = xyz.y;
-if (xyz.z < minz) minz = xyz.z;
-if (xyz.x > maxx) maxx = xyz.x;
-if (xyz.y > maxy) maxy = xyz.y;
-if (xyz.z > maxz) maxz = xyz.z;
-}
-var dx = (maxx - minx);
-var dy = (maxy - miny);
-var dz = (maxz - minz);
-return this.volume = dx * dx + dy * dy + dz * dz;
-}, "~B");
-Clazz.defineMethod(c$, "setColor", 
-function(){
-var count = this.size();
-this.center =  new JU.P3();
-for (var i = count; --i >= 0; ) this.center.add(this.get(i));
-
-this.center.scale(1 / count);
-return this.b$["javajs.img.GifEncoder"].toRGB(this.center);
-});
-Clazz.defineMethod(c$, "splitCell", 
-function(cells){
-var n = this.size();
-if (n < 2) return false;
-var newIndex = cells.size();
-var newCell = Clazz.innerTypeInstance(javajs.img.GifEncoder.ColorCell, this, null, newIndex);
-cells.addLast(newCell);
-var ranges =  Clazz.newFloatArray (3, 3, 0);
-for (var ic = 0; ic < 3; ic++) {
-var low = 3.4028235E38;
-var high = -3.4028235E38;
-for (var i = n; --i >= 0; ) {
-var lab = this.get(i);
-var v = (ic == 0 ? lab.x : ic == 1 ? lab.y : lab.z);
-if (low > v) low = v;
-if (high < v) high = v;
-}
-ranges[0][ic] = low;
-ranges[1][ic] = high;
-ranges[2][ic] = high - low;
-}
-var r = ranges[2];
-var mode = (r[0] >= r[1] ? (r[0] >= r[2] ? 0 : 2) : r[1] >= r[2] ? 1 : 2);
-var val = ranges[0][mode] + ranges[2][mode] / 2;
-this.volume = 0;
-switch (mode) {
-case 0:
-for (var i = n; --i >= 0; ) if (this.get(i).x >= val) newCell.addLast(this.removeItemAt(i));
-
-break;
-case 1:
-for (var i = n; --i >= 0; ) if (this.get(i).y >= val) newCell.addLast(this.removeItemAt(i));
-
-break;
-case 2:
-for (var i = this.size(); --i >= 0; ) if (this.get(i).z >= val) newCell.addLast(this.removeItemAt(i));
-
-break;
-}
-return true;
-}, "JU.Lst");
-/*eoif4*/})();
+})();
 };
 c$.xyz2rgb = null;
 c$.rgb2xyz = null;

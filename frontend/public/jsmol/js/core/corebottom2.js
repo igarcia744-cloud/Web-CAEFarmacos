@@ -1,4 +1,4 @@
-})(Clazz
+﻿})(Clazz
 ,Clazz.getClassName
 ,Clazz.newLongArray
 ,Clazz.doubleToByte
@@ -56,6 +56,5 @@
 ,Clazz.defineMethod
 ,Clazz.overrideMethod
 ,Clazz.declareAnonymous
-//,Clazz.checkPrivateMethod
 ,Clazz.cloneFinals
 );

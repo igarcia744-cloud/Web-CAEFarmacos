@@ -1,4 +1,4 @@
-(function(Clazz
+﻿(function(Clazz
 ,Clazz_getClassName
 ,Clazz_newLongArray
 ,Clazz_doubleToByte
@@ -56,11 +56,9 @@
 ,Clazz_defineMethod
 ,Clazz_overrideMethod
 ,Clazz_declareAnonymous
-//,Clazz_checkPrivateMethod
 ,Clazz_cloneFinals
 ){
 var $t$;
-//var c$;
 Clazz_declarePackage("JS");
 Clazz_load(null, "JS.ScriptExt", ["JU.AU"], function(){
 var c$ = Clazz_decorateAsClass(function(){
@@ -5610,6 +5608,5 @@ c$.labeler = null;
 ,Clazz.defineMethod
 ,Clazz.overrideMethod
 ,Clazz.declareAnonymous
-//,Clazz.checkPrivateMethod
 ,Clazz.cloneFinals
 );

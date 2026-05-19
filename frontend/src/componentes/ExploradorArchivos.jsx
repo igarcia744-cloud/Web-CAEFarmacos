@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import api from "../api/api";
 import "../css/Explorador.css";
 
@@ -54,7 +54,6 @@ function ExploradorArchivos({ filtros, modo = "normal", onSelect }) {
         const url = window.URL.createObjectURL(new Blob([res.data]));
         const link = document.createElement("a");
 
-        // 🔥 AQUÍ ESTÁ LA CLAVE
         let nombreArchivo = item.nombre;
 
         if (item.tipo === "carpeta") {
@@ -81,7 +80,6 @@ function ExploradorArchivos({ filtros, modo = "normal", onSelect }) {
     )
     );
 
-    // 🔤 ordenar
     if (filtros.orden === "nombre_asc") {
     datosFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
     }
@@ -96,7 +94,6 @@ function ExploradorArchivos({ filtros, modo = "normal", onSelect }) {
             
             <h2>Explorador de Archivos</h2>
 
-            {/* HEADER */}
             <div className="explorador-header">
 
             <button className="explorador-back" onClick={irAtras}>
@@ -120,7 +117,6 @@ function ExploradorArchivos({ filtros, modo = "normal", onSelect }) {
                 </div>
             )}
 
-            {/* GRID */}
             <div className="explorador-grid">
 
             {datosFiltrados.map(item => (

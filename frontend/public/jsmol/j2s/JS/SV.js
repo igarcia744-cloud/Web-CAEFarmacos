@@ -1,4 +1,4 @@
-Clazz.declarePackage("JS");
+﻿Clazz.declarePackage("JS");
 Clazz.load(["javajs.api.JSONEncodable", "JS.T", "JU.P3"], "JS.SV", ["java.util.Arrays", "$.Collections", "$.Hashtable", "JU.AU", "$.BArray", "$.BS", "$.Base64", "$.Lst", "$.Measure", "$.PT", "$.SB", "JM.BondSet", "JU.BSUtil", "$.Escape", "JV.JC", "$.Viewer"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.index = 2147483647;
@@ -1427,48 +1427,7 @@ function(){
 return (this === JS.SV.vNaN || "NaN".equals(this.value));
 });
 c$.$SV$Sort$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.arrayPt = 0;
-this.myKey = null;
-Clazz.instantialize(this, arguments);}, JS.SV, "Sort", null, java.util.Comparator);
-Clazz.makeConstructor(c$, 
-function(arrayPt, myKey){
-this.arrayPt = arrayPt;
-this.myKey = myKey;
-}, "~N,~S");
-Clazz.overrideMethod(c$, "compare", 
-function(x, y){
-if (x.tok != y.tok) {
-if (x.tok == 3 || x.tok == 2 || y.tok == 3 || y.tok == 2) {
-var fx = JS.SV.fValue(x);
-var fy = JS.SV.fValue(y);
-return (fx < fy ? -1 : fx > fy ? 1 : 0);
-}if (x.tok == 4 || y.tok == 4) return JS.SV.sValue(x).compareTo(JS.SV.sValue(y));
-}switch (x.tok) {
-case 2:
-return (x.intValue < y.intValue ? -1 : x.intValue > y.intValue ? 1 : 0);
-case 4:
-return JS.SV.sValue(x).compareTo(JS.SV.sValue(y));
-case 7:
-var sx = x.getList();
-var sy = y.getList();
-if (sx.size() != sy.size()) return (sx.size() < sy.size() ? -1 : 1);
-var iPt = this.arrayPt;
-if (iPt < 0) iPt += sx.size();
-if (iPt < 0 || iPt >= sx.size()) return 0;
-return this.compare(sx.get(iPt), sy.get(iPt));
-case 6:
-if (this.myKey != null) {
-return this.compare(x.getMap().get(this.myKey), y.getMap().get(this.myKey));
-}default:
-var fx = JS.SV.fValue(x);
-var fy = JS.SV.fValue(y);
-return (fx < fy ? -1 : fx > fy ? 1 : 0);
-}
-}, "JS.SV,JS.SV");
-/*eoif4*/})();
+})();
 };
 c$.vT = JS.SV.newSV(1073742335, 1, "true");
 c$.vF = JS.SV.newSV(1073742334, 0, "false");

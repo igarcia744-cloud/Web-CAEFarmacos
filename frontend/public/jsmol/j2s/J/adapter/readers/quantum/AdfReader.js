@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.adapter.readers.quantum");
+﻿Clazz.declarePackage("J.adapter.readers.quantum");
 Clazz.load(["J.adapter.readers.quantum.SlaterReader"], "J.adapter.readers.quantum.AdfReader", ["java.util.Hashtable", "JU.AU", "$.Lst", "$.PT", "J.api.JmolAdapter", "J.quantum.SlaterData", "JU.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.htSymmetries = null;
@@ -285,24 +285,7 @@ this.asc.atoms[i].partialCharge = charges[p];
 }
 });
 c$.$AdfReader$SymmetryData$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.index = 0;
-this.sym = null;
-this.nSFO = 0;
-this.nBF = 0;
-this.coefs = null;
-this.mos = null;
-this.basisFunctions = null;
-Clazz.instantialize(this, arguments);}, J.adapter.readers.quantum.AdfReader, "SymmetryData", null);
-Clazz.makeConstructor(c$, 
-function(index, sym){
-JU.Logger.info((this.b$["J.adapter.readers.quantum.AdfReader"].isADF ? "ADF" : "AMS") + " reader creating SymmetryData " + sym + " " + index);
-this.index = index;
-this.sym = sym;
-}, "~N,~S");
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

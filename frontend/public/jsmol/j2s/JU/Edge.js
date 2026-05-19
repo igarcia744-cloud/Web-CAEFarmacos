@@ -1,4 +1,4 @@
-Clazz.declarePackage("JU");
+﻿Clazz.declarePackage("JU");
 Clazz.load(["java.lang.Enum", "JU.SimpleEdge"], "JU.Edge", ["JU.PT"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.index = -1;
@@ -228,54 +228,7 @@ Clazz.defineMethod(c$, "getCIPChirality",
 function(doCalculate){
 return "";
 }, "~B");
-/*if2*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.code = 0;
-this.number = null;
-this.$$name = null;
-Clazz.instantialize(this, arguments);}, JU.Edge, "EnumBondOrder", Enum);
-Clazz.makeConstructor(c$, 
-function(code, number, name){
-this.code = code;
-this.number = number;
-this.$$name = name;
-}, "~N,~S,~S");
-c$.getCodeFromName = Clazz.defineMethod(c$, "getCodeFromName", 
-function(name){
-for (var item, $item = 0, $$item = JU.Edge.EnumBondOrder.values(); $item < $$item.length && ((item = $$item[$item]) || true); $item++) if (item.$$name.equalsIgnoreCase(name)) return item.code;
-
-return 131071;
-}, "~S");
-c$.getNameFromCode = Clazz.defineMethod(c$, "getNameFromCode", 
-function(code){
-for (var item, $item = 0, $$item = JU.Edge.EnumBondOrder.values(); $item < $$item.length && ((item = $$item[$item]) || true); $item++) if (item.code == code) return item.$$name;
-
-return "?";
-}, "~N");
-c$.getNumberFromCode = Clazz.defineMethod(c$, "getNumberFromCode", 
-function(code){
-for (var item, $item = 0, $$item = JU.Edge.EnumBondOrder.values(); $item < $$item.length && ((item = $$item[$item]) || true); $item++) if (item.code == code) return item.number;
-
-return "?";
-}, "~N");
-Clazz.defineEnumConstant(c$, "SINGLE", 0, [1, "1", "single"]);
-Clazz.defineEnumConstant(c$, "DOUBLE", 1, [2, "2", "double"]);
-Clazz.defineEnumConstant(c$, "TRIPLE", 2, [3, "3", "triple"]);
-Clazz.defineEnumConstant(c$, "QUADRUPLE", 3, [4, "4", "quadruple"]);
-Clazz.defineEnumConstant(c$, "QUINTUPLE", 4, [5, "5", "quintuple"]);
-Clazz.defineEnumConstant(c$, "sextuple", 5, [6, "6", "sextuple"]);
-Clazz.defineEnumConstant(c$, "AROMATIC", 6, [515, "1.5", "aromatic"]);
-Clazz.defineEnumConstant(c$, "STRUT", 7, [32768, "1", "struts"]);
-Clazz.defineEnumConstant(c$, "H_REGULAR", 8, [2048, "1", "hbond"]);
-Clazz.defineEnumConstant(c$, "PARTIAL01", 9, [33, "0.5", "partial"]);
-Clazz.defineEnumConstant(c$, "PARTIAL12", 10, [66, "1.5", "partialDouble"]);
-Clazz.defineEnumConstant(c$, "PARTIAL23", 11, [97, "2.5", "partialTriple"]);
-Clazz.defineEnumConstant(c$, "PARTIAL32", 12, [100, "2.5", "partialTriple2"]);
-Clazz.defineEnumConstant(c$, "AROMATIC_SINGLE", 13, [513, "1", "aromaticSingle"]);
-Clazz.defineEnumConstant(c$, "AROMATIC_DOUBLE", 14, [514, "2", "aromaticDouble"]);
-Clazz.defineEnumConstant(c$, "ATROPISOMER", 15, [65537, "1", "atropisomer"]);
-Clazz.defineEnumConstant(c$, "UNSPECIFIED", 16, [17, "1", "unspecified"]);
-/*eoif2*/})();
+})();
 c$.argbsHbondType =  Clazz.newIntArray(-1, [0xFFFF69B4, 0xFFFFFF00, 0xFFFFFF00, 0xFFFFFFFF, 0xFFFF00FF, 0xFFFF0000, 0xFFFFA500, 0xFF00FFFF, 0xFF00FF00, 0xFFFF8080]);
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

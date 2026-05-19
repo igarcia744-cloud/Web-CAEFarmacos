@@ -1,4 +1,4 @@
-(function(Clazz
+﻿(function(Clazz
 ,Clazz_getClassName
 ,Clazz_newLongArray
 ,Clazz_doubleToByte
@@ -56,11 +56,9 @@
 ,Clazz_defineMethod
 ,Clazz_overrideMethod
 ,Clazz_declareAnonymous
-//,Clazz_checkPrivateMethod
 ,Clazz_cloneFinals
 ){
 var $t$;
-//var c$;
 Clazz_declarePackage("J.api");
 Clazz_declareInterface(J.api, "JmolPropertyManager");
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026
@@ -1552,6 +1550,5 @@ c$.readableTypes =  Clazz_newArray(-1, ["", "stateinfo", "extractmodel", "fileco
 ,Clazz.defineMethod
 ,Clazz.overrideMethod
 ,Clazz.declareAnonymous
-//,Clazz.checkPrivateMethod
 ,Clazz.cloneFinals
 );

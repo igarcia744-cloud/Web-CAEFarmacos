@@ -1,11 +1,11 @@
-.tabla-contenedor{
+﻿.tabla-contenedor{
 
   display:flex;
   flex-direction:column;
   gap:15px;
 
-  height:100%; /* 🔥 CLAVE (NO vh) */
-  min-height:0; /* 🔥 CLAVE */
+  height:100%; 
+  min-height:0; 
 
 }
 
@@ -25,7 +25,6 @@
   margin-bottom:10px;
 }
 
-/* botón refresh */
 .btn-refresh{
   background:#181818;
   border:1px solid #333;
@@ -41,10 +40,9 @@
   color:black;
 }
 
-/* BLOQUE (MITAD Y MITAD) */
 .tabla-bloque{
 
-  height:50%; /* 🔥 FUERZA MITAD EXACTA */
+  height:50%; 
   min-height:0;
 
   display:flex;
@@ -56,13 +54,11 @@
 
 }
 
-/* TÍTULO */
 .tabla-bloque h3{
   color:#438e23;
   margin-bottom:10px;
 }
 
-/* SCROLL */
 .tabla-scroll{
 
   flex:1;
@@ -83,25 +79,21 @@
   width:8px;
 }
 
-/* FONDO */
 .tabla-scroll::-webkit-scrollbar-track {
   background:#202020;
   border-radius:10px;
 }
 
-/* BARRA */
 .tabla-scroll::-webkit-scrollbar-thumb {
   background:#2e6b1a;
   border-radius:10px;
   border:2px solid #202020;
 }
 
-/* HOVER */
 .tabla-scroll::-webkit-scrollbar-thumb:hover {
   background:#438e23;
 }
 
-/* FIREFOX */
 .tabla-scroll {
   scrollbar-width:thin;
   scrollbar-color:#2e6b1a #202020;

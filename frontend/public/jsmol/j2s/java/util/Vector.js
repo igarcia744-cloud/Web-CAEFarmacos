@@ -1,4 +1,4 @@
-Clazz.load(["java.util.AbstractList", "$.List", "$.RandomAccess"], "java.util.Vector", ["java.lang.reflect.Array", "java.util.Arrays", "$.Collections", "$.Enumeration"], function(){
+﻿Clazz.load(["java.util.AbstractList", "$.List", "$.RandomAccess"], "java.util.Vector", ["java.lang.reflect.Array", "java.util.Arrays", "$.Collections", "$.Enumeration"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.elementCount = 0;
 this.elementData = null;
@@ -402,23 +402,7 @@ if (this.elementData.length != this.elementCount) {
 this.grow(this.elementCount);
 }});
 c$.$Vector$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.pos = 0;
-Clazz.instantialize(this, arguments);}, java.util, "Vector$1", null, java.util.Enumeration);
-Clazz.overrideMethod(c$, "hasMoreElements", 
-function(){
-return this.pos < this.b$["java.util.Vector"].elementCount;
-});
-Clazz.overrideMethod(c$, "nextElement", 
-function(){
-{
-if (this.pos < this.b$["java.util.Vector"].elementCount) {
-return this.b$["java.util.Vector"].elementData[this.pos++];
-}}throw  new java.util.NoSuchElementException();
-});
-/*eoif5*/})();
+})();
 };
 });
 ;//5.0.1-v7 Mon May 12 23:42:45 CDT 2025

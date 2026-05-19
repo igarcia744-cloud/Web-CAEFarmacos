@@ -8,7 +8,7 @@ const Home = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mensaje, setMensaje] = useState('');
-  const navigate = useNavigate(); // Hook para redirigir
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ const Home = () => {
     try {
 
       const formData = new URLSearchParams();
-      formData.append("username", email);   // username = email
+      formData.append("username", email);  
       formData.append("password", password);
 
       const res = await fetch('http://localhost:8000/auth/login', {
@@ -56,13 +56,11 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Columna izquierda con la imagen */}
       <div className="home-image">
         <img src={logo} alt="Logo grande" />
         <p></p>
       </div>
 
-      {/* Columna derecha con el formulario */}
       <div className="home-form">
         <h2>Iniciar sesión</h2>
         <form onSubmit={handleLogin}>

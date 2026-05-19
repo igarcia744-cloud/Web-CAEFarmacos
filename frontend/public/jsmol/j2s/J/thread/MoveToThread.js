@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.thread");
+﻿Clazz.declarePackage("J.thread");
 Clazz.load(["J.thread.JmolThread"], "J.thread.MoveToThread", ["JU.A4", "$.M3", "$.P3", "$.V3"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.isMove = false;
@@ -255,24 +255,7 @@ function(s){
 return (s == null ? NaN : s.getVal(this.fStep));
 }, "J.thread.MoveToThread.Slider");
 c$.$MoveToThread$Slider$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.start = 0;
-this.delta = 0;
-this.value = 0;
-Clazz.instantialize(this, arguments);}, J.thread.MoveToThread, "Slider", null);
-Clazz.makeConstructor(c$, 
-function(start, value){
-this.start = start;
-this.value = value;
-this.delta = value - start;
-}, "~N,~N");
-Clazz.defineMethod(c$, "getVal", 
-function(fStep){
-return (fStep < 0 ? this.value : this.start + fStep * this.delta);
-}, "~N");
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

@@ -1,5 +1,4 @@
-/* Reset global */
-* {
+﻿* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -11,23 +10,20 @@ body, html {
   font-family: Arial, sans-serif;
 }
 
-/* Contenedor principal centrado */
-/* Contenedor principal centrado vertical y horizontalmente */
 .registrar-container {
   display: flex;
-  flex-direction: column;       /* columna: imagen arriba, formulario abajo */
-  align-items: center;          /* centra horizontalmente */
-  justify-content: flex-start;  /* empieza desde arriba */
+  flex-direction: column;       
+  align-items: center;          
+  justify-content: flex-start; 
   min-height: 100vh;
-  width: 100%;                  /* importante para centrar la imagen */
+  width: 100%;                  
   padding-top: 20px;
 }
 
-/* Imagen arriba centrada */
 .registrar-image {
-  display: flex;                /* para centrar la imagen dentro del div */
-  justify-content: center;      /* centra horizontalmente */
-  width: 100%;                  /* que ocupe todo el ancho */
+  display: flex;                
+  justify-content: center;      
+  width: 100%;                 
   margin-bottom: 20px;
 }
 
@@ -36,11 +32,10 @@ body, html {
   max-width: 600px;
   height: auto;
   object-fit: contain;
-  display: block;               /* evita el pequeño espacio que generan las imágenes inline */
+  display: block;               
 }
 
 
-/* Formulario */
 .registrar-form {
   display: flex;
   flex-direction: column;

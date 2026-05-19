@@ -1,4 +1,4 @@
-Clazz.declarePackage("JS");
+﻿Clazz.declarePackage("JS");
 Clazz.load(["JS.HallInfo", "java.util.Hashtable"], "JS.SpaceGroup", ["java.util.Arrays", "JU.AU", "$.Lst", "$.M3", "$.M4", "$.P3", "$.PT", "$.SB", "JS.Symmetry", "$.SymmetryOperation", "$.UnitCell", "JU.Logger", "$.SimpleUnitCell"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.specialPrefix = "";
@@ -1512,71 +1512,7 @@ spinOps.addLast(op.suvw);
 }
 return this.spinList = spinOps;
 }, "~S");
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.a = 0;
-this.b = 0;
-this.c = 0;
-this.alpha = 0;
-this.beta = 0;
-this.gamma = 0;
-this.acsame = false;
-Clazz.instantialize(this, arguments);}, JS.SpaceGroup, "ParamCheck", null);
-Clazz.makeConstructor(c$, 
-function(params, allowSame, checkC){
-this.a = params[0];
-this.b = params[1];
-this.c = params[2];
-this.alpha = params[3];
-this.beta = params[4];
-this.gamma = params[5];
-if (!allowSame) this.checkParams(checkC);
-}, "~A,~B,~B");
-Clazz.defineMethod(c$, "checkParams", 
-function(checkC){
-if (this.b > 0 && this.a > this.b) {
-var d = this.a;
-this.a = this.b;
-this.b = d;
-}var bcsame = checkC && this.c > 0 && JU.SimpleUnitCell.approx0(this.b - this.c);
-if (bcsame) this.c = this.b * 1.5;
-var absame = JU.SimpleUnitCell.approx0(this.a - this.b);
-if (absame) this.b = this.a * 1.2;
-if (JU.SimpleUnitCell.approx0(this.gamma - 90)) {
-this.gamma = 130;
-}if (!checkC) return;
-this.acsame = this.c > 0 && JU.SimpleUnitCell.approx0(this.c - this.a);
-if (this.acsame) this.c = this.a * 1.1;
-if (JU.SimpleUnitCell.approx0(this.alpha - 90)) {
-this.alpha = 80;
-}if (JU.SimpleUnitCell.approx0(this.beta - 90)) {
-this.beta = 100;
-}if (this.alpha > this.beta) {
-var d = this.alpha;
-this.alpha = this.beta;
-this.beta = d;
-}var albesame = JU.SimpleUnitCell.approx0(this.alpha - this.beta);
-var begasame = JU.SimpleUnitCell.approx0(this.beta - this.gamma);
-var algasame = JU.SimpleUnitCell.approx0(this.gamma - this.alpha);
-if (albesame) {
-this.beta = this.alpha * 1.2;
-}if (begasame) {
-this.gamma = this.beta * 1.3;
-}if (algasame) {
-this.gamma = this.alpha * 1.4;
-}}, "~B");
-Clazz.defineMethod(c$, "checkNew", 
-function(params, newParams){
-var isNew = !(this.a == params[0] && this.b == params[1] && this.c == params[2] && this.alpha == params[3] && this.beta == params[4] && this.gamma == params[5]);
-newParams[0] = this.a;
-newParams[1] = this.b;
-newParams[2] = this.c;
-newParams[3] = this.alpha;
-newParams[4] = this.beta;
-newParams[5] = this.gamma;
-return isNew;
-}, "~A,~A");
-/*eoif3*/})();
+})();
 c$.canonicalSeitzList = null;
 c$.sgIndex = -1;
 c$.lastInfo = null;

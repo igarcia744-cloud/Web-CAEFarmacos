@@ -1,4 +1,4 @@
-Clazz.declarePackage("JV");
+﻿Clazz.declarePackage("JV");
 Clazz.load(null, "JV.OutputManager", ["java.util.Date", "$.Hashtable", "JU.AU", "$.Lst", "$.OC", "$.PT", "$.Rdr", "$.SB", "J.api.Interface", "J.i18n.GT", "JU.Logger", "JV.FileManager", "$.JC", "$.Viewer"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.vwr = null;
@@ -767,23 +767,7 @@ var vname = "v__" + ("" + Math.random()).substring(3);
 return "# Jmol script\n{\n\tVar " + vname + " = pathForAllFiles\n\tpathForAllFiles=\"$SCRIPT_PATH$\"\n\ttry{\n\t\t" + cmd + "\n\t}catch(e){" + strCatch + "}\n\tpathForAllFiles = " + vname + "\n}\n";
 }, "~S,~S");
 c$.$OutputManager$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(JV, "OutputManager$1", null, Runnable);
-Clazz.defineMethod(c$, "run", 
-function(){
-try {
-this.b$["JV.OutputManager"].getImagePixels(this.f$.image, this.f$.params);
-} catch (e) {
-if (Clazz.exceptionOf(e, Exception)){
-e.printStackTrace();
-} else {
-throw e;
-}
-}
-this.b$["JV.OutputManager"].finishImage(this.f$.errRet, "Png", this.f$.out, null, this.f$.params);
-this.f$.out.closeChannel();
-});
-/*eoif5*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

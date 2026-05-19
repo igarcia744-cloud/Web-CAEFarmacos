@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.shapespecial");
+﻿Clazz.declarePackage("J.shapespecial");
 Clazz.load(["java.lang.Enum", "J.shape.MeshCollection", "JU.P3i", "$.V3"], "J.shapespecial.Draw", ["java.util.Hashtable", "JU.AU", "$.BS", "$.Lst", "$.Measure", "$.P3", "$.PT", "$.SB", "JS.SV", "J.shapespecial.DrawMesh", "JU.BSUtil", "$.C", "$.Escape", "$.Font", "$.Logger", "$.MeshSurface"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.dmeshes = null;
@@ -1251,42 +1251,6 @@ c$.randomPoint = Clazz.defineMethod(c$, "randomPoint",
 function(){
 return JU.P3.new3(Math.random(), Math.random(), Math.random());
 });
-/*if2*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.id = 0;
-this.$$name = null;
-Clazz.instantialize(this, arguments);}, J.shapespecial.Draw, "EnumDrawType", Enum);
-Clazz.makeConstructor(c$, 
-function(id, name){
-this.id = id;
-this.$$name = name;
-}, "~N,~S");
-c$.getType = Clazz.defineMethod(c$, "getType", 
-function(nPoints){
-switch (nPoints) {
-case 1:
-return J.shapespecial.Draw.EnumDrawType.POINT;
-case 2:
-return J.shapespecial.Draw.EnumDrawType.LINE;
-case 4:
-return J.shapespecial.Draw.EnumDrawType.PLANE;
-default:
-return J.shapespecial.Draw.EnumDrawType.NONE;
-}
-}, "~N");
-Clazz.defineEnumConstant(c$, "MULTIPLE", 0, [-1, "multiple"]);
-Clazz.defineEnumConstant(c$, "NONE", 1, [0, "none"]);
-Clazz.defineEnumConstant(c$, "POINT", 2, [1, "point"]);
-Clazz.defineEnumConstant(c$, "LINE", 3, [2, "line"]);
-Clazz.defineEnumConstant(c$, "PLANE", 4, [4, "plane"]);
-Clazz.defineEnumConstant(c$, "CYLINDER", 5, [14, "cylinder"]);
-Clazz.defineEnumConstant(c$, "ARROW", 6, [15, "arrow"]);
-Clazz.defineEnumConstant(c$, "CIRCLE", 7, [16, "circle"]);
-Clazz.defineEnumConstant(c$, "CURVE", 8, [17, "curve"]);
-Clazz.defineEnumConstant(c$, "CIRCULARPLANE", 9, [18, "circularPlane"]);
-Clazz.defineEnumConstant(c$, "ARC", 10, [19, "arc"]);
-Clazz.defineEnumConstant(c$, "LINE_SEGMENT", 11, [20, "lineSegment"]);
-Clazz.defineEnumConstant(c$, "POLYGON", 12, [21, "polygon"]);
-/*eoif2*/})();
+})();
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

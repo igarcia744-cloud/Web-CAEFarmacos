@@ -1,21 +1,4 @@
-/*
-
-  http://chemapps.stolaf.edu/jmol/jsmol/jpge
-  Jmol Point Group Explorer
-  Bob Hanson, 2022.08.05-08
- 
-  BH 2024.03.07 added Hermann-Mauguin option 
-
-  This page graphically displays point group symmetry operators for a model. 
-  You can load any of the examples here or any file of your own.
-
-  Many of the models are sourced from https://symotter.org/gallery
-  with various adjustments and additions.
-
-  Thank you, Dean Johnston, for that terrific page and the great struture list!
-
-*/
-
+﻿
 
 
 		Jmol.Info.j2sPath = "../j2s"
@@ -83,7 +66,6 @@ csdlink = "https://www.ccdc.cam.ac.uk/structures/Search?Ccdcid=$CSDID$";
 
 drawCommand = ";draw scale 1.4 pointgroup;";
 
-//Models=[['name','pointGroup','hm','label','special','doi','csd','fullName']// models.js
 
 FILENAME = 0;
 SFNAME = 1;
@@ -323,7 +305,6 @@ function report(name) {
 	Jmol.script(jmolApplet0, "modelTitle = '"+fixPointGroupSubs(pg)+"';modelTitleNoSubs = '"+getName(pg)+"'");
 }
 
-/// Jmol callbacks
 
 function errorCallback(a, b, msg) {
  alert(msg)

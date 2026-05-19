@@ -1,4 +1,4 @@
-Clazz.declarePackage("JU");
+﻿Clazz.declarePackage("JU");
 Clazz.load(["java.io.BufferedReader", "javajs.api.GenericLineReader"], "JU.Rdr", ["java.io.BufferedInputStream", "$.ByteArrayInputStream", "$.InputStreamReader", "$.StringReader", "JU.AU", "$.Base64", "$.Encoding", "$.SB"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.reader = null;
@@ -357,28 +357,7 @@ if (JU.Rdr.b264[264] == -1) for (var i = 0; i < n; i++) if (bytes[i] < 9) return
 
 return false;
 }, "java.io.BufferedInputStream,~N");
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.stream = null;
-Clazz.instantialize(this, arguments);}, JU.Rdr, "StreamReader", java.io.BufferedReader);
-Clazz.makeConstructor(c$, 
-function(bis, charSet){
-Clazz.superConstructor(this, JU.Rdr.StreamReader, [ new java.io.InputStreamReader(bis, (charSet == null ? "UTF-8" : charSet))]);
-this.stream = bis;
-}, "java.io.BufferedInputStream,~S");
-Clazz.defineMethod(c$, "getStream", 
-function(){
-try {
-this.stream.reset();
-} catch (e) {
-if (Clazz.exceptionOf(e,"java.io.IOException")){
-} else {
-throw e;
-}
-}
-return this.stream;
-});
-/*eoif3*/})();
+})();
 c$.b264 = null;
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

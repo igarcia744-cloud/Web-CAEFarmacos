@@ -1,4 +1,4 @@
-Clazz.load(["java.util.AbstractMap", "$.AbstractSet", "$.Iterator", "$.Map", "$.MapEntry"], "java.util.IdentityHashMap", ["java.util.AbstractCollection", "java.util.MapEntry.Type"], function(){
+﻿Clazz.load(["java.util.AbstractMap", "$.AbstractSet", "$.Iterator", "$.Map", "$.MapEntry"], "java.util.IdentityHashMap", ["java.util.AbstractCollection", "java.util.MapEntry.Type"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.elementData = null;
 this.$size = 0;
@@ -245,203 +245,26 @@ if (map.entrySet() != null) {
 Clazz.superCall(this, java.util.IdentityHashMap, "putAll", [map]);
 }}, "java.util.Map");
 c$.$IdentityHashMap$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "IdentityHashMap$1", java.util.AbstractSet);
-Clazz.overrideMethod(c$, "contains", 
-function(object){
-return this.b$["java.util.IdentityHashMap"].containsKey(object);
-}, "~O");
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.b$["java.util.IdentityHashMap"].size();
-});
-Clazz.overrideMethod(c$, "clear", 
-function(){
-this.b$["java.util.IdentityHashMap"].clear();
-});
-Clazz.overrideMethod(c$, "remove", 
-function(key){
-if (this.b$["java.util.IdentityHashMap"].containsKey(key)) {
-this.b$["java.util.IdentityHashMap"].remove(key);
-return true;
-}return false;
-}, "~O");
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return  new java.util.IdentityHashMap.IdentityHashMapIterator(((Clazz.isClassDefined("java.util.IdentityHashMap$1$1") ? 0 : java.util.IdentityHashMap.$IdentityHashMap$1$1$ ()), Clazz.innerTypeInstance(java.util.IdentityHashMap$1$1, this, null)), this.b$["java.util.IdentityHashMap"]);
-});
-/*eoif5*/})();
+})();
 };
 c$.$IdentityHashMap$1$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "IdentityHashMap$1$1", null, java.util.MapEntry.Type);
-Clazz.overrideMethod(c$, "get", 
-function(entry){
-return entry.key;
-}, "java.util.MapEntry");
-/*eoif5*/})();
+})();
 };
 c$.$IdentityHashMap$2$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "IdentityHashMap$2", java.util.AbstractCollection);
-Clazz.overrideMethod(c$, "contains", 
-function(object){
-return this.b$["java.util.IdentityHashMap"].containsValue(object);
-}, "~O");
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.b$["java.util.IdentityHashMap"].size();
-});
-Clazz.overrideMethod(c$, "clear", 
-function(){
-this.b$["java.util.IdentityHashMap"].clear();
-});
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return  new java.util.IdentityHashMap.IdentityHashMapIterator(((Clazz.isClassDefined("java.util.IdentityHashMap$2$1") ? 0 : java.util.IdentityHashMap.$IdentityHashMap$2$1$ ()), Clazz.innerTypeInstance(java.util.IdentityHashMap$2$1, this, null)), this.b$["java.util.IdentityHashMap"]);
-});
-Clazz.overrideMethod(c$, "remove", 
-function(object){
-var it = this.iterator();
-while (it.hasNext()) {
-if (object === it.next()) {
-it.remove();
-return true;
-}}
-return false;
-}, "~O");
-/*eoif5*/})();
+})();
 };
 c$.$IdentityHashMap$2$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "IdentityHashMap$2$1", null, java.util.MapEntry.Type);
-Clazz.overrideMethod(c$, "get", 
-function(entry){
-return entry.value;
-}, "java.util.MapEntry");
-/*eoif5*/})();
+})();
 };
-/*if3*/;(function(){
-var c$ = Clazz.declareType(java.util.IdentityHashMap, "IdentityHashMapEntry", java.util.MapEntry);
-Clazz.overrideMethod(c$, "equals", 
-function(object){
-if (this === object) {
-return true;
-}if (Clazz.instanceOf(object,"java.util.Map.Entry")) {
-var entry = object;
-return (this.key === entry.getKey()) && (this.value === entry.getValue());
-}return false;
-}, "~O");
-Clazz.overrideMethod(c$, "hashCode", 
-function(){
-return System.identityHashCode(this.key) ^ System.identityHashCode(this.value);
-});
-Clazz.overrideMethod(c$, "toString", 
-function(){
-return this.key + "=" + this.value;
-});
-/*eoif3*/})();
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.position = 0;
-this.lastPosition = 0;
-this.associatedMap = null;
-this.expectedModCount = 0;
-this.type = null;
-this.canRemove = false;
-Clazz.instantialize(this, arguments);}, java.util.IdentityHashMap, "IdentityHashMapIterator", null, java.util.Iterator);
-Clazz.makeConstructor(c$, 
-function(value, hm){
-this.associatedMap = hm;
-this.type = value;
-this.expectedModCount = hm.modCount;
-}, "java.util.MapEntry.Type,java.util.IdentityHashMap");
-Clazz.overrideMethod(c$, "hasNext", 
-function(){
-while (this.position < this.associatedMap.elementData.length) {
-if (this.associatedMap.elementData[this.position] == null) {
-this.position += 2;
-} else {
-return true;
-}}
-return false;
-});
-Clazz.defineMethod(c$, "checkConcurrentMod", 
-function(){
-if (this.expectedModCount != this.associatedMap.modCount) {
-throw  new java.util.ConcurrentModificationException();
-}});
-Clazz.overrideMethod(c$, "next", 
-function(){
-this.checkConcurrentMod();
-if (!this.hasNext()) {
-throw  new java.util.NoSuchElementException();
-}var result = this.associatedMap.getEntry(this.position);
-this.lastPosition = this.position;
-this.position += 2;
-this.canRemove = true;
-return this.type.get(result);
-});
-Clazz.overrideMethod(c$, "remove", 
-function(){
-this.checkConcurrentMod();
-if (!this.canRemove) {
-throw  new IllegalStateException();
-}this.canRemove = false;
-this.associatedMap.remove(this.associatedMap.elementData[this.lastPosition]);
-this.position = this.lastPosition;
-this.expectedModCount++;
-});
-/*eoif3*/})();
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.associatedMap = null;
-Clazz.instantialize(this, arguments);}, java.util.IdentityHashMap, "IdentityHashMapEntrySet", java.util.AbstractSet);
-Clazz.makeConstructor(c$, 
-function(hm){
-Clazz.superConstructor (this, java.util.IdentityHashMap.IdentityHashMapEntrySet, []);
-this.associatedMap = hm;
-}, "java.util.IdentityHashMap");
-Clazz.defineMethod(c$, "hashMap", 
-function(){
-return this.associatedMap;
-});
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.associatedMap.$size;
-});
-Clazz.overrideMethod(c$, "clear", 
-function(){
-this.associatedMap.clear();
-});
-Clazz.overrideMethod(c$, "remove", 
-function(object){
-if (this.contains(object)) {
-this.associatedMap.remove((object).getKey());
-return true;
-}return false;
-}, "~O");
-Clazz.overrideMethod(c$, "contains", 
-function(object){
-if (Clazz.instanceOf(object,"java.util.Map.Entry")) {
-var entry = this.associatedMap.getEntry((object).getKey());
-return entry != null && entry.equals(object);
-}return false;
-}, "~O");
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return  new java.util.IdentityHashMap.IdentityHashMapIterator(((Clazz.isClassDefined("java.util.IdentityHashMap$IdentityHashMapEntrySet$1") ? 0 : java.util.IdentityHashMap.IdentityHashMapEntrySet.$IdentityHashMap$IdentityHashMapEntrySet$1$ ()), Clazz.innerTypeInstance(java.util.IdentityHashMap$IdentityHashMapEntrySet$1, this, null)), this.associatedMap);
-});
-c$.$IdentityHashMap$IdentityHashMapEntrySet$1$=function(){
-/*if5*/;(function(){
+})();
+})();
+;(function(){
 var c$ = Clazz.declareAnonymous(java.util, "IdentityHashMap$IdentityHashMapEntrySet$1", null, java.util.MapEntry.Type);
 Clazz.overrideMethod(c$, "get", 
 function(entry){
 return entry;
 }, "java.util.MapEntry");
-/*eoif5*/})();
-};
-/*eoif3*/})();
+})();
 c$.NULL_OBJECT =  new Clazz._O();
 });
 ;//5.0.1-v7 Mon May 12 23:42:45 CDT 2025

@@ -1,4 +1,4 @@
-Clazz.load(null, "java.io.ObjectStreamField", ["java.util.Arrays"], function(){
+﻿Clazz.load(null, "java.io.ObjectStreamField", ["java.util.Arrays"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.name = null;
 this.type = null;
@@ -166,13 +166,7 @@ function(){
 return this.unshared;
 });
 c$.$ObjectStreamField$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.io, "ObjectStreamField$1", null, java.util.Comparator);
-Clazz.overrideMethod(c$, "compare", 
-function(f1, f2){
-return f1.compareTo(f2);
-}, "java.io.ObjectStreamField,java.io.ObjectStreamField");
-/*eoif5*/})();
+})();
 };
 });
 ;//5.0.1-v7 Mon May 12 23:42:45 CDT 2025

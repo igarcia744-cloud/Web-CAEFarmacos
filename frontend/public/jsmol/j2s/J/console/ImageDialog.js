@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.console");
+﻿Clazz.declarePackage("J.console");
 Clazz.load(["javax.swing.JDialog", "$.JPanel", "J.api.GenericImageDialog"], "J.console.ImageDialog", ["java.util.Hashtable", "JU.PT", "javax.swing.JMenuBar", ], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.menubar = null;
@@ -118,41 +118,13 @@ Clazz.overrideMethod(c$, "windowDeactivated",
 function(e){
 }, "java.awt.event.WindowEvent");
 c$.$ImageDialog$ImageCanvas$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-Clazz.instantialize(this, arguments);}, J.console.ImageDialog, "ImageCanvas", javax.swing.JPanel);
-Clazz.overrideMethod(c$, "paintComponent", 
-function(g){
-System.out.println(this.b$["J.console.ImageDialog"].image.getClass().getName());
-g.setColor(java.awt.Color.white);
-g.fillRect(0, 0, this.b$["J.console.ImageDialog"].image.getWidth(null), this.b$["J.console.ImageDialog"].image.getHeight(null));
-g.drawImage(this.b$["J.console.ImageDialog"].image, 0, 0, null);
-}, "java.awt.Graphics");
-/*eoif4*/})();
+})();
 };
 c$.$ImageDialog$2$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(J.console, "ImageDialog$2", Thread);
-/*eoif5*/})();
+})();
 };
 c$.$ImageDialog$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(J.console, "ImageDialog$1", null, Runnable);
-Clazz.overrideMethod(c$, "run", 
-function(){
-var params =  new java.util.Hashtable();
-var fname = this.b$["J.console.ImageDialog"].vwr.dialogAsk("Save Image", "jmol.png", params);
-if (fname == null) return;
-var type = "PNG";
-var pt = fname.lastIndexOf(".");
-if (pt > 0) type = fname.substring(pt + 1).toUpperCase();
-params.put("fileName", fname);
-params.put("type", type);
-params.put("image", this.b$["J.console.ImageDialog"].image);
-this.b$["J.console.ImageDialog"].vwr.showString(this.b$["J.console.ImageDialog"].vwr.processWriteOrCapture(params), false);
-});
-/*eoif5*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

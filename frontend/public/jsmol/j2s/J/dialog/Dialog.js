@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.dialog");
+﻿Clazz.declarePackage("J.dialog");
 Clazz.load(["javax.swing.JPanel", "javax.swing.event.ChangeListener", "javax.swing.filechooser.FileFilter", "J.api.JmolDialogInterface"], "J.dialog.Dialog", ["java.io.File", "javax.swing.JComboBox", "$.JFileChooser", "$.JOptionPane", "$.JSlider", "$.SwingUtilities", "$.UIManager", "javax.swing.border.TitledBorder", "J.dialog.FileChooser", "$.FilePreview", "J.i18n.GT", "JU.Logger", "JV.FileManager"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.extensions = null;
@@ -315,94 +315,15 @@ throw e;
 return this.outputFileName;
 }, "JV.Viewer,~S,~S");
 c$.$Dialog$QualityListener$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.isJPEG = false;
-this.slider = null;
-Clazz.instantialize(this, arguments);}, J.dialog.Dialog, "QualityListener", null, javax.swing.event.ChangeListener);
-Clazz.makeConstructor(c$, 
-function(isJPEG, slider){
-this.isJPEG = isJPEG;
-this.slider = slider;
-}, "~B,javax.swing.JSlider");
-Clazz.overrideMethod(c$, "stateChanged", 
-function(arg0){
-var value = this.slider.getValue();
-if (this.isJPEG) {
-J.dialog.Dialog.qualityJPG = value;
-this.b$["J.dialog.Dialog"].qPanelJPEG.setBorder( new javax.swing.border.TitledBorder(J.i18n.GT.i(J.i18n.GT.$("JPEG Quality ({0})"), value)));
-} else {
-J.dialog.Dialog.qualityPNG = value;
-this.b$["J.dialog.Dialog"].qPanelPNG.setBorder( new javax.swing.border.TitledBorder(J.i18n.GT.i(J.i18n.GT.$("PNG Quality ({0})"), value)));
-}}, "javax.swing.event.ChangeEvent");
-/*eoif4*/})();
+})();
 };
 c$.$Dialog$ExportChoiceListener$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-Clazz.instantialize(this, arguments);}, J.dialog.Dialog, "ExportChoiceListener", null, java.awt.event.ItemListener);
-Clazz.overrideMethod(c$, "itemStateChanged", 
-function(e){
-var source = e.getSource();
-var selectedFile = J.dialog.Dialog.imageChooser.getSelectedFile();
-if (selectedFile == null) selectedFile = this.b$["J.dialog.Dialog"].initialFile;
-var newFile = null;
-var name;
-var newExt = this.b$["J.dialog.Dialog"].extensions[source.getSelectedIndex()];
-if ((name = selectedFile.getName()) != null && name.endsWith("." + this.b$["J.dialog.Dialog"].extension)) {
-name = name.substring(0, name.length - this.b$["J.dialog.Dialog"].extension.length);
-name += newExt;
-this.b$["J.dialog.Dialog"].initialFile = newFile =  new java.io.File(selectedFile.getParent(), name);
-}this.b$["J.dialog.Dialog"].extension = newExt;
-J.dialog.Dialog.imageChooser.resetChoosableFileFilters();
-J.dialog.Dialog.imageChooser.addChoosableFileFilter( new J.dialog.Dialog.TypeFilter(this.b$["J.dialog.Dialog"].extension));
-if (newFile != null) J.dialog.Dialog.imageChooser.setSelectedFile(newFile);
-this.b$["J.dialog.Dialog"].choice = source.getSelectedItem();
-}, "java.awt.event.ItemEvent");
-/*eoif4*/})();
+})();
 };
 c$.$Dialog$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(J.dialog, "Dialog$1", null, Runnable);
-Clazz.overrideMethod(c$, "run", 
-function(){
-if (this.b$["J.dialog.Dialog"].dialogType.equals("Load")) {
-this.b$["J.dialog.Dialog"].outputFileName = this.b$["J.dialog.Dialog"].getOpenFileNameFromDialog(this.b$["J.dialog.Dialog"].vwr.vwrOptions, this.b$["J.dialog.Dialog"].vwr, this.b$["J.dialog.Dialog"].inputFileName, null, null, false);
-return;
-}if (this.b$["J.dialog.Dialog"].dialogType.equals("Save")) {
-this.b$["J.dialog.Dialog"].outputFileName = this.b$["J.dialog.Dialog"].getSaveFileNameFromDialog(this.b$["J.dialog.Dialog"].vwr, this.b$["J.dialog.Dialog"].inputFileName, null);
-return;
-}if (this.b$["J.dialog.Dialog"].dialogType.startsWith("Save Image")) {
-this.b$["J.dialog.Dialog"].outputFileName = this.b$["J.dialog.Dialog"].getImageFileNameFromDialog(this.b$["J.dialog.Dialog"].vwr, this.b$["J.dialog.Dialog"].inputFileName, this.b$["J.dialog.Dialog"].imageType, this.b$["J.dialog.Dialog"].imageChoices, this.b$["J.dialog.Dialog"].imageExtensions, this.b$["J.dialog.Dialog"].qualityJ, this.b$["J.dialog.Dialog"].qualityP);
-return;
-}this.b$["J.dialog.Dialog"].outputFileName = null;
-});
-/*eoif5*/})();
+})();
 };
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.thisType = null;
-Clazz.instantialize(this, arguments);}, J.dialog.Dialog, "TypeFilter", javax.swing.filechooser.FileFilter);
-Clazz.makeConstructor(c$, 
-function(type){
-Clazz.superConstructor (this, J.dialog.Dialog.TypeFilter, []);
-this.thisType = type.toLowerCase();
-}, "~S");
-Clazz.overrideMethod(c$, "accept", 
-function(f){
-if (f.isDirectory() || this.thisType == null) {
-return true;
-}var ext = f.getName();
-var pt = ext.lastIndexOf(".");
-return (pt >= 0 && ext.substring(pt + 1).toLowerCase().equals(this.thisType));
-}, "java.io.File");
-Clazz.overrideMethod(c$, "getDescription", 
-function(){
-return this.thisType.toUpperCase() + " (*." + this.thisType + ")";
-});
-/*eoif3*/})();
+})();
 c$.defaultChoice = 0;
 c$.qualityJPG = 75;
 c$.qualityPNG = 2;

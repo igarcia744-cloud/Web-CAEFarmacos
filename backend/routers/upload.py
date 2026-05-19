@@ -103,7 +103,6 @@ async def subir_mol2(
     if not archivo.filename.endswith(".mol2"):
         raise HTTPException(status_code=400, detail="Debe ser un archivo .mol2")
 
-    # buscar libreria
     resultado = await db.execute(
         select(Libreria).where(Libreria.id == libreria_id)
     )

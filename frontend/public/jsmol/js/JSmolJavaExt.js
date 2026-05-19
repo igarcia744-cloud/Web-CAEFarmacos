@@ -1,74 +1,15 @@
-// JSmolJavaExt.js
- 
-// contains class declarations for 
-// Integer, Byte, Short, Float, Double, Character
-// EventObject, EventListenerProxy
-// Throwable, Error
-// and many others. If these classes have js files in java/, those files are unused
+﻿ 
 
 
-// This library will be wrapped by an additional anonymous function using ANT in 
-// build_03_tojs.xml. This task will also modify variable names. References 
-// to Clazz._ will not be changed, but other Clazz.xxx will be changed to 
-// (local scope) Clazz_xxx, allowing them to be further compressed using
-// Google Closure Compiler in that same ANT task.
 
-// BH 2025.11.10 removing override of String.prototype.concat
-// BH 2023.07.08 NaN.0 fix
-// BH 10/16/2017 6:51:20 AM fixing range error for MSIE in prepareCallback setting arguments.length < 0
-// BH 10/13/2017 7:03:28 AM fix for String.initialize(bytes) applying bytes as arguments
-// BH 9/18/2017 10:15:18 PM adding Integer.compare()
-// BH 4/7/2017 10:48:50 AM adds Math.signum(f)
-// BH 10/15/2016 9:28:13 AM adds Float.floatToIntBits(f)
-// BH 3/9/2016 6:25:08 PM at least allow Error() by itself to work as before (inchi.js uses this)
-// BH 12/21/2015 1:31:41 PM fixing String.instantialize for generic typed array
-// BH 9/19/2015 11:05:45 PM Float.isInfinite(), Float.isNaN(), Double.isInfinite(), Double.isNaN() all not implemented
-// BH 5/31/2015 5:53:04 PM Number.compareTo added
-// BH 5/21/2015 5:46:30 PM Number("0xFFFFFFFF") is not -1
-// BH 4/23/2015 9:08:59 AM xx.getComponentType() is nonfunctional. Array.newInstance now defines a wrapper for .getClass().getComponentType() that works  
-// BH 4/12/2015 1:37:44 PM adding Math.rint = Math.round
-// BH 1/16/2015 10:09:38 AM Chrome failure jqGrig due to new String("x").toString() not being a simple string
-// BH 8/14/2014 6:49:22 PM Character class efficiencies
-// BH 7/24/2014 9:02:18 AM most browsers do not support String.codePointAt()
-// BH 7/11/2014 4:17:22 PM fix for Boolean.valueOf("false") not being false 
-// BH 5/27/2014 6:29:59 AM ensure floats and doubles have decimal point in toString
-// BH 4/1/2014 12:23:41 PM Encoding moved to Clazz._Encoding; 
-// BH 4/1/2014 7:51:46 AM removing java.lang.B00lean
-// BH 3/7/2014 9:17:10 AM removing Array.toString; moving that code here from j2sJmol.js
-// BH 1/30/2014 9:04:25 AM adding Throwable.getStackTrace() as a STRING
-// BH 12/4/2013 9:20:44 PM fix for reassigning Date.prototype.toString()
-// BH 12/3/2013 11:43:10 AM bizarre Safari bug in reassigning Boolean (OK, I admit, we shouldn't have done that...) 
-// BH 12/1/2013 6:50:16 AM evit Number.prototype.toString assignment removed!
-// BH 11/30/2013 1:46:31 PM fixing Byte, Short, Long, Integer, Float, Double to reflect proper bounds and error conditions
-// BH 11/29/2013 8:58:49 PM removing Boolean.toString(boolean)
-// BH 11/4/2013 7:34:26 AM changing "var nativeClazz" to "var nativeClass" to avoid ANT replacement of "nativeClazz." to "nativeClazz_"
-// BH 10/19/2013 1:29:27 PM fixed String.$replace()
-// BH 10/18/2013 6:09:23 PM fixed (Double|Float).valueOf(NaN).valueOf(), which should return NaN, not throw an error
-// BH 10/12/2013 11:18:44 AM fixed bug in Double(String) and Float(String) that was returning typeof "string"
-// BH 10/10/2013 2:40:20 PM  added Math.log10   
-// BH 7/23/2013 7:24:01 AM fixing Number.shortValue() and Number.byteValue() for negative values
-// BH 6/16/2013 1:31:30 PM adding /| in String.replace -- thank you David Koes
-// BH 3/13/2013 12:49:23 PM setting Boolean.valueOf() "@" 
-// BH 3/2/2013 10:46:45 PM removed Double.valueOf(String)
-// BH 11/6/2012 8:26:33 PM added instanceof Int32Array in String.instantialize
-// BH 10/13/2012 11:38:07 PM corrected Integer.parseInt to allow only +-0123456789; created Integer.parseIntRadix
-// BH 11/1/2012 added Short
-// BH 9/10/2012 6:27:21 AM added java.net.URL... classes
-// BH 1/7/2013 7:40:06 AM added Clazz.dateToString
 
 ;(function(Clazz) {
 
-// moved here from package.js
-// these classes will be created as objects prior to any others
-// and are then available immediately
 
 	Clazz._Loader.registerPackages("java", [ "io", "lang", "lang.reflect", "util" ]);
 
   var sJU = "java.util";
 
-  //var sJU = "JU";  
-	//Clazz._Loader.registerPackages (sJU, ["regex", "zip"]);
-	//var javautil = JU;
 
   var javautil = java.util;
 
@@ -83,9 +24,6 @@
 		"java.io.FileInputStream",
 		"java.io.FileWriter",
 		"java.io.OutputStreamWriter",
-//		sJU + ".Calendar", // bypassed in ModelCollection
-//		"java.text.SimpleDateFormat", // not used
-//		"java.text.DateFormat", // not used
 		sJU + ".concurrent.Executors"
 	])
 
@@ -96,7 +34,6 @@ Math.log10||(Math.log10=function(a){return Math.log(a)/2.302585092994046});
 Math.signum||(Math.signum=function(d){return(d==0.0||isNaN(d))?d:d < 0 ? -1 : 1});
 
 if(Clazz._supportsNativeObject){
-	// Number and Array are special -- do not override prototype.toString -- "length - 2" here
 	for(var i=0;i<Clazz._extendedObjectMethods.length - 2;i++){
 		var p=Clazz._extendedObjectMethods[i];
 		Array.prototype[p] = Clazz._O.prototype[p];
@@ -161,15 +98,6 @@ return"class java.lang.Integer";
 return""+this.valueOf();
 };
 
-/*
-
-Clazz.makeConstructor(Integer,
-function(){
-this.valueOf=function(){
-return 0;
-};
-});
-*/
 
 
 Clazz.overrideConstructor(Integer, function(v){
@@ -178,15 +106,6 @@ Clazz.overrideConstructor(Integer, function(v){
 	v = Integer.parseIntRadix(v, 10);
  this.valueOf=function(){return v;};
 }); //BH
-/*
-Clazz.makeConstructor(Integer,
-function(s){
-var value=Integer.parseInt(s,10);
-this.valueOf=function(){
-return value;
-};
-},"String");
-*/
 Integer.MIN_VALUE=Integer.prototype.MIN_VALUE=-0x80000000;
 Integer.MAX_VALUE=Integer.prototype.MAX_VALUE=0x7fffffff;
 Integer.TYPE=Integer.prototype.TYPE=Integer;
@@ -265,24 +184,12 @@ return Integer.parseIntRadix(s,10);
 },"String");
 Integer.parseInt=Integer.prototype.parseInt;
 
-/*
-Clazz.defineMethod(Integer,"$valueOf",
-function(s){
-return new Integer(Integer.parseIntRadix(s,10));
-},"String");
-*/
 
 Clazz.overrideMethod(Integer,"$valueOf",
 function(s){
 return new Integer(s);
 });
 
-/*
-Clazz.defineMethod(Integer,"$valueOf",
-function(s,r){
-return new Integer(Integer.parseIntRadix(s,r));
-},"String, Number");
-*/
 
 Integer.$valueOf=Integer.prototype.$valueOf;
 
@@ -310,9 +217,6 @@ if (n.indexOf(".") >= 0)n = "";
 var i = (n.startsWith("-") ? 1 : 0);
 n = n.replace(/\#/, "0x").toLowerCase();
 var radix=(n.startsWith("0x", i) ? 16 : n.startsWith("0", i) ? 8 : 10);
-// The general problem with parseInt is that is not strict -- ParseInt("10whatever") == 10.
-// Number is strict, but Number("055") does not work, though ParseInt("055", 8) does.
-// need to make sure negative numbers are negative
 n = Number(n) & 0xFFFFFFFF;
 return (radix == 8 ? parseInt(n, 8) : n);
 },"~S");
@@ -329,7 +233,6 @@ function(){
 return this.valueOf();
 });
 
-// Note that Long is problematic in JavaScript 
 
 java.lang.Long=Long=function(){
 Clazz.instantialize(this,arguments);
@@ -351,8 +254,6 @@ Clazz.overrideConstructor(Long, function(v){
 this.valueOf=function(){return v;};
 });
 
-//Long.MIN_VALUE=Long.prototype.MIN_VALUE=-0x8000000000000000;
-//Long.MAX_VALUE=Long.prototype.MAX_VALUE=0x7fffffffffffffff;
 Long.TYPE=Long.prototype.TYPE=Long;
 
 Clazz.defineMethod(Long,"parseLong",
@@ -366,17 +267,6 @@ Clazz.overrideMethod(Long,"$valueOf",
 function(s){
 return new Long(s);
 });
-/*
-Clazz.defineMethod(Long,"$valueOf",
-function(s){
-return new Long(s);
-},"Number");
-
-Clazz.defineMethod(Long,"$valueOf",
-function(s,r){
-return new Long(Long.parseLong(s,r));
-},"String, Number");
-*/
 Long.$valueOf=Long.prototype.$valueOf;
 Clazz.overrideMethod(Long,"equals",
 function(s){
@@ -445,24 +335,12 @@ return Short.parseShortRadix (s, 10);
 
 Short.parseShort = Short.prototype.parseShort;
 
-/*
-Clazz.defineMethod(Short, "$valueOf",
-function (s) {
-return new Short(Short.parseShort (s, 10));
-}, "String");
-	*/
 
 Clazz.overrideMethod(Short, "$valueOf",
 function (s) {
 return new Short(s);
 });
 
-/*
-Clazz.defineMethod(Short, "$valueOf",
-function (s, r) {
-return new Short(Short.parseShort (s, r));
-}, "String, Number");
-	*/
 
 Short.$valueOf = Short.prototype.$valueOf;
 Clazz.overrideMethod(Short, "equals",
@@ -699,12 +577,6 @@ return doubleVal;
 },"String");
 Double.parseDouble=Double.prototype.parseDouble;
 
-/*
-Clazz.defineMethod(Double,"$valueOf",
-function(s){
-return new Double(this.parseDouble(s));
-},"String");
-*/
 
 Clazz.defineMethod(Double,"$valueOf",
 function(v){
@@ -722,7 +594,6 @@ return s.valueOf()==this.valueOf();
 },"Object");
 
 
-//java.lang.B00lean = Boolean; ?? BH why this?
 Boolean = java.lang.Boolean = Boolean || function () {Clazz.instantialize (this, arguments);};
 if (Clazz._supportsNativeObject) {
 	for (var i = 0; i < Clazz._extendedObjectMethods.length; i++) {
@@ -736,12 +607,6 @@ Boolean.equals=Clazz._innerFunctions.equals;
 Boolean.getName=Clazz._innerFunctions.getName;
 Boolean.serialVersionUID=Boolean.prototype.serialVersionUID=-3665804199014368530;
 
-//Clazz.makeConstructor(Boolean,
-//function(value){
-//this.valueOf=function(){
-//return value;
-//};
-//},"~B");
 
 Clazz.overrideConstructor(Boolean,
 function(s){
@@ -762,12 +627,6 @@ function(b){
 return((typeof b == "string"? "true".equalsIgnoreCase(b) : b)?Boolean.TRUE:Boolean.FALSE);
 });
 
-/*
-Boolean.toString=Clazz.defineMethod(Boolean,"toString",
-function(b){
-return b?"true":"false";
-},"~B");
-*/
 
 Clazz.overrideMethod(Boolean,"toString",
 function(){
@@ -1158,22 +1017,6 @@ var regExp=new RegExp(regex,"gm");
 return this.split(regExp);
 }
 };
-/*
-sp.trim=function(){
-var len=this.length;
-var st=0;
-
-while((st<len)&&(this.charAt(st)<=' ')){
-st++;
-}
-while((st<len)&&(this.charAt(len-1)<=' ')){
-len--;
-}
-return((st>0)||(len<len))?this.substring(st,len):this;
-};
-
-
-*/
 
 if (!sp.trim)
 sp.trim=function(){
@@ -1280,27 +1123,6 @@ ii++;
 return Clazz.newByteArray(arrs);
 };
 
-/*
-sp.compareTo=function(anotherString){
-if(anotherString==null){
-throw new java.lang.NullPointerException();
-}
-var len1=this.length;
-var len2=anotherString.length;
-var n=Math.min(len1,len2);
-var k=0;
-while(k<n){
-var c1=this.charCodeAt(k);
-var c2=anotherString.charCodeAt(k);
-if(c1!=c2){
-return c1-c2;
-}
-k++;
-}
-return len1-len2;
-};
-
-*/
 
 sp.contains = function(a) {return this.indexOf(a) >= 0}  // bh added
 sp.compareTo = function(a){return this > a ? 1 : this < a ? -1 : 0} // bh added
@@ -1393,13 +1215,6 @@ for(var i=0;i<srcEnd-srcBegin;i++){
 dst[dstBegin+i]=this.charAt(srcBegin+i);
 }
 };
-//sp.$concat=sp.concat;
-//sp.concat=function(s){
-//if(s==null){
-//throw new NullPointerException();
-//}
-//return this.$concat(s);
-//};
 
 sp.$lastIndexOf=sp.lastIndexOf;
 sp.lastIndexOf=function(s,last){
@@ -1446,15 +1261,6 @@ case 1:
 	if(typeof x=="string"||x instanceof String){
 		return new String(x);
 	}
-//	if(x.__CLASS_NAME__=="StringBuffer"||x.__CLASS_NAME__=="java.lang.StringBuffer"){
-//		var value=x.shareValue();
-//		var length=x.length();
-//		var valueCopy=new Array(length);
-//		for(var i=0;i<length;i++){
-//			valueCopy[i]=value[i];
-//		}
-//		return valueCopy.join('')
-//	}
 	return""+x;
 case 2:	
 	var x=arguments[0];
@@ -1500,7 +1306,6 @@ case 4:
 			arr[i]=bytes[offset+i];
 		}
 		return textDecoder.decode(arr);
-		//return Encoding.readUTF8Array(arr);
 	}
 	var count=arguments[3];
 	var offset=arguments[2];
@@ -1753,7 +1558,6 @@ Clazz.instantialize(this,arguments);
 },java.lang,"Throwable",null,java.io.Serializable);
 Clazz.prepareFields(c$,function(){
 this.cause=this;
-//alert("e0 "+ arguments.callee.caller.caller.caller.caller.caller)
 });
 Clazz.makeConstructor(c$,
 function(){
@@ -1986,11 +1790,9 @@ Clazz.declareTypeError = function (prefix, name, clazzParent, interfacez,
 			parentClazzInstance);
 };
 
-// at least allow Error() by itself to work as before
 Clazz._Error || (Clazz._Error = Error);
 Clazz.decorateAsClass (function (){Clazz.instantialize(this, arguments);return Clazz._Error();}, java.lang, "Error", Throwable);
 
-//c$=Clazz.declareTypeError(java.lang,"Error",Throwable);
 
 
 c$=Clazz.declareType(java.lang,"LinkageError",Error);
@@ -2242,7 +2044,6 @@ c$=Clazz.declareType(java.io,"UnsupportedEncodingException",java.io.IOException)
 
 c$=Clazz.declareType(java.io,"UTFDataFormatException",java.io.IOException);
 
-// ignore ObjectStream exceptions
 
 Clazz.defineMethod(c$,"getMessage",
 function(){

@@ -1,5 +1,4 @@
-// BH removed inner class 
-Clazz.load(null,"java.lang.Enum",["java.lang.CloneNotSupportedException","$.IllegalArgumentException","$.NullPointerException"],function(){
+﻿Clazz.load(null,"java.lang.Enum",["java.lang.CloneNotSupportedException","$.IllegalArgumentException","$.NullPointerException"],function(){
 var $fz,c$=Clazz.decorateAsClass(function(){
 this.$name=null;
 this.$ordinal=0;
@@ -64,18 +63,7 @@ function(enumType){
 return enumType.values();
 },"Class");
 
-//c$.$Enum$1$=function(){
-//Clazz.pu$h(self.c$);
 
-//c$=Clazz.declareAnonymous(null,"Enum$1",null,java.security.PrivilegedExceptionAction);
-//Clazz.overrideMethod(c$,"run",
-//function(){
-//var valsMethod=this.f$.enumType.getMethod("values",null);
-//valsMethod.setAccessible(true);
-//return valsMethod;
-//});
-//c$=Clazz.p0p();
-//};
 
 
 });

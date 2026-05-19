@@ -1,10 +1,11 @@
 from fastapi import FastAPI, Request
-from auth import router as auth_router
 from database import Base, engine
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 import os
 
+from auth import router as auth_router
+from routers import usuarios
 from routers.librerias import router as librerias_router
 from routers.compuestos import router as compuestos_router
 from routers.upload import router as upload_router
@@ -19,6 +20,7 @@ from auth import *
 
 app = FastAPI()
 app.include_router(auth_router)
+app.include_router(usuarios.router)
 
 app.include_router(librerias_router)
 app.include_router(compuestos_router)
@@ -40,10 +42,10 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Frontend permitido
+    allow_origins=origins,  
     allow_credentials=True,
     allow_methods=["*"], 
-    allow_headers=["*"],     # Permite Authorization y Content-Type
+    allow_headers=["*"],    
 )
 
 @app.middleware("http")

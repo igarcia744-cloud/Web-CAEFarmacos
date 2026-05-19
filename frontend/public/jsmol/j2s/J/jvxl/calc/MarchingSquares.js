@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.jvxl.calc");
+﻿Clazz.declarePackage("J.jvxl.calc");
 Clazz.load(["JU.P3", "java.util.Hashtable"], "J.jvxl.calc.MarchingSquares", ["JU.AU", "JU.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.surfaceReader = null;
@@ -200,42 +200,10 @@ this.surfaceReader.addTriangleCheck(t.pts[0], t.pts[1], t.pts[2], t.check, t.con
 }
 });
 c$.$MarchingSquares$ContourVertex$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.value = 0;
-Clazz.instantialize(this, arguments);}, J.jvxl.calc.MarchingSquares, "ContourVertex", JU.P3);
-Clazz.makeConstructor(c$, 
-function(vertexXYZ){
-Clazz.superConstructor (this, J.jvxl.calc.MarchingSquares.ContourVertex, []);
-this.setT(vertexXYZ);
-}, "JU.P3");
-Clazz.defineMethod(c$, "setValue", 
-function(value){
-this.value = value;
-}, "~N");
-Clazz.overrideMethod(c$, "toString", 
-function(){
-return this.value + " " + this.x + " " + this.y + " " + this.z;
-});
-/*eoif4*/})();
+})();
 };
 c$.$MarchingSquares$Triangle$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.pts = null;
-this.check = 0;
-this.isValid = true;
-this.contourIndex = 0;
-Clazz.instantialize(this, arguments);}, J.jvxl.calc.MarchingSquares, "Triangle", null);
-Clazz.makeConstructor(c$, 
-function(iA, iB, iC, check, contourIndex){
-this.pts =  Clazz.newIntArray(-1, [iA, iB, iC]);
-this.check = check;
-this.contourIndex = contourIndex;
-}, "~N,~N,~N,~N,~N");
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

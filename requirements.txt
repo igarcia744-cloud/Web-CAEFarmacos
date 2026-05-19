@@ -1,4 +1,4 @@
-fastapi
+﻿fastapi
 uvicorn
 sqlalchemy
 asyncpg
@@ -6,3 +6,5 @@ pydantic
 passlib[bcrypt]
 python-dotenv
 python-multipart
+python-jose
+pytz

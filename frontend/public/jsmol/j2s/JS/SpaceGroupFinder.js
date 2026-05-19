@@ -1,4 +1,4 @@
-Clazz.declarePackage("JS");
+﻿Clazz.declarePackage("JS");
 Clazz.load(["JU.P3"], "JS.SpaceGroupFinder", ["java.util.Arrays", "JU.BS", "$.Lst", "$.M4", "$.Measure", "$.PT", "$.V3", "J.api.Interface", "JS.SpaceGroup", "$.SymmetryOperation", "$.UnitCell", "JU.BSUtil", "JV.FileManager"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.vwr = null;
@@ -800,30 +800,10 @@ for (var i = 0; i < list.length; i++) list[i] = JS.SpaceGroupFinder.rdr.readLine
 return list;
 }, "JV.Viewer,~A,~S");
 c$.$SpaceGroupFinder$SGAtom$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.typeAndOcc = 0;
-this.index = 0;
-this.name = null;
-Clazz.instantialize(this, arguments);}, JS.SpaceGroupFinder, "SGAtom", JU.P3);
-Clazz.makeConstructor(c$, 
-function(type, index, name, occupancy){
-Clazz.superConstructor (this, JS.SpaceGroupFinder.SGAtom, []);
-this.typeAndOcc = type + 1000 * occupancy;
-this.index = index;
-this.name = name;
-}, "~N,~N,~S,~N");
-/*eoif4*/})();
+})();
 };
 c$.$SpaceGroupFinder$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(JS, "SpaceGroupFinder$1", null, java.util.Comparator);
-Clazz.overrideMethod(c$, "compare", 
-function(sg1, sg2){
-return (sg1.itaNo != sg2.itaNo ? sg1.itaNo - sg2.itaNo : sg2.setNo - sg1.setNo);
-}, "JS.SpaceGroup,JS.SpaceGroup");
-/*eoif5*/})();
+})();
 };
 c$.GROUP_COUNT = 0;
 c$.OP_COUNT = 0;

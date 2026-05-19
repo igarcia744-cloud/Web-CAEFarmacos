@@ -1,4 +1,4 @@
-Clazz.declarePackage("JV");
+﻿Clazz.declarePackage("JV");
 Clazz.load(["JU.BS"], "JV.AnimationManager", ["J.api.Interface", "JU.BSUtil"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.animationThread = null;
@@ -457,19 +457,7 @@ this.bsVisibleModels.or(bs);
 return bs;
 });
 c$.$AnimationManager$SplitFrame$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.index = 0;
-this.modelIndex = 0;
-this.offsetX = 0;
-Clazz.instantialize(this, arguments);}, JV.AnimationManager, "SplitFrame", null);
-Clazz.makeConstructor(c$, 
-function(index, modelIndex){
-this.index = index;
-this.modelIndex = modelIndex;
-}, "~N,~N");
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

@@ -1,4 +1,4 @@
-(function(Clazz
+﻿(function(Clazz
 ,Clazz_getClassName
 ,Clazz_newLongArray
 ,Clazz_doubleToByte
@@ -56,11 +56,9 @@
 ,Clazz_defineMethod
 ,Clazz_overrideMethod
 ,Clazz_declareAnonymous
-//,Clazz_checkPrivateMethod
 ,Clazz_cloneFinals
 ){
 var $t$;
-//var c$;
 Clazz_declarePackage("J.console");
 Clazz_declareInterface(J.console, "GenericTextArea");
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026
@@ -544,16 +542,9 @@ Jmol.Console.buttons[id].console.appletConsole.doAction(Jmol.Console.buttons[id]
 }
 }
 Jmol.consoleGetImageDialog = function(vwr, title, imageMap) {
-// JmolObjectInterface
 return new Jmol.Console.Image(vwr, title, imageMap);
 }
 Jmol.Console.Image = function(vwr, title, imageMap) {
-// page designer may indicate one of three divs for images on the page:
-// <appletID>_Image_app_holder for IMAGE command by itself (current app image)
-// <appletID>_Image_<cleaned id or filename>_holder  for IMAGE ID "xxx" ... or IMAGE "xxx"
-//   where cleaning is with .replace(/\W/g,"_")
-// <appletID>_Image_holder for all images not identified as above
-// if a page div is not identified, then the image will be placed in a new floating div
 this.vwr = vwr;
 this.title = title;
 this.imageMap = imageMap;
@@ -575,13 +566,10 @@ imageMap.put(this.id, this);
 imageMap.put(title, this);
 }
 Jmol.Console.Image.setCanvas = function(obj, canvas) {
-// this method can be customized as desired
-// it puts the canvas into a holder div
 Jmol.$append(Jmol._$(obj.id + "_holder"), canvas);
 Jmol.$html(obj.id + "_title", "<table style='width:100%'><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:Jmol.Console.buttons['"+obj.id+"'].closeMe()\">close</a></td><td align=right>" + obj.title + " [" + canvas.width + " x " + canvas.height + "]</td></tr></table>");
 }
 Jmol.Console.Image.closeImage = function(obj) {
-// this method can be customized as desired
 obj.imageMap.remove(obj.title);
 obj.imageMap.remove(obj.id);
 if (obj.div) {
@@ -592,7 +580,6 @@ Jmol.$remove(obj.id);
 }
 }
 Jmol.Console.Image.prototype.setImage = function(canvas) {
-// called by Jmol asynchronously after image is loaded
 if (this.cid)
 Jmol.$remove(this.cid);
 var c = document.createElement("canvas");
@@ -600,8 +587,6 @@ c.width = canvas.width;
 c.height = canvas.height;
 var cdx = c.getContext("2d");
 if (canvas.buf32) {
-// image buffer from current view
-// (note that buf32.length will be the same as buf8.length when images are antialiased)
 var imgData = cdx.getImageData(0, 0, c.width, c.height);
 var buf8 = imgData.data;
 var buf32 = canvas.buf32;
@@ -614,14 +599,12 @@ buf8[j++] = 0xFF;
 }
 cdx.putImageData(imgData, 0, 0);
 } else {
-// asynchronous load of image from file
 cdx.drawImage(canvas,0,0);
 }
 this.cid = c.id = this.id + "_image";
 Jmol.Console.Image.setCanvas(this, c);
 }
 Jmol.Console.Image.prototype.closeMe = function() {
-// called by Jmol
 Jmol.Console.Image.closeImage(this);
 }
 Jmol.Swing.setDraggable(Jmol.Console.Image);
@@ -645,12 +628,7 @@ var console = this;
 console.appletConsole = appletConsole;
 console.input = appletConsole.input = new Jmol.Console.Input(console);
 console.output = appletConsole.output = new Jmol.Console.Output(console);
-// check to see if the user already has a div on the page with id such as "jmolApplet0_console"
 var userConsole = Jmol.$("#" + id);
-// set up this.appletConsole.input, this.appletconsole.output
-// set up buttons, which are already made by this time:
-// I would prefer NOT to use jQueryUI for this - just simple buttons with simple actions
-// create and insert HTML code
 var s = '<div id=$ID_title></div><div id=$ID_label1></div><div id=$ID_outputdiv style="position:relative;left:2px"></div><div id=$ID_inputdiv style="position:relative;left:2px"></div><div id=$ID_buttondiv></div>'
 var w = 600, h = 362;
 if (userConsole[0]) {
@@ -683,7 +661,6 @@ s += "&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:Jmol.Console.buttons['"+id+"'
 s += "&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:Jmol.script("+console.applet._id+",'help')\">help</a>";
 Jmol.$html(id + "_label1", s);
 if (userConsole[0]) {
-// leaves a little slop for margins
 w = w - 10;
 h = (h - Jmol.$getSize(id + "_label1")[1] - Jmol.$getSize(id + "_buttondiv")[1] - 20)/3;
 } else {
@@ -708,7 +685,6 @@ this.container.hide();
 this.dragBind(b);
 }
 console.setTitle = function(title) {
-//Jmol.$html(this.id + "_title", title);
 }
 console.setVisible(false);
 }
@@ -716,7 +692,6 @@ Jmol.Swing.setDraggable(Jmol.Console.JSConsole);
 Jmol.Console.Input = function(console) {
 this.console = console;
 this.id = console.id + "_input";
-// something like this....
 this.getText = function() {
 return Jmol.$val(this.id);
 }
@@ -726,49 +701,23 @@ text = "";
 Jmol.$val(this.id, text);
 }
 this.keyEvent = function(ev) {
-// chrome/safari
-// for left paren:
-//             keyCode   which   key    originalEvent.keyIdentifier
-//  keydown     57         57     -      U+0039
-//  keypress    40         40     -      Down    // why Down??
-//
-// for down arrow
-//  keydown     40         40     -      Down
-// ff, msie
-// for left paren:
-//             keyCode   which   key    originalEvent.keyIdentifier
-//  keydown     57         57     (      -
-//  keypress    0          40     (      -
-//
-// for down arrow
-//  keydown     40         40     Down   -
-// in all cases: normal keys (as well as backspace[8] and delete[46]) are keydown keypress keyup
-//               special keys just keydown keyup
-//               keyup is only once when repeated; same as keydown
-// ff/msie delivers key, chrome/safari does not
-// chrome/safari has "feature" that keyIdentifier for "(" is reported as "Down" and similar issues for many other keys
-//System.out.println(ev.type + " key:" + (!ev.key) + " keyCode:" + ev.keyCode + " which:" + ev.which + " " + ev.key + "--" + ev.originalEvent.keyIdentifier);
 var mode;
 var type = ev.type;
 var isCtrl = ev.ctrlKey;
 var kcode = ev.keyCode;
 if (kcode == 13)
 kcode=10;
-// keycode is deprecated, but is essential still
 if (type == "keyup") {
 mode = (kcode == 38 || kcode == 40 ? 1 : this.console.appletConsole.processKey(kcode, 402, isCtrl));
 if ((mode & 1) == 1)
 ev.preventDefault();
 return;
 }
-// includes keypress and keydown
-// only  assign "key" for keydown, as keypress gives erroneous identifier in chrome/safari
 var isKeydown = (type == "keydown");
 var key = (isKeydown ? (ev.key || ev.originalEvent.keyIdentifier) : "");
 switch (kcode) {
 case 38: // up-arrow, possibly
 case 40: // down-arrow, possibly
-// must be keydown, not keypress to be arrow key
 if (!isKeydown)
 kcode = 0;
 break;
@@ -776,7 +725,6 @@ case 8: // bs
 case 9: // tab
 case 10: // CR
 case 27: // esc
-// only these are of interest to Jmol
 break;
 default:
 kcode = 0; // nothing to report
@@ -788,7 +736,6 @@ if (mode == 0 && ev.keyCode == 9) {
 var me = this;
 setTimeout(function(){me.setText(me.getText() + "\t"); Jmol.$focus(me.id)},10);
 }
-// ignore if...
 if ((mode & 1) == 1 // Jmol has handled the key press
 || key == "Up" || key == "Down" // up and down arrows
 || isKeydown && ev.keyCode != 8 && ev.keyCode < 32 // a special character other than backspace, when keyDown
@@ -896,6 +843,5 @@ return s;
 ,Clazz.defineMethod
 ,Clazz.overrideMethod
 ,Clazz.declareAnonymous
-//,Clazz.checkPrivateMethod
 ,Clazz.cloneFinals
 );

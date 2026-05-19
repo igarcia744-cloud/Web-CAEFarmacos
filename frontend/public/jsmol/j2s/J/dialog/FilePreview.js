@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.dialog");
+﻿Clazz.declarePackage("J.dialog");
 Clazz.load(["java.beans.PropertyChangeListener", "javax.swing.JPanel", ], "J.dialog.FilePreview", ["JU.PT", "javax.swing.Box", "$.JCheckBox", "J.i18n.GT", "JV.Viewer"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.active = null;
@@ -76,50 +76,12 @@ this.append.setVisible(TF);
 this.cartoons.setVisible(TF);
 }, "~B");
 c$.$FilePreview$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(J.dialog, "FilePreview$1", null, java.awt.event.ActionListener);
-Clazz.overrideMethod(c$, "actionPerformed", 
-function(e){
-this.b$["J.dialog.FilePreview"].doPreviewAction(this.b$["J.dialog.FilePreview"].active.isSelected());
-}, "java.awt.event.ActionEvent");
-/*eoif5*/})();
+})();
 };
 c$.$FilePreview$2$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(J.dialog, "FilePreview$2", null, java.awt.event.ActionListener);
-Clazz.overrideMethod(c$, "actionPerformed", 
-function(e){
-if (this.b$["J.dialog.FilePreview"].active.isSelected()) {
-this.b$["J.dialog.FilePreview"].doUpdatePreview(this.b$["J.dialog.FilePreview"].chooser.getSelectedFile());
-}}, "java.awt.event.ActionEvent");
-/*eoif5*/})();
+})();
 };
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.vwr = null;
-this.currentSize = null;
-Clazz.instantialize(this, arguments);}, J.dialog.FilePreview, "FPPanel", javax.swing.JPanel);
-Clazz.prepareFields (c$, function(){
-this.currentSize =  new java.awt.Dimension();
-});
-Clazz.makeConstructor(c$, 
-function(info){
-Clazz.superConstructor (this, J.dialog.FilePreview.FPPanel, []);
-info.put("previewOnly", Boolean.TRUE);
-var display = info.get("display");
-info.put("display", this);
-this.vwr =  new JV.Viewer(info);
-info.put("display", display);
-}, "java.util.Map");
-Clazz.overrideMethod(c$, "paint", 
-function(g){
-this.getSize(this.currentSize);
-this.vwr.setScreenDimension(this.currentSize.width, this.currentSize.height);
-var rectClip =  new java.awt.Rectangle();
-g.getClipBounds(rectClip);
-this.vwr.renderScreenImage(g, this.currentSize.width, this.currentSize.height);
-}, "java.awt.Graphics");
-/*eoif3*/})();
+})();
 c$.pdbCartoonChecked = true;
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

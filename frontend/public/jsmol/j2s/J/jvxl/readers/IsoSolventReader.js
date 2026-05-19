@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.jvxl.readers");
+﻿Clazz.declarePackage("J.jvxl.readers");
 Clazz.load(["JU.P3", "J.jvxl.readers.AtomDataReader", "JU.P4", "$.V3"], "J.jvxl.readers.IsoSolventReader", ["java.util.Hashtable", "JU.BS", "$.Lst", "$.Measure", "J.jvxl.data.MeshData", "JU.BSUtil", "$.Logger", "$.MeshSurface", "$.TempArray"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.cavityRadius = 0;
@@ -564,69 +564,10 @@ this.markPlaneVoxels(this.contactPair.myAtoms[0], this.contactPair.radii[0]);
 }return this.thisPlane;
 }, "~N");
 c$.$IsoSolventReader$Edge$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.ia = 0;
-this.ib = 0;
-this.nFaces = 0;
-this.nInvalid = 0;
-this.d = 0;
-this.d2 = 0;
-this.maxr = 0;
-this.cosASB2 = 0;
-this.v = null;
-Clazz.instantialize(this, arguments);}, J.jvxl.readers.IsoSolventReader, "Edge", JU.P3);
-Clazz.overrideConstructor(c$, 
-function(r, ia, ib, d){
-this.ia = Math.min(ia, ib);
-this.ib = Math.max(ia, ib);
-this.d = d;
-this.d2 = d * d;
-this.maxr = Math.sqrt(this.d2 / 4 + Math.max(r.rs2[ia], r.rs2[ib]));
-this.ave(r.atomXyzTruncated[ia], r.atomXyzTruncated[ib]);
-this.cosASB2 = (r.rs2[ia] + r.rs2[ib] - this.d2) / (r.rs[ib] * r.rs[ia]);
-this.v = JU.V3.newVsub(r.atomXyzTruncated[ib], r.atomXyzTruncated[ia]);
-this.v.normalize();
-}, "J.jvxl.readers.IsoSolventReader,~N,~N,~N");
-Clazz.defineMethod(c$, "addFace", 
-function(f){
-this.nFaces++;
-if (f == null) {
-this.nInvalid++;
-return;
-}}, "J.jvxl.readers.IsoSolventReader.Face");
-Clazz.defineMethod(c$, "isValid", 
-function(){
-return (this.nFaces == 0 || this.nInvalid != this.nFaces);
-});
-Clazz.overrideMethod(c$, "toString", 
-function(){
-return this.ia + "_" + this.ib;
-});
-/*eoif4*/})();
+})();
 };
 c$.$IsoSolventReader$Face$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.ia = 0;
-this.ib = 0;
-this.ic = 0;
-this.pS = null;
-Clazz.instantialize(this, arguments);}, J.jvxl.readers.IsoSolventReader, "Face", null);
-Clazz.makeConstructor(c$, 
-function(ia, ib, ic, pS){
-this.ia = ia;
-this.ib = ib;
-this.ic = ic;
-this.pS = JU.P3.newP(pS);
-}, "~N,~N,~N,JU.P3");
-Clazz.overrideMethod(c$, "toString", 
-function(){
-return this.ia + "_" + this.ib + "_" + this.ic + "_" + this.pS;
-});
-/*eoif4*/})();
+})();
 };
 c$.testLinear = false;
 });

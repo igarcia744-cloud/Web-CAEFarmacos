@@ -1,4 +1,4 @@
-Clazz.declarePackage("com.jcraft.jzlib");
+﻿Clazz.declarePackage("com.jcraft.jzlib");
 Clazz.load(["java.lang.Exception"], "com.jcraft.jzlib.Inflate", ["com.jcraft.jzlib.Adler32", "$.CRC32", "$.GZIPHeader", "$.InfBlocks", "java.io.ByteArrayOutputStream"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.mode = 0;
@@ -539,17 +539,7 @@ return false;
 }
 });
 c$.$Inflate$Return$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.r = 0;
-Clazz.instantialize(this, arguments);}, com.jcraft.jzlib.Inflate, "Return", Exception);
-Clazz.makeConstructor(c$, 
-function(r){
-Clazz.superConstructor (this, com.jcraft.jzlib.Inflate.Return, []);
-this.r = r;
-}, "~N");
-/*eoif4*/})();
+})();
 };
 c$.mark =  Clazz.newByteArray(-1, [0, 0, 0xff, 0xff]);
 });

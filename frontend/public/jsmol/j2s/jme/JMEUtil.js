@@ -1,4 +1,4 @@
-Clazz.declarePackage("jme");
+﻿Clazz.declarePackage("jme");
 Clazz.load(null, "jme.JMEUtil", ["java.lang.reflect.Array", "java.util.StringTokenizer", "jme.JME"], function(){
 var c$ = Clazz.declareType(jme, "JMEUtil", null);
 c$.growArray = Clazz.defineMethod(c$, "growArray", 
@@ -329,23 +329,9 @@ c$.stringHeight = Clazz.defineMethod(c$, "stringHeight",
 function(fm){
 return fm.getAscent() - fm.getDescent();
 }, "java.awt.FontMetrics");
-/*if3*/;(function(){
-var c$ = Clazz.declareType(jme.JMEUtil, "GWT", null);
-c$.isScript = Clazz.defineMethod(c$, "isScript", 
-function(){
-return false;
-});
-c$.log = Clazz.defineMethod(c$, "log", 
-function(string){
-}, "~S");
-/*eoif3*/})();
+})();
 Clazz.declareInterface(jme.JMEUtil, "RunAsyncCallback");
-/*if3*/;(function(){
-var c$ = Clazz.declareType(jme.JMEUtil, "JSME_RunAsyncCallback", null, jme.JMEUtil.RunAsyncCallback);
-Clazz.overrideMethod(c$, "onFailure", 
-function(reason){
-}, "Throwable");
-/*eoif3*/})();
+})();
 Clazz.declareInterface(jme.JMEUtil, "RunWhenDataReadyCallback");
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

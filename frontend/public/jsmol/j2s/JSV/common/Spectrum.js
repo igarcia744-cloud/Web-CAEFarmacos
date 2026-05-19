@@ -1,4 +1,4 @@
-Clazz.declarePackage("JSV.common");
+﻿Clazz.declarePackage("JSV.common");
 Clazz.load(["java.lang.Enum", "JSV.source.JDXDataObject", "JU.Lst"], "JSV.common.Spectrum", ["java.util.Hashtable", "JU.PT", "JSV.common.Coordinate", "$.Parameters", "$.PeakInfo", "JSV.source.JDXSourceStreamTokenizer", "JU.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.id = "";
@@ -458,25 +458,6 @@ Clazz.overrideMethod(c$, "toString",
 function(){
 return this.getTitleLabel() + (this.xyCoords == null ? "" : " xyCoords.length=" + this.xyCoords.length);
 });
-/*if2*/;(function(){
-var c$ = Clazz.declareType(JSV.common.Spectrum, "IRMode", Enum);
-c$.getMode = Clazz.defineMethod(c$, "getMode", 
-function(value){
-switch ((value == null ? 'I' : value.toUpperCase().charAt(0)).charCodeAt(0)) {
-case 65:
-return JSV.common.Spectrum.IRMode.TO_ABS;
-case 84:
-return (value.equalsIgnoreCase("TOGGLE") ? JSV.common.Spectrum.IRMode.TOGGLE : JSV.common.Spectrum.IRMode.TO_TRANS);
-case 78:
-return JSV.common.Spectrum.IRMode.NO_CONVERT;
-default:
-return JSV.common.Spectrum.IRMode.TOGGLE;
-}
-}, "~S");
-Clazz.defineEnumConstant(c$, "NO_CONVERT", 0, []);
-Clazz.defineEnumConstant(c$, "TO_TRANS", 1, []);
-Clazz.defineEnumConstant(c$, "TO_ABS", 2, []);
-Clazz.defineEnumConstant(c$, "TOGGLE", 3, []);
-/*eoif2*/})();
+})();
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

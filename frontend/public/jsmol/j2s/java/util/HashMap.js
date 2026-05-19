@@ -1,4 +1,4 @@
-Clazz.load(["java.util.AbstractMap", "$.AbstractSet", "$.Iterator", "$.Map", "$.MapEntry"], "java.util.HashMap", ["java.util.AbstractCollection", "$.Arrays", "java.util.MapEntry.Type"], function(){
+﻿Clazz.load(["java.util.AbstractMap", "$.AbstractSet", "$.Iterator", "$.Map", "$.MapEntry"], "java.util.HashMap", ["java.util.AbstractCollection", "$.Arrays", "java.util.MapEntry.Type"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.elementCount = 0;
 this.elementData = null;
@@ -427,229 +427,20 @@ m.forEach(function(value, key){map.put(key, value);}); m.clear();
 }
 }}, "java.util.Map");
 c$.$HashMap$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "HashMap$1", java.util.AbstractSet);
-Clazz.overrideMethod(c$, "contains", 
-function(object){
-return this.b$["java.util.HashMap"].containsKey(object);
-}, "~O");
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.b$["java.util.HashMap"].size();
-});
-Clazz.overrideMethod(c$, "clear", 
-function(){
-this.b$["java.util.HashMap"].clear();
-});
-Clazz.overrideMethod(c$, "remove", 
-function(key){
-if (!this.b$["java.util.HashMap"].containsKey(key)) return false;
-this.b$["java.util.HashMap"].remove(key);
-return true;
-}, "~O");
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return  new java.util.HashMap.HashMapIterator(((Clazz.isClassDefined("java.util.HashMap$1$1") ? 0 : java.util.HashMap.$HashMap$1$1$ ()), Clazz.innerTypeInstance(java.util.HashMap$1$1, this, null)), this.b$["java.util.HashMap"]);
-});
-/*eoif5*/})();
+})();
 };
 c$.$HashMap$1$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "HashMap$1$1", null, java.util.MapEntry.Type);
-Clazz.overrideMethod(c$, "get", 
-function(entry){
-if (java.util.HashMap.__isSimple(this.b$["java.util.HashMap"])) {
-{
-return (entry == null ? null : entry.value[0]);
-}}return entry.key;
-}, "java.util.MapEntry");
-/*eoif5*/})();
+})();
 };
 c$.$HashMap$2$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "HashMap$2", java.util.AbstractCollection);
-Clazz.overrideMethod(c$, "contains", 
-function(object){
-return this.b$["java.util.HashMap"].containsValue(object);
-}, "~O");
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.b$["java.util.HashMap"].size();
-});
-Clazz.overrideMethod(c$, "clear", 
-function(){
-this.b$["java.util.HashMap"].clear();
-});
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return  new java.util.HashMap.HashMapIterator(((Clazz.isClassDefined("java.util.HashMap$2$1") ? 0 : java.util.HashMap.$HashMap$2$1$ ()), Clazz.innerTypeInstance(java.util.HashMap$2$1, this, null)), this.b$["java.util.HashMap"]);
-});
-/*eoif5*/})();
+})();
 };
 c$.$HashMap$2$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "HashMap$2$1", null, java.util.MapEntry.Type);
-Clazz.overrideMethod(c$, "get", 
-function(entry){
-if (java.util.HashMap.__isSimple(this.b$["java.util.HashMap"])) {
-{
-return (entry == null ? null : entry.value[1]);
-}}return entry.value;
-}, "java.util.MapEntry");
-/*eoif5*/})();
+})();
 };
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.origKeyHash = 0;
-this.next = null;
-Clazz.instantialize(this, arguments);}, java.util.HashMap, "Entry", java.util.MapEntry);
-Clazz.makeConstructor(c$, 
-function(theKey, theValue){
-Clazz.superConstructor(this, java.util.HashMap.Entry, [theKey, theValue]);
-this.origKeyHash = (theKey == null ? 0 : theKey.hashCode());
-}, "~O,~O");
-Clazz.defineMethod(c$, "clone", 
-function(){
-var entry = Clazz.superCall(this, java.util.HashMap.Entry, "clone", []);
-if (this.next != null) {
-entry.next = this.next.clone();
-}return entry;
-});
-/*eoif3*/})();
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.jsMapIterator = null;
-this.isSimple = false;
-this.index = 0;
-this.expectedModCount = 0;
-this.type = null;
-this.canRemove = false;
-this.entry = null;
-this.lastEntry = null;
-this.associatedMap = null;
-Clazz.instantialize(this, arguments);}, java.util.HashMap, "HashMapIterator", null, java.util.Iterator);
-Clazz.makeConstructor(c$, 
-function(value, hm){
-this.associatedMap = hm;
-this.type = value;
-this.expectedModCount = hm.modCount;
-this.lastEntry = this.entry = null;
-this.isSimple = java.util.HashMap.__isSimple(this.associatedMap);
-if (this.isSimple) {
-var m = this.associatedMap.__m;
-{
-this.jsMapIterator = m.entries();
-this.entry = this.jsMapIterator.next();
-}}}, "java.util.MapEntry.Type,java.util.HashMap");
-Clazz.overrideMethod(c$, "hasNext", 
-function(){
-if (this.isSimple) {
-if (this.entry == null) {
-return false;
-}var isDone = false;
-{
-isDone = this.entry.done;
-}return !isDone;
-}if (this.entry != null) {
-return true;
-}while (this.index < this.associatedMap.elementData.length) {
-if (this.associatedMap.elementData[this.index] == null) {
-this.index++;
-} else {
-return true;
-}}
-return false;
-});
-Clazz.defineMethod(c$, "checkConcurrentMod", 
-function(){
-if (this.expectedModCount != this.associatedMap.modCount) {
-throw  new java.util.ConcurrentModificationException();
-}});
-Clazz.overrideMethod(c$, "next", 
-function(){
-this.checkConcurrentMod();
-if (!this.hasNext()) {
-throw  new java.util.NoSuchElementException();
-}var result = null;
-if (this.isSimple) {
-{
-result = this.entry;
-this.entry = this.jsMapIterator.next() || null;
-}} else if (this.entry == null) {
-result = this.lastEntry = this.associatedMap.elementData[this.index++];
-this.entry = this.lastEntry.next;
-} else {
-if (this.lastEntry.next !== this.entry) {
-this.lastEntry = this.lastEntry.next;
-}result = this.entry;
-this.entry = this.entry.next;
-}this.canRemove = true;
-return this.type.get(result);
-});
-Clazz.overrideMethod(c$, "remove", 
-function(){
-this.checkConcurrentMod();
-if (!this.canRemove) {
-throw  new IllegalStateException();
-}this.canRemove = false;
-this.associatedMap.modCount++;
-if (this.lastEntry.next === this.entry) {
-while (this.associatedMap.elementData[--this.index] == null) {
-;}
-this.associatedMap.elementData[this.index] = this.associatedMap.elementData[this.index].next;
-this.entry = null;
-} else {
-this.lastEntry.next = this.entry;
-}this.associatedMap.elementCount--;
-this.expectedModCount++;
-});
-/*eoif3*/})();
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.associatedMap = null;
-Clazz.instantialize(this, arguments);}, java.util.HashMap, "HashMapEntrySet", java.util.AbstractSet);
-Clazz.makeConstructor(c$, 
-function(hm){
-Clazz.superConstructor (this, java.util.HashMap.HashMapEntrySet, []);
-this.associatedMap = hm;
-}, "java.util.HashMap");
-Clazz.defineMethod(c$, "hashMap", 
-function(){
-return this.associatedMap;
-});
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.associatedMap.elementCount;
-});
-Clazz.overrideMethod(c$, "clear", 
-function(){
-this.associatedMap.clear();
-});
-Clazz.overrideMethod(c$, "remove", 
-function(object){
-if (this.contains(object)) {
-this.associatedMap.remove((object).getKey());
-return true;
-}return false;
-}, "~O");
-Clazz.overrideMethod(c$, "contains", 
-function(object){
-if (!(Clazz.instanceOf(object,"java.util.Map.Entry"))) return false;
-var key = (object).getKey();
-if (!this.associatedMap.containsKey(key)) return false;
-if (java.util.HashMap.__isSimple(this.associatedMap)) {
-var value = (object).getValue();
-var v = this.associatedMap.get(key);
-return (value === v || value != null && value.equals(v));
-}var entry = this.associatedMap.getJavaEntry((object).getKey());
-return object.equals(entry);
-}, "~O");
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return  new java.util.HashMap.HashMapIterator(((Clazz.isClassDefined("java.util.HashMap$HashMapEntrySet$1") ? 0 : java.util.HashMap.HashMapEntrySet.$HashMap$HashMapEntrySet$1$ ()), Clazz.innerTypeInstance(java.util.HashMap$HashMapEntrySet$1, this, null)), this.associatedMap);
-});
-c$.$HashMap$HashMapEntrySet$1$=function(){
-/*if5*/;(function(){
+})();
+})();
+;(function(){
 var c$ = Clazz.declareAnonymous(java.util, "HashMap$HashMapEntrySet$1", null, java.util.MapEntry.Type);
 Clazz.overrideMethod(c$, "get", 
 function(entry){
@@ -662,9 +453,7 @@ value = entry.value[1];
 }return  new java.util.HashMap.Entry(key, value);
 }return entry;
 }, "java.util.MapEntry");
-/*eoif5*/})();
-};
-/*eoif3*/})();
+})();
 c$.USE_SIMPLE = true;
 });
 ;//5.0.1-v7 Mon May 12 23:42:45 CDT 2025

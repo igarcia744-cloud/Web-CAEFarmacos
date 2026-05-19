@@ -1,4 +1,4 @@
-Clazz.load(["java.util.AbstractList", "$.RandomAccess"], "java.util.Arrays", null, function(){
+﻿Clazz.load(["java.util.AbstractList", "$.RandomAccess"], "java.util.Arrays", null, function(){
 var c$ = Clazz.declareType(java.util, "Arrays", null);
 c$.fill = Clazz.defineMethod(c$, "fill", 
 function(a, fromIndex, toIndex, val){
@@ -114,49 +114,7 @@ temp.sort(function(a,b){return c.compare(a,b)});
 }if (ret != null) {
 System.arraycopy(temp, 0, ret, fromIndex, toIndex);
 }}, "~A,~N,~N,java.util.Comparator");
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.a = null;
-Clazz.instantialize(this, arguments);}, java.util.Arrays, "ArrayList", java.util.AbstractList, [java.util.RandomAccess, java.io.Serializable]);
-Clazz.makeConstructor(c$, 
-function(array){
-Clazz.superConstructor (this, java.util.Arrays.ArrayList, []);
-if (array == null) throw  new NullPointerException();
-this.a = array;
-}, "~A");
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.a.length;
-});
-Clazz.defineMethod(c$, "toArray", 
-function(){
-return this.a.clone();
-});
-Clazz.overrideMethod(c$, "get", 
-function(index){
-return this.a[index];
-}, "~N");
-Clazz.overrideMethod(c$, "set", 
-function(index, element){
-var oldValue = this.a[index];
-this.a[index] = element;
-return oldValue;
-}, "~N,~O");
-Clazz.overrideMethod(c$, "indexOf", 
-function(o){
-if (o == null) {
-for (var i = 0; i < this.a.length; i++) if (this.a[i] == null) return i;
-
-} else {
-for (var i = 0; i < this.a.length; i++) if (o.equals(this.a[i])) return i;
-
-}return -1;
-}, "~O");
-Clazz.overrideMethod(c$, "contains", 
-function(o){
-return this.indexOf(o) != -1;
-}, "~O");
-/*eoif3*/})();
+})();
 c$.comp = null;
 {
 c$.comp = {compare: function (o1, o2) {

@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.adapter.writers");
+﻿Clazz.declarePackage("J.adapter.writers");
 Clazz.load(["JU.SB", "J.api.JmolWriter", "JU.JSONWriter", "java.util.Hashtable"], "J.adapter.writers.QCJSONWriter", ["java.util.Date", "JU.DF", "$.P3", "$.PT", "org.qcschema.QCSchemaUnits"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.moBases = null;
@@ -385,83 +385,7 @@ this.oc.append(o.toString());
 Clazz.superCall(this, J.adapter.writers.QCJSONWriter, "writeObject", [o]);
 }}, "~O");
 c$.$QCJSONWriter$SparseArray$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.repeatCount = 0;
-this.elementCount = 0;
-this.$lastElement = null;
-this.sep = "";
-this.type = null;
-this.isRLE = false;
-Clazz.instantialize(this, arguments);}, J.adapter.writers.QCJSONWriter, "SparseArray", JU.SB);
-Clazz.makeConstructor(c$, 
-function(type){
-Clazz.superConstructor (this, J.adapter.writers.QCJSONWriter.SparseArray, []);
-this.type = type;
-this.isRLE = (type.equals("_RLE_"));
-}, "~S");
-Clazz.defineMethod(c$, "add", 
-function(element){
-if (element == null) element = "null";
-if (!this.isRLE) {
-this.append(this.sep);
-this.append(element);
-this.sep = ",";
-return;
-}if (this.repeatCount > 0 && !element.equals(this.$lastElement)) {
-this.append(this.sep);
-this.appendI(this.repeatCount);
-this.sep = ",";
-this.append(this.sep);
-this.append(this.$lastElement);
-this.repeatCount = 0;
-}this.$lastElement = element;
-this.repeatCount++;
-this.elementCount++;
-}, "~S");
-Clazz.defineMethod(c$, "lastElement", 
-function(){
-return this.$lastElement;
-});
-Clazz.defineMethod(c$, "isEmpty", 
-function(){
-return (this.elementCount == 0);
-});
-Clazz.defineMethod(c$, "allNaN", 
-function(){
-return (this.allSame() && JU.PT.parseFloat(this.$lastElement) == NaN);
-});
-Clazz.defineMethod(c$, "allNull", 
-function(){
-return (this.allSame() && this.$lastElement.equals("null"));
-});
-Clazz.defineMethod(c$, "allEmptyString", 
-function(){
-return (this.allSame() && this.$lastElement.equals(""));
-});
-Clazz.defineMethod(c$, "allSame", 
-function(){
-return (!this.isEmpty() && this.elementCount == this.repeatCount);
-});
-Clazz.defineMethod(c$, "allZero", 
-function(){
-return (this.allSame() && JU.PT.parseFloat(this.$lastElement) != NaN);
-});
-Clazz.defineMethod(c$, "hasValues", 
-function(){
-return (!this.allSame() || !this.allNull() && !this.allEmptyString());
-});
-Clazz.defineMethod(c$, "isNumericAndNonZero", 
-function(){
-return (this.allSame() && !this.allNaN() && !this.allZero());
-});
-Clazz.defineMethod(c$, "toString", 
-function(){
-var s = Clazz.superCall(this, J.adapter.writers.QCJSONWriter.SparseArray, "toString", []);
-return (s.length == 0 ? "[]" : "[\"" + this.type + "\"," + s + (this.repeatCount > 0 ? this.sep + this.repeatCount + "," + this.$lastElement : "") + "]");
-});
-/*eoif4*/})();
+})();
 };
 c$.integrationKeyMap = null;
 });

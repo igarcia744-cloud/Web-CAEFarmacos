@@ -9,19 +9,16 @@ function SelectorExploradorModal({ onClose, onCargar }) {
 
       <div className="modal-content">
 
-        {/* ❌ CERRAR */}
         <span className="modal-close" onClick={onClose}>✖</span>
 
         <h2>Seleccionar archivo</h2>
 
-        {/* 🔥 EXPLORADOR */}
         <ExploradorArchivos
           modo="seleccion"
           filtros={{ busqueda: "", orden: "" }} // 🔥 obligatorio
           onSelect={(item) => { onCargar(item); onClose();}}
         />
 
-        {/* 🔥 FOOTER */}
         <div style={{
           marginTop: "10px",
           display: "flex",

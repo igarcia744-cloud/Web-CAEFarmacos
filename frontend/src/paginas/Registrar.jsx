@@ -5,7 +5,7 @@ import logo from '../assets/logo-principal.png';
 
 const Registrar = () => {
   const [mensaje, setMensaje] = useState("");
-  const navigate = useNavigate(); // <-- Hook para redireccionar
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

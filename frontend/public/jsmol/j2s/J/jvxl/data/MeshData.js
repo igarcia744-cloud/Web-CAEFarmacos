@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.jvxl.data");
+﻿Clazz.declarePackage("J.jvxl.data");
 Clazz.load(["JU.MeshSurface"], "J.jvxl.data.MeshData", ["java.util.Arrays", "JU.AU", "$.BS", "$.V3", "JU.BSUtil"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.setsSuccessful = false;
@@ -178,29 +178,10 @@ for (var i = bsInvalid.nextSetBit(0); i >= 0; i = bsInvalid.nextSetBit(i + 1)) t
 
 }, "JU.BS");
 c$.$MeshData$SSet$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.bs = null;
-this.n = 0;
-Clazz.instantialize(this, arguments);}, J.jvxl.data.MeshData, "SSet", null);
-Clazz.makeConstructor(c$, 
-function(bs){
-this.bs = bs;
-this.n = bs.cardinality();
-}, "JU.BS");
-/*eoif4*/})();
+})();
 };
 c$.$MeshData$SortSet$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-Clazz.instantialize(this, arguments);}, J.jvxl.data.MeshData, "SortSet", null, java.util.Comparator);
-Clazz.overrideMethod(c$, "compare", 
-function(o1, o2){
-return (o1.n > o2.n ? -1 : o1.n < o2.n ? 1 : 0);
-}, "J.jvxl.data.MeshData.SSet,J.jvxl.data.MeshData.SSet");
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

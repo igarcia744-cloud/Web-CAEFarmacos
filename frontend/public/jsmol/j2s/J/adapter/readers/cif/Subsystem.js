@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.adapter.readers.cif");
+﻿Clazz.declarePackage("J.adapter.readers.cif");
 Clazz.load(["J.adapter.smarter.XtalSymmetry"], "J.adapter.readers.cif.Subsystem", ["JU.Lst", "$.Matrix", "$.V3", "JS.SymmetryOperation", "JU.Logger", "$.SimpleUnitCell"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 if (!Clazz.isClassDefined("J.adapter.readers.cif.Subsystem.SubsystemSymmetry")) {
@@ -120,19 +120,7 @@ function(){
 return "Subsystem " + this.code + "\n" + this.w;
 });
 c$.$Subsystem$SubsystemSymmetry$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-Clazz.instantialize(this, arguments);}, J.adapter.readers.cif.Subsystem, "SubsystemSymmetry", J.adapter.smarter.XtalSymmetry.FileSymmetry);
-Clazz.defineMethod(c$, "addSubSystemOp", 
-function(code, rs, vs, sigma){
-this.spaceGroup.isSSG = true;
-var s = JS.SymmetryOperation.getXYZFromRsVs(rs, vs, false);
-var i = this.spaceGroup.addSymmetry(s, -1, true);
-this.spaceGroup.symmetryOperations[i].setSigma(code, sigma);
-return s;
-}, "~S,JU.Matrix,JU.Matrix,JU.Matrix");
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Wed Mar 25 00:33:43 CDT 2026

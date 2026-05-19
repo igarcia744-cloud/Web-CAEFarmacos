@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.atomdata");
+﻿Clazz.declarePackage("J.atomdata");
 Clazz.load(null, "J.atomdata.AtomData", ["JU.P3", "JU.BSUtil"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.programInfo = null;
@@ -24,16 +24,3 @@ this.ac = 0;
 this.hydrogenAtomCount = 0;
 this.adpMode = 0;
 Clazz.instantialize(this, arguments);}, J.atomdata, "AtomData", null);
-/*LV!1824 unnec constructor*/Clazz.defineMethod(c$, "transformXYZ", 
-function(mat, bs){
-var p =  new Array(this.xyz.length);
-if (bs == null) bs = JU.BSUtil.newBitSet2(0, this.xyz.length);
-for (var i = bs.nextSetBit(0); i >= 0; i = bs.nextSetBit(i + 1)) {
-if (this.xyz[i] == null) continue;
-p[i] = JU.P3.newP(this.xyz[i]);
-mat.rotTrans(p[i]);
-}
-this.xyz = p;
-}, "JU.M4,JU.BS");
-});
-;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

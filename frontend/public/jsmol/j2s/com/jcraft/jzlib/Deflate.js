@@ -1,4 +1,4 @@
-Clazz.declarePackage("com.jcraft.jzlib");
+﻿Clazz.declarePackage("com.jcraft.jzlib");
 Clazz.load(["com.jcraft.jzlib.Tree"], "com.jcraft.jzlib.Deflate", ["com.jcraft.jzlib.CRC32", "$.GZIPHeader", "$.StaticTree"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.strm = null;
@@ -876,23 +876,7 @@ Clazz.defineMethod(c$, "getBytesWritten",
 function(){
 return this.strm.total_out;
 });
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.good_length = 0;
-this.max_lazy = 0;
-this.nice_length = 0;
-this.max_chain = 0;
-this.func = 0;
-Clazz.instantialize(this, arguments);}, com.jcraft.jzlib.Deflate, "Config", null);
-Clazz.makeConstructor(c$, 
-function(good_length, max_lazy, nice_length, max_chain, func){
-this.good_length = good_length;
-this.max_lazy = max_lazy;
-this.nice_length = nice_length;
-this.max_chain = max_chain;
-this.func = func;
-}, "~N,~N,~N,~N,~N");
-/*eoif3*/})();
+})();
 c$.config_table = null;
 {
 com.jcraft.jzlib.Deflate.config_table =  new Array(10);

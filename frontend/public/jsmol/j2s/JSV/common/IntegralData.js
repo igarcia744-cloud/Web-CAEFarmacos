@@ -1,4 +1,4 @@
-Clazz.declarePackage("JSV.common");
+﻿Clazz.declarePackage("JSV.common");
 Clazz.load(["java.lang.Enum", "JSV.common.MeasurementData", "$.IntegralComparator"], "JSV.common.IntegralData", ["java.util.Collections", "$.StringTokenizer", "JU.AU", "$.BS", "$.DF", "$.Lst", "$.PT", "JSV.common.Annotation", "$.Coordinate", "$.Integral", "$.ScriptToken"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.percentMinY = 0;
@@ -316,25 +316,7 @@ function(val){
 for (var i = this.size(); --i >= 0; ) if (this.get(i).getValue() < val) this.removeItemAt(i);
 
 }, "~N");
-/*if2*/;(function(){
-var c$ = Clazz.declareType(JSV.common.IntegralData, "IntMode", Enum);
-c$.getMode = Clazz.defineMethod(c$, "getMode", 
-function(value){
-for (var mode, $mode = 0, $$mode = JSV.common.IntegralData.IntMode.values(); $mode < $$mode.length && ((mode = $$mode[$mode]) || true); $mode++) if (value.startsWith(mode.name())) return mode;
-
-return JSV.common.IntegralData.IntMode.NA;
-}, "~S");
-Clazz.defineEnumConstant(c$, "OFF", 0, []);
-Clazz.defineEnumConstant(c$, "ON", 1, []);
-Clazz.defineEnumConstant(c$, "TOGGLE", 2, []);
-Clazz.defineEnumConstant(c$, "AUTO", 3, []);
-Clazz.defineEnumConstant(c$, "LIST", 4, []);
-Clazz.defineEnumConstant(c$, "MARK", 5, []);
-Clazz.defineEnumConstant(c$, "MIN", 6, []);
-Clazz.defineEnumConstant(c$, "UPDATE", 7, []);
-Clazz.defineEnumConstant(c$, "CLEAR", 8, []);
-Clazz.defineEnumConstant(c$, "NA", 9, []);
-/*eoif2*/})();
+})();
 c$.c =  new JSV.common.IntegralComparator();
 c$.$HEADER =  Clazz.newArray(-1, ["peak", "start/ppm", "end/ppm", "value"]);
 });

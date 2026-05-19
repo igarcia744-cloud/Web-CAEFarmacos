@@ -1,4 +1,4 @@
-Clazz.load(["java.util.Map"], "java.util.AbstractMap", ["java.util.AbstractCollection", "$.AbstractSet", "$.Iterator"], function(){
+﻿Clazz.load(["java.util.Map"], "java.util.AbstractMap", ["java.util.AbstractCollection", "$.AbstractSet", "$.Iterator"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.$keySet = null;
 this.$values = null;
@@ -172,84 +172,16 @@ result.$values = null;
 return result;
 });
 c$.$AbstractMap$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "AbstractMap$1", java.util.AbstractSet);
-Clazz.overrideMethod(c$, "contains", 
-function(object){
-return this.b$["java.util.AbstractMap"].containsKey(object);
-}, "~O");
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.b$["java.util.AbstractMap"].size();
-});
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return ((Clazz.isClassDefined("java.util.AbstractMap$1$1") ? 0 : java.util.AbstractMap.$AbstractMap$1$1$ ()), Clazz.innerTypeInstance(java.util.AbstractMap$1$1, this, null));
-});
-/*eoif5*/})();
+})();
 };
 c$.$AbstractMap$1$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.setIterator = null;
-Clazz.instantialize(this, arguments);}, java.util, "AbstractMap$1$1", null, java.util.Iterator);
-Clazz.prepareFields (c$, function(){
-this.setIterator = this.b$["java.util.AbstractMap"].entrySet().iterator();
-});
-Clazz.overrideMethod(c$, "hasNext", 
-function(){
-return this.setIterator.hasNext();
-});
-Clazz.overrideMethod(c$, "next", 
-function(){
-return this.setIterator.next().getKey();
-});
-Clazz.overrideMethod(c$, "remove", 
-function(){
-this.setIterator.remove();
-});
-/*eoif5*/})();
+})();
 };
 c$.$AbstractMap$2$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(java.util, "AbstractMap$2", java.util.AbstractCollection);
-Clazz.overrideMethod(c$, "size", 
-function(){
-return this.b$["java.util.AbstractMap"].size();
-});
-Clazz.overrideMethod(c$, "contains", 
-function(object){
-return this.b$["java.util.AbstractMap"].containsValue(object);
-}, "~O");
-Clazz.overrideMethod(c$, "iterator", 
-function(){
-return ((Clazz.isClassDefined("java.util.AbstractMap$2$1") ? 0 : java.util.AbstractMap.$AbstractMap$2$1$ ()), Clazz.innerTypeInstance(java.util.AbstractMap$2$1, this, null));
-});
-/*eoif5*/})();
+})();
 };
 c$.$AbstractMap$2$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.setIterator = null;
-Clazz.instantialize(this, arguments);}, java.util, "AbstractMap$2$1", null, java.util.Iterator);
-Clazz.prepareFields (c$, function(){
-this.setIterator = this.b$["java.util.AbstractMap"].entrySet().iterator();
-});
-Clazz.overrideMethod(c$, "hasNext", 
-function(){
-return this.setIterator.hasNext();
-});
-Clazz.overrideMethod(c$, "next", 
-function(){
-return this.setIterator.next().getValue();
-});
-Clazz.overrideMethod(c$, "remove", 
-function(){
-this.setIterator.remove();
-});
-/*eoif5*/})();
+})();
 };
 });
 ;//5.0.1-v7 Mon May 12 23:42:45 CDT 2025

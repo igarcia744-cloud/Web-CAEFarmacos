@@ -1,7 +1,4 @@
-// BH 12/15/2012 1:56:28 PM  adds corezip.z.js and corebio.z.js
-// later additions include coresym.z.js, coresurface.z.js, coremenu.z.js
-
-// NOTE: Any changes here must also be reflected in build_03_tocore.xml
+﻿
 
 if (!window["java.registered"])
  window["java.registered"] = false;
@@ -11,10 +8,8 @@ if (!window["java.registered"])
 	if (window["java.packaged"]) return;
 	window["java.packaged"] = true;
 
-	//if (!Jmol._isAsync) {
 		for (var i = 0; i < Jmol._coreFiles.length; i++)
 		  ClazzLoader.loadZJar(Jmol._coreFiles[i], ClazzLoader.runtimeKeyClass);
-	//}
 		
   if (Jmol._debugCode)
     return;
@@ -22,8 +17,6 @@ if (!window["java.registered"])
 	var	base = ClazzLoader.getJ2SLibBase() + "core/";
 
 
-// note - we don't need to list ALL the classes -- only the ones that are entry points.
-// several more classe are in each of these files -- see build_03_tocore.xml
 
 	ClazzLoader.jarClasspath (base + "coretext.z.js",	[ 
 	"JM.Text",

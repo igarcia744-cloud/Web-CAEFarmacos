@@ -1,4 +1,4 @@
-Clazz.declarePackage("jme");
+﻿Clazz.declarePackage("jme");
 Clazz.load(["javax.swing.JFrame", "$.JPanel", "java.util.ArrayList", "javax.swing.JTextField"], ["jme.MultiBox", "$.QueryBox", "$.JME"], ["java.io.FileInputStream", "java.util.StringTokenizer", "JU.Rdr", "javax.swing.JButton", "$.JComboBox", "$.JLabel", "jme.JMEmol"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.myFrame = null;
@@ -1896,34 +1896,13 @@ Clazz.overrideMethod(c$, "keyReleased",
 function(e){
 }, "java.awt.event.KeyEvent");
 c$.$MultiBox$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(jme, "MultiBox$1", null, java.awt.event.ActionListener);
-Clazz.overrideMethod(c$, "actionPerformed", 
-function(e){
-this.b$["jme.MultiBox"].jme.aboutBoxPoint = this.b$["jme.MultiBox"].jme.aboutBox.getLocationOnScreen();
-this.b$["jme.MultiBox"].jme.aboutBox.setVisible(false);
-}, "java.awt.event.ActionEvent");
-/*eoif5*/})();
+})();
 };
 c$.$MultiBox$2$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(jme, "MultiBox$2", null, java.awt.event.ActionListener);
-Clazz.overrideMethod(c$, "actionPerformed", 
-function(e){
-this.b$["jme.MultiBox"].jme.smilesBoxPoint = this.b$["jme.MultiBox"].jme.smilesBox.getLocationOnScreen();
-this.b$["jme.MultiBox"].jme.smilesBox.setVisible(false);
-}, "java.awt.event.ActionEvent");
-/*eoif5*/})();
+})();
 };
 c$.$MultiBox$3$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.declareAnonymous(jme, "MultiBox$3", null, java.awt.event.ActionListener);
-Clazz.overrideMethod(c$, "actionPerformed", 
-function(e){
-this.b$["jme.MultiBox"].jme.atomxBoxPoint = this.b$["jme.MultiBox"].jme.atomxBox.getLocationOnScreen();
-this.b$["jme.MultiBox"].jme.atomxBox.setVisible(false);
-}, "java.awt.event.ActionEvent");
-/*eoif5*/})();
+})();
 };
 var c$ = Clazz.decorateAsClass(function(){
 this.text = null;

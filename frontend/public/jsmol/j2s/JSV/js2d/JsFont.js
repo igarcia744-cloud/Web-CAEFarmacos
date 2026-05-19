@@ -1,4 +1,4 @@
-Clazz.declarePackage("JSV.js2d");
+﻿Clazz.declarePackage("JSV.js2d");
 (function(){
 var c$ = Clazz.declareType(JSV.js2d, "JsFont", null);
 c$.newFont = Clazz.defineMethod(c$, "newFont", 
@@ -13,8 +13,6 @@ if (context.font != font.font) {
 context.font = font.font;
 font.font = context.font;
 context._fontAscent = Math.ceil(font.fontSize); //pt, not px
-// the descent is actually (px - pt)
-// but I know of no way of getting access to the drawn height
 context._fontDescent = Math.ceil(font.fontSize * 0.25);//approx
 }
 }return context;

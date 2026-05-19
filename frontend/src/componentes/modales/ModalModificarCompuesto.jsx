@@ -34,7 +34,7 @@ function ModalModificarCompuesto({ isOpen, onClose, compuesto, actualizar }) {
         libreria_id: parseInt(libreria_id)
       });
 
-      actualizar(); // recargar tabla
+      actualizar(); 
       onClose();
 
     } catch(error){

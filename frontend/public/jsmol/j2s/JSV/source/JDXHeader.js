@@ -1,4 +1,4 @@
-Clazz.declarePackage("JSV.source");
+﻿Clazz.declarePackage("JSV.source");
 Clazz.load(["JU.Lst"], "JSV.source.JDXHeader", ["java.util.Hashtable", "JSV.source.JDXSourceStreamTokenizer"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.title = "";
@@ -128,28 +128,7 @@ var s = this.headerTable.get(j);
 {
 return [s[0], JU.PT.rep(s[1], "<", "&lt;")];
 }}, "~N");
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.table = null;
-this.map = null;
-Clazz.instantialize(this, arguments);}, JSV.source.JDXHeader, "DataLDRTable", null);
-Clazz.makeConstructor(c$, 
-function(){
-this.table =  new JU.Lst();
-this.map =  new java.util.Hashtable();
-});
-Clazz.defineMethod(c$, "addHeader", 
-function(label, value){
-var pt = this.map.get(label);
-if (pt == null) {
-pt = Integer.$valueOf(this.table.size());
-this.table.addLast( Clazz.newArray(-1, [label, value, JSV.source.JDXSourceStreamTokenizer.cleanLabel(label)]));
-this.map.put(label, pt);
-} else {
-var entry = this.table.get(pt.intValue());
-entry[1] = value;
-}}, "~S,~S");
-/*eoif3*/})();
+})();
 c$.typeNames =  Clazz.newArray(-1, ["ND NMR SPECTRUM   NMR", "NMR SPECTRUM      NMR", "INFRARED SPECTRUM IR", "MASS SPECTRUM     MS", "RAMAN SPECTRUM    RAMAN", "GAS CHROMATOGRAM  GC", "UV/VIS SPECTRUM   UV/VIS"]);
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

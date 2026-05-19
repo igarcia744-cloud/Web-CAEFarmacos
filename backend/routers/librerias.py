@@ -66,10 +66,8 @@ async def actualizar_libreria(
         if os.path.exists(ruta_antigua):
             os.rename(ruta_antigua, nueva_ruta)
 
-        # actualizar ruta de la librería (RELATIVA)
         libreria.ruta_zip = nueva_ruta_relativa
 
-        # actualizar rutas de compuestos (RELATIVAS)
         resultado = await db.execute(
             select(Compuesto).where(Compuesto.libreria_id == libreria_id)
         )
@@ -86,7 +84,6 @@ async def actualizar_libreria(
                     nombre_archivo
                 )
 
-    # actualizar datos de librería
     libreria.nombre = nuevo_nombre
     libreria.comentario = nuevo_comentario
 

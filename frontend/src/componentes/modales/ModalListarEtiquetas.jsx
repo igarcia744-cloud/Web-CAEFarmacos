@@ -53,15 +53,11 @@ function ModalListarEtiquetas({ isOpen, onClose }) {
       title="Lista de etiquetas"
     >
 
-      {/* BUSCADOR */}
-
       <input
         placeholder="Buscar etiqueta..."
         value={busqueda}
         onChange={(e)=>setBusqueda(e.target.value)}
       />
-
-      {/* TABLA */}
 
       <div className="tabla-scroll">
         <table className="tabla-etiquetas">

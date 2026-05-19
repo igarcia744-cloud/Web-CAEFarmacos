@@ -94,7 +94,17 @@ async def crear_compuesto(
 
 async def actualizar_compuesto(db, compuesto_id, datos):
 
-    compuesto = await db.get(Compuesto, compuesto_id)
+    resultado = await db.execute(
+        select(Compuesto)
+        .options(
+            selectinload(Compuesto.etiquetas)
+        )
+        .where(
+            Compuesto.id == compuesto_id
+        )
+    )
+
+    compuesto = resultado.scalar_one_or_none()
 
     if not compuesto:
         return None
@@ -104,14 +114,30 @@ async def actualizar_compuesto(db, compuesto_id, datos):
 
     if ruta_relativa:
 
-        ruta_actual = os.path.join(STORAGE_PATH, ruta_relativa)
+        ruta_actual = os.path.join(
+            STORAGE_PATH,
+            ruta_relativa
+        )
 
-        carpeta = os.path.dirname(ruta_relativa)
-        nueva_ruta_relativa = os.path.join(carpeta, nuevo_nombre)
-        nueva_ruta = os.path.join(STORAGE_PATH, nueva_ruta_relativa)
+        carpeta = os.path.dirname(
+            ruta_relativa
+        )
+
+        nueva_ruta_relativa = os.path.join(
+            carpeta,
+            nuevo_nombre
+        )
+
+        nueva_ruta = os.path.join(
+            STORAGE_PATH,
+            nueva_ruta_relativa
+        )
 
         if os.path.exists(ruta_actual):
-            os.rename(ruta_actual, nueva_ruta)
+            os.rename(
+                ruta_actual,
+                nueva_ruta
+            )
 
         compuesto.ruta_archivo = nueva_ruta_relativa
 
@@ -119,9 +145,20 @@ async def actualizar_compuesto(db, compuesto_id, datos):
     compuesto.libreria_id = datos.libreria_id
 
     await db.commit()
-    await db.refresh(compuesto)
 
-    return compuesto
+    resultado = await db.execute(
+        select(Compuesto)
+        .options(
+            selectinload(Compuesto.etiquetas)
+        )
+        .where(
+            Compuesto.id == compuesto_id
+        )
+    )
+
+    compuesto_actualizado = resultado.scalar_one()
+
+    return compuesto_actualizado
 
 
 async def eliminar_compuesto(db, compuesto_id: int):

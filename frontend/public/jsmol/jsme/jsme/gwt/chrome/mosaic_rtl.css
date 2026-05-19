@@ -1,60 +1,15 @@
-/**
- * The file contains styles for GWT widgets in the standard theme.
- *
- * In order to maintain cross-browser compatibility, the following syntax is
- * used to create IE6 specific style rules:
- *    html>body .gwt-Widget {
- *      Rule applies to all browsers (including IE7), except IE6
- *    }
- *    * html .gwt-Widget {
- *      Rule applied to IE6 only (not to IE7)
- *    }
- * 
- * Specifically, IE6 does not support images with multiple transparent colors,
- * so we need to use the AlphaImageLoader in IE6 only.
- */
-
-/**
- * The reference theme can be used to determine when this style sheet has
- * loaded.  Create a hidden div element with absolute position, assign the style
- * name below, and attach it to the DOM.  Use a timer to detect when the
- * element's height and width are set to 5px.
- */
+﻿
 .mosaic-Reference-chrome-rtl {
   height: 5px;
   width: 5px;
   
 }
 
-/*
-body {
-	font-family: arial,sans-serif;
-}
-
-div,td {
-	color: #000000;
-}
-
-a:link {
-	color:#0000cc;
-}
-     
-a:visited {
-	color:#551a8b;
-}
-
-a:active {
-	color:#ff0000;
-}
-*/
-/*** Button ***/
 
 .gwt-Button {
-  /* IE hack */
   overflow: visible;
 }
 
-/*** TextBox & TextArea */
 
 .gwt-TextBox,
 .gwt-PasswordTextBox,
@@ -66,7 +21,6 @@ a:active {
 	border: 1px inset #ccc;
 }
 
-/*** DecoratedButton ***/
 
 .mosaic-DecoratedButton {
 	margin: 0px;
@@ -107,7 +61,6 @@ a:active {
 	background: #0ff;
 }
 
-/*** ComboBox ***/
 
 .mosaic-ComboBox {
 	border: 1px inset #ccc;
@@ -128,7 +81,6 @@ a:active {
     background-image: url(images/combobox/arrow-down.png);
 }
 
-/*** ToolButton ***/
 
 .mosaic-ToolButton {
 	margin: 0px;
@@ -184,14 +136,12 @@ a:active {
     background-image: url(images/button/split-button-arrow-active.png);
 }
 
-/* Checked state */
 
 .mosaic-ToolButton .mosaic-Checkbox-Button-checked {
     border: 1px inset #ccc;
     background-color: #ccc;
 }
 
-/* Disabled state */
 
 .mosaic-ToolButton .mosaic-Menu-Button-disabled {
     background-image: url(images/button/menu-button-arrow-disabled.png);
@@ -205,7 +155,6 @@ a:active {
     border: 1px inset #ccc;  
 }
 
-/*** Caption ***/
 
 .mosaic-Caption {
 	background: #e3e8f3 url(images/hborder.png) repeat-x 0px -2003px;
@@ -225,7 +174,6 @@ a:active {
 	overflow: hidden;
 }
 
-/*** DropDownPanel ***/
 
 .mosaic-DropDownPanel {
 	
@@ -300,7 +248,6 @@ a:active {
 .mosaic-DropDownPanel .mosaic-ColumnWidget .dataTable tr.highlighted,
 .mosaic-DropDownPanel .mosaic-ScrollTreeTable .dataTable tr.hovering,
 .mosaic-DropDownPanel .mosaic-ScrollTreeTable .dataTable tr.highlighted {
-	/*background: #FFFFAA;*/
 	cursor: hand;
 	cursor: pointer;
 }
@@ -311,7 +258,6 @@ a:active {
 	background: #7AA5D6;
 }
 
-/*** WindowPanel ***/
 
 .mosaic-WindowPanel {
 }
@@ -325,8 +271,6 @@ a:active {
 	padding: 0px;
 	margin: 0px;
 	
-	/* debug */
-	/*border: 1px solid #00f;*/
 }
 .mosaic-WindowPanel .Body {
 	background: white;
@@ -365,32 +309,20 @@ a:active {
 	cursor: w-resize;
 }
 
-/*** GlassPanel ***/
 
 .mosaic-GlassPanel-loading,
 .gwt-GlassPanel {
-	/* Override glass panel color to be `green` */
 	background-color: #000 !important;
 	background-repeat: repeat;
 
-	/* Override glass panel to 10% opacity (= 90% transparency) */
 	filter: alpha(opacity = 10) !important; /* IE */
 	opacity: 0.1 !important; /* non-IE */
 
-	/*
-      NOTE: Please do NOT use either CSS 'width' or 'height' here, as
-      this would defeat much of the effort that went into GlassPanel
-      in order to get it to work consistently in a variety of
-      circumstances. Specifically, please resist the urge to use
-      'width/height: 100%' or similar constructs.
-	*/
 }
 .mosaic-GlassPanel-invisible {
-	/* Override glass panel color to be `green` */
 	background-color: #000 !important;
 	background-repeat: repeat;
 	
-	/* Override glass panel to 0% opacity (= 100% transparency) */
 	filter: alpha(opacity = 0) !important; /* IE */
 	opacity: 0.0 !important; /* non-IE */
 }
@@ -456,7 +388,6 @@ a:active {
 	opacity: 1.0 !important; /* non-IE */
 }
 
-/*** ImageButton ***/
 
 .mosaic-ImageButton {
 	cursor: pointer;
@@ -465,20 +396,10 @@ a:active {
 .mosaic-ImageButton img {
 	display: block;
 	
-	/*
-	 * Unfortunately, in IE, border-color: transparent is rendered as black.
-	 * We get around the border on hover displacement of content by adjusting
-	 * the margin/padding at the same time.
-	 */
 	border: 0px solid transparent;
 	margin: 1px;
 }
 .mosaic-ImageButton img:hover {
-	/*
-	 * Unfortunately, in IE, border-color: transparent is rendered as black.
-	 * We get around the border on hover displacement of content by adjusting
-	 * the margin/padding at the same time.
-	 */
 	border: 1px solid #4d4d4d;
 	margin: 0px;
 	
@@ -488,7 +409,6 @@ a:active {
 	background-color: #dcc;
 }
 
-/*** InfoPanel ***/
 
 .mosaic-InfoPanel {
 }
@@ -501,20 +421,13 @@ a:active {
 .mosaic-InfoPanel-description {
 }
 
-/*** TabLayoutPanel ***/
 
 .mosaic-TabLayoutPanel {
 }
 
 .mosaic-TabLayoutPanelBottom {
-/*
-	border-color: #92c1f0;
-	border-style: solid;
-	border-width: 3px 2px 2px 2px;
-*/
 }
 
-/*** ScrollTabBar ***/
 
 .mosaic-ScrollTabBar {
 }
@@ -529,7 +442,6 @@ a:active {
   border: 1px solid #ccc;
 }
 
-/*** ScrollTable ***/
 
 .gwt-ScrollTable,
 .mosaic-ColumnWidget,
@@ -630,22 +542,16 @@ a:active {
 	cursor: hand;
 }
 
-/*** CaptionLayoutPanel ***/
 
 .mosaic-CaptionLayoutPanel {
 	padding: 0px;
 	margin: 0px;
 
-	/* debug */
-	/*border: 1px dotted #00f;*/
 }
 .mosaic-CaptionLayoutPanel .Body {
 	
-	/* debug */
-	/*border: 1px dotted #0f0;*/
 }
 
-/** DisclosureLayoutPanel */
 
 .mosaic-DisclosureLayoutPanel {
 }
@@ -670,20 +576,13 @@ a:active {
   margin-left: 6px;
 }
 
-/*** LayoutPanel ***/
 
 .mosaic-LayoutPanel {
 	padding: 5px;
 	margin: 0px;
 	
-	/* debug */
-	/*
-	margin: 1px;
-	border: 1px dotted #f00;
-	*/
 }
 .mosaic-LayoutPanel-FormLayout .mosaic-LayoutPanel {
-	/* required by Safari to handle the 'width' attribute */ 
 	position: absolute !important;
 }
 .mosaic-LayoutPanel-FillLayout {
@@ -707,19 +606,10 @@ a:active {
 	padding: 1px 1px 0px 1px;
 	overflow: hidden;
 }
-/* TODO
-html>body .mosaic-LayoutPanel-BorderLayout .NorthCollapsedImageButton img,
-html>body .mosaic-LayoutPanel-BorderLayout .SouthCollapsedImageButton img {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-}
-*/
 .mosaic-LayoutPanel-BorderLayout .WestCollapsedImageButton {
 	border: 1px solid #d0e4f6;
 	border-left: none;
 	
-	/* required by Safari to handle the 'width' attribute */
 	position: absolute !important;
 	width: 18px !important;
 	
@@ -730,7 +620,6 @@ html>body .mosaic-LayoutPanel-BorderLayout .SouthCollapsedImageButton img {
 	border: 1px solid #d0e4f6;
 	border-right: none;
 	
-	/* required by Safari to handle the 'width' attribute */
 	position: absolute !important;
 	width: 18px !important;
 
@@ -785,7 +674,6 @@ html>body .mosaic-LayoutPanel-BorderLayout .SouthCollapsedImageButton img {
 	background: #000;
 }
 
-/*** ToolBar ***/
 
 .mosaic-ToolBar {
 	cursor: default;
@@ -800,7 +688,6 @@ html>body .mosaic-LayoutPanel-BorderLayout .SouthCollapsedImageButton img {
 	border-left: 1px solid #ccc;
 	background: white;
 	
-	/* required by Safari to handle the 'width' attribute */
 	position: absolute !important;
 	width: 1px;
 	
@@ -808,14 +695,10 @@ html>body .mosaic-LayoutPanel-BorderLayout .SouthCollapsedImageButton img {
 	margin: 5px 3px;
 }
 
-/*** WidgetWrapper ***/
 
 .mosaic-WidgetWrapper {
-	/* debug */
-	/*border: 1px solid;*/	
 }
 
-/*** DateTimePicker ***/
 
 .mosaic-DateTimePicker {
 	border: none;
@@ -825,7 +708,6 @@ html>body .mosaic-LayoutPanel-BorderLayout .SouthCollapsedImageButton img {
 	background: #dbe6de;
 }
 
-/*** mosaic-DecoratedBottomTabBar ***/
 
 .mosaic-DecoratedBottomTabBar {	
 }
@@ -926,10 +808,8 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 	background: #92c1f0;
 }
 
-/*** StackLayoutPanel ***/
 
 .mosaic-StackLayoutPanel {
-	/*border: 1px solid #bbbbbb;*/
 }
 .mosaic-StackLayoutPanel .mosaic-StackLayoutPanelItem {
 	cursor: pointer;
@@ -941,13 +821,9 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 	cursor: hand;
 }
 .mosaic-StackLayoutPanel .mosaic-StackLayoutPanelContent {
-	/*border: 1px solid #bbbbbb;*/
-	/*border-bottom: 0px;*/
 }
 
-/*** FastTree ***/
 
-/* --- Structural CSS --- */
 
 .gwt-FastTree {
 	-moz-user-select: none;
@@ -972,7 +848,6 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 	outline: none
 }
 
-/* --- Visual styling --- */
 
 .gwt-FastTree .open .treeItemContent,.gwt-FastTree  .closed .treeItemContent {
 	margin-left: 18px;
@@ -1006,9 +881,7 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 	background: #e3e8f3 url('images/fasttree/selectionBar.gif') repeat-x;
 }
 
-/*** FastTreeTable ***/
 
-/* --- Structural CSS --- */
 
 .gwt-FastTreeTable {
 	-moz-user-select: none;
@@ -1036,7 +909,6 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 	outline: none
 }
 
-/* --- Visual styling --- */
 
 .gwt-FastTreeTable .open .treeItemContent,.gwt-FastTreeTable .closed .treeItemContent {
 	margin-left: 18px;
@@ -1066,13 +938,7 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 .gwt-FastTreeTable .treeItemContent {
 	padding: 2px;
 }
-/*
-.gwt-FastTreeTable .selected .treeItemContent {
-	background: #e3e8f3 url('images/fasttree/selectionBar.gif') repeat-x;
-}
-*/
 
-/*** gwt-MenuItem ***/
 
 .gwt-MenuBar .gwt-MenuItem-disabled {
 	cursor: default;
@@ -1082,25 +948,21 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 	filter: alpha(opacity=40);
 }
 
-/*** gwt-MenuBarPopup ***/
 
 .gwt-MenuBarPopup {
 	z-index: 2147483647; /* Integer.MAX_VALUE */
 }
 
-/*** gwt-InlineCellEditor **/
 
 .gwt-InlineCellEditor {
 	z-index: 2147483647; /* Integer.MAX_VALUE */
 }
 
-/*** gwt-PopupPanel **/
 .gwt-PopupPanel,
 .gwt-DecoratedPopupPanel {
 	z-index: 2147483647; /* Integer.MAX_VALUE */
 }
 
-/*** mosaic-FormSeparator **/
 
 .mosaic-FormSeparator {
 	font-weight: bold;
@@ -1110,7 +972,6 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 	border: 1px solid #4d4d4d;
 }
 
-/*** Basic Button with Images ***/
 
 .gwt-Button[disabled] table,
 .gwt-Button[disabled] img {
@@ -1123,7 +984,6 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 	white-space: nowrap;
 }
 
-/*** GWT Incubator SliderBar ***/
 
 .gwt-SliderBar-shell {
 	height: 34pt;
@@ -1175,7 +1035,6 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 	cursor: pointer;
 }
 
-/*** GWT Incubator ProgressBar ***/
 
 .gwt-ProgressBar-shell {
 	border: 1px solid #4d4d4d;
@@ -1192,7 +1051,6 @@ html>body .mosaic-DecoratedBottomTabBar .gwt-TabBarItem-selected .tabBottomRight
 	color: white;
 }
 
-/*** GWT Incubator Value Spinner ***/
 
 .gwt-ValueSpinner .arrows {
 	width: 17px;

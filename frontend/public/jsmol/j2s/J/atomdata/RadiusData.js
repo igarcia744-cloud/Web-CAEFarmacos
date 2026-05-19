@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.atomdata");
+﻿Clazz.declarePackage("J.atomdata");
 Clazz.load(["java.lang.Enum", "J.c.VDW"], "J.atomdata.RadiusData", ["JU.SB"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.info = null;
@@ -43,12 +43,6 @@ sb.appendI(Clazz.floatToInt(this.value));
 }
 return sb.toString();
 });
-/*if2*/;(function(){
-var c$ = Clazz.declareType(J.atomdata.RadiusData, "EnumType", Enum);
-Clazz.defineEnumConstant(c$, "ABSOLUTE", 0, []);
-Clazz.defineEnumConstant(c$, "OFFSET", 1, []);
-Clazz.defineEnumConstant(c$, "FACTOR", 2, []);
-Clazz.defineEnumConstant(c$, "SCREEN", 3, []);
-/*eoif2*/})();
+})();
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

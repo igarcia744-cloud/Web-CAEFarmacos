@@ -1,67 +1,5 @@
-//  JSmolJME.js   Bob Hanson hansonr@stolaf.edu  6/14/2012
+﻿
 
-// see http://peter-ertl.com/jsme
-
-// BH 2025.11.09 updates to JSME_2024-04-29; fixes "marker" option for smiles
-// BH 12/3/2017 8:56:35 PM two JSME applets on a page fail.
-// BH 2/16/2017 2:09:40 PM uses show chemical jme not show chemical/file=jme
-// BH 4/24/2016 10:51:22 PM adds getjsmeh Jmol script to derive jsme with H atoms from NCI mrv 
-// BH 9/15/2015 18:10:25 jmolAtoms no var
-// BH 6/19/2015 5:36:23 PM fix for Jmol mouse hook t.x.baseVal not implemented fully on iOS
-// BH 3/26/2015 6:13:01 PM  SMILES fix for stereochem in rings losing H atoms
-// BH 9/13/2014 2:24:29 PM SMILES fix again
-// BH 9/2/2014 6:56:42 PM  SMILES fix for quaternary carbon with stereochemistry
-// BH 3/1/2014 4:31:18 PM fix for evaluate returning atom sets as arrays
-// BH 1/27/2014 8:37:06 AM adding Info.viewSet  
-// BH 12/4/2013 7:44:26 PM fix for JME independent search box
-// BH 5/25/2017 5:11:17 AM removing Jmol changes to JSME SMILES. Problem is with incomplete assignment of H stereochemistry, as in CC[C@@H](C)[H]
-/*
-
-	Only HTML5 version (JSME) is supported.
-
-	JME 2D option -- use 
-
-		Jmol.getJMEApplet(id, Info)
-		Jmol.getJMEApplet(id, Info, linkedApplet)
-
-	no option for getJMEAppletHtml(), but instead we indicate the
-	target div using Info.divId.
-
-	linkedApplet puts JME into INFO block for that applet; 
-	use Jmol.showInfo(jme,true/false) to show/hide JME applet with id "jme"
-
-	JME licensing: http://www.molinspiration.com/jme/doc/index.html
-	note that required boilerplate: "JME Editor courtesy of Peter Ertl, Novartis"
-
-	API includes:
-
-	Jmol.jmeSmiles = function(jme, withStereoChemistry); 
-
-		// returns SMILES string
-
-	Jmol.jmeGetFile = function(jme, asJME)
-
-		// retrieves structure as JME or MOL data
-
-	Jmol.jmeReadMolecule = function(jme, jmeOrMolData); 
-
-		// loads JME or MOL data into the app
-		// JME data is recognized as a single line with no line ending
-
-
-	Jmol.jmeReset = function(jme);
-
-		// clears the app
-
-	Jmol.jmeOptions = function(jme, options);
-
-			 
-	All other methods are private to JSmolJME.js
-
-
-
-
-*/
 
 
 ;(function (Jmol, document) {
@@ -121,9 +59,6 @@
 
 	Jmol._JMEApplet._get = function(id, Info, linkedApplet, checkOnly) {
 
-	// requires JmolJME.js and JME.jar
-	// Jmol.getJMEApplet("jme", Info)
-	// window.JME will be created as the return to this function
 
 		Info || (Info = {});
 		var DefaultInfo = {
@@ -136,17 +71,6 @@
 			editOptions: "editEnabled",
 			highlightColor: 1,  // 1-6
 			options: "autoez"
-			// see http://www2.chemie.uni-erlangen.de/services/fragment/editor/jme_functions.html
-			// rbutton, norbutton - show / hide R button
-			// hydrogens, nohydrogens - display / hide hydrogens
-			// query, noquery - enable / disable query features
-			// autoez, noautoez - automatic generation of SMILES with E,Z stereochemistry
-			// nocanonize - SMILES canonicalization and detection of aromaticity supressed
-			// nostereo - stereochemistry not considered when creating SMILES
-			// reaction, noreaction - enable / disable reaction input
-			// multipart - possibility to enter multipart structures
-			// number - possibility to number (mark) atoms
-			// depict - the applet will appear without editing butons,this is used for structure display only
 		};		
 		Jmol._addDefaultInfo(Info, DefaultInfo);
 		var applet = new Jmol._JMEApplet(id, Info, linkedApplet, checkOnly);
@@ -164,22 +88,15 @@
 				if (app._viewSet) {
           f = function(event){theapp._myEditCallback(theapp, event);};
 
-//					f = "(function(){" + app._id + "._myEditCallback()})";
 				} else if (app.__Info.structureChangedCallback) {
           f = function(event){theapp.__Info.structureChangedCallback(theapp, event);};
-//					var m = app.__Info.structureChangedCallback;
-//					if (!m.endsWith(")"))
-//						m += "()";
-//					f = "(function(a,b,c,d){"+m.replace(/\(\)/, "(" + app._id +",a,b,c,d)") + "})";
 				}
 				if (f) 
 	          app._applet.setAfterStructureModifiedCallback(f);
-//				app._applet.setNotifyStructuralChangeJSfunction(f);
 				app._ready = true;
 				if (app._isEmbedded && app._linkedApplet._ready && app.__Info.visible)
 					app._linkedApplet.show2d(true);
 				Jmol._setReady(app);
-				//app._setSVG();
 			}
 		}
 	}   
@@ -240,7 +157,6 @@
 	}
 
 	proto._loadModelFromView = function(view, _jme_loadModelFromView) {
-		// request from Jmol.View to update view with view.JME.data==null or needs changing
 		var rec = view.JME;
 		this._currentView = view;
 		if (rec.data != null) {
@@ -261,12 +177,10 @@
   }
 
 	proto._updateView = function(_jme_updateView) {
-		// called from model change without chemical identifier, possibly by user action and call to Jmol.updateView(applet)
 		if (this._viewSet != null) {
 			this._search("$" + this._getSmiles(true, false))
     }
 		var me = this;
-    // missing View.updateView?
 	}
 
 	proto._setCheck = function(b, why) {
@@ -281,57 +195,12 @@
 			this._editEnabled = (o.indexOf("editdisable") < 0);
 	}
 	
-//	proto._setSVG = function() {
-//		var me = this;
-//		Jmol._$(this._divId).find("div").each(function(){this._applet = me})
-//		this._starPressed = false;
-//	}
 	
 	proto._enableEdit = function(tf) {
 	  this._editEnabled = tf;
-		//this._setSVG();
 	}
 
-//	Jmol._jmeHook = function(a, e) {
-//  alert("hooked")
-//		// called from within function C(a) in JSME code
-//		// a is the function to send this event to using apply
-//		var d;
-//		return (!(d = e.target) || !(d._applet || (d = Jmol.$closest(d, 'div')[0])) || !d || !d._applet ? a : d._applet.__allowEvent(a, e));
-//	}
 	
-//	proto.__allowEvent = function(a, e){
-//  alert("allowing event")
-//		var t;
-//		if(!e || !(t = e.target) || "DIV rect line text polygon ellipse path".indexOf("" + t.tagName) < 0){
-//			// cancel only these specific tags
-//			return a;
-//		}
-//		
-//		var isKey = (e.type.indexOf("key") >= 0);
-//		if  (!this._editEnabled && isKey) {
-///			// cancel all keyboard events
-//		return 0;
-//		}
-//		if ("dblclick mousedown mouseup".indexOf(e.type) < 0) {
-//			// cancel only these specific events
-//			return a;
-//		}	
-//    var x = 200;
-//    var y = 200;
-//    try {
-//		x = parseInt(t.getAttribute("x"));//(t.textContent ? t.x.baseVal[0].value : t.points ? t.animatedPoints[0].x : isKey || !t.x && !t.x1 ? 200 : (t.x || t.x1).baseVal.value);
-//		y = parseInt(t.getAttribute("y"));//(t.textContent ? t.y.baseVal[0].value : t.points ? t.animatedPoints[0].y : isKey || !t.x && !t.x1 ? 200 : (t.y || t.y1).baseVal.value);
-//    } catch(e) {
-//    }
-//		// when editing is disabled, only the star key and main-panel clicking will be allowed
-//		var isStar = (x >= 100 && x < 124 && y < 24); // fifth icon from the left on top row
-//		var isMain = (x > 25 && y > 50 || x == 0 && y == 0 && t.width.baseVal.value > 100 && t.height.baseVal.value > 100);
-//		if (isStar || this._editEnabled && !isMain)
-//			this._starPressed = isStar;			
-//		var ok = (isStar || this._editEnabled || isMain && this._starPressed);
-//		return (ok ? a : 0);
-//	}
 			
 	proto.__getJmeFileOrEmptyString = function() {
 		var s = this._applet.jmeFile();
@@ -347,12 +216,9 @@
 	proto.__doEditCallback = function(me, event, _jme_myEditCallback) {
 		console.log("editcallback check=" + event.action + " " + this._checkEnabled + " edit=" + this._editEnabled + " "  );
 
-		// direct callback from JSME applet
 		var data = this.__getJmeFileOrEmptyString().replace(/\:1/g,"");
 		this._editMol = this._editMol.replace(/\:1/g,"");
 		if (this._checkEnabled && !this._editEnabled) {
-			// data is not null, and we don't allow editing
-			// data is null, and we don't allow clearing
 			console.log("editcallback "
 					+ " data= " + data + " ; " + this._editMol);
 	 		this._editEnabled && data && (this._editMol = data); /// was .editEnabled
@@ -363,7 +229,6 @@
 				setTimeout(function(){
 					me._setCheck(false, "sorry");
 					(m ? me._applet.readMolecule(m) : me._applet.reset());
-					//me._setSVG();
 					me._editMol = me.__getJmeFileOrEmptyString();
 					console.log("editmol = " + me._editMol);
 					me._setCheck(true, "failed")
@@ -377,7 +242,6 @@
 		if (this._viewSet == null)
 			return;
     if (event.action == "readMolFile" || event.action == "readJME") {
-     // JSME marks the selected atom in the third from last column!
       this._molData = this._applet.molFile().replace(/1  0  0\n/g, "0  0  0\n");
       setTimeout(function() {jme.__updateAtomCorrelation()},10);
 	return;
@@ -389,7 +253,6 @@
 			this._thisJmolModel = null;
 			return this.__clearAtomSelection(false);
 		}
-		// not a structural change
 		var data = this.__getJmeFileOrEmptyString();
 		if (data.indexOf(":") < 0) 
 			return this.__clearAtomSelection(true);
@@ -483,10 +346,6 @@
 			  isOK = false;
 			} else if (jme != null) {
 				jmeSMILES = this._getSmiles();
-        //alert(jmeSMILES)
-				// testing here to see that we have the same structure as in the JMOL applet
-				// feature change here --- evaluation of an atom set returns an array now, not an uninterpretable string
-        // had "/noncanonical/" here - but this is not necessary. Jmol will convert this
          
         var script = "{*}.find('SMILES', '" + jmeSMILES.replace(/\\/g,"\\\\")+ "')"
 				var jmolAtoms = (jmeSMILES ? jmol._evaluate(script) : []);
@@ -496,21 +355,18 @@
 				if (toJME) {
 				  this._loadFromJmol(jmol);
 				} else {
-					// toJmol
 					if (jmeSMILES)
 						Jmol.script(jmol, "load \"$" + jmeSMILES + "\"");
 				}
 			}
 		}
 		if (this._linkedApplet) {
-		 	//this.__showContainer(toJME, true);
 			this._showInfo(!toJME);
 		}
 	}
 	
 	proto._loadFromJmol = function(jmol, format) {
     format || (format = "jme");
-    //alert("OK, loading from Jmol here" + (xxjme=jme) + " " + Clazz.getStackTrace());
     if (format == "jmeh") {
       if (!this._getjmeh) {
         this._getjmeh = true;
@@ -526,9 +382,7 @@
 		if (!this._applet)return;
 		this._setCheck(false, "readmoldata");
 		if (this._molData) {
-    //alert(format + " " + data + " reading " + this._molData)
     	    Jmol.jmeReadMolecule(this, this._molData);
-//			this._applet.readMolecule(this._molData);
 			this._molData = this._applet.molFile();
 			this.__updateAtomCorrelation();
 		} else {
@@ -537,7 +391,6 @@
 		} 
 		this._editMol = this.__getJmeFileOrEmptyString();
 		this._setCheck(true, "readmoldata2");
-		//this._setSVG();
 	}
   
 	proto.__showContainer = function(tf, andShow) {	
@@ -555,13 +408,10 @@
 	}
 
 	proto._script = function(script) {
-	 // a little scripting language for JME!
-	 // print 
 		var list = script.split(";");
 		for (i = 0; i < list.length; i++) {
 			switch (list[i].split(" ")[0].trim().toLowerCase()) {
 			case "print":
-				// only FF and Chrome right now. Maybe Safari
 				var svg = Jmol.$("#" + this._divId).find("svg")[0];
 				var img = new Image();
 				var me = this;
@@ -570,7 +420,6 @@
 					var ctx = canvas.getContext('2d');
 					ctx.clearRect( 0, 0, (canvas.width = svg.width.animVal.value - 5), (canvas.height = svg.height.animVal.value));
 					ctx.drawImage(img, 0, 0);
-					// throw out "data:image/png;base64," because we will reconstruct that if we need to, and we might not
 					Jmol._saveFile(me._id + ".png", canvas.toDataURL("image/png"));
 				}
 				img.src = "data:image/svg+xml;base64," + btoa(svg.outerHTML);
@@ -581,29 +430,11 @@
 
   proto._getSmiles = function(withStereoChemistry, withMarkers) {
 	withMarkers = (arguments.length < 2 || withMarkers); 
-	// markers indicate a highlighted atoms [H:1] for example
-	// we use false here for inputs to NCI when editing is on
 	this._applet.options(withMarkers ? "marker" : "nomarker");
   	var s = (arguments.length == 0 || withStereoChemistry ? this._applet.smiles() : this._applet.nonisomericSmiles());
 	if (!withMarkers)
 		this._applet.options("marker");
 
-//    s = s.replace(/\:1/g,"");
-//		s = s.replace(/@H/g,"@~").replace(/H/g,"")
-//		s = s.replace(/\/\[\]/g,"/[H]")
-//		s = s.replace(/\\\[\]/g,"\\[H]")
-//		s = s.replace(/\[\]\//g,"[H]/")
-//		s = s.replace(/\[\]\\/g,"[H]\\")
-//    s = s.replace(/\[\]/g,"")
-//    // but change [C@][H] to [C@H] and [C@]1[H] to [C@@H]1 
-//    s = s.replace(/\@\]\(\)/g,"@H]")
-//    s = s.replace(/\@\](\d+)\(\)/g,"@@H]$1")
-//    s = s.replace(/\@\@\@/g,"@")
-//    s = s.replace(/\(\)/g,"");
-//    s = s.replace(/@~/g,"@H");
-//    if (s.lastIndexOf(")") == s.length - 1)
-//      s += "[H]"
-    //alert("JSmolJME s is now " + s)
 		return s;
   }
 
@@ -613,20 +444,15 @@
   
 })(Jmol._JMEApplet.prototype);
 
-	//////  additional API for JME /////////
 
-	// see also http://www2.chemie.uni-erlangen.de/services/fragment/editor/jme_functions.html
 
-	// The final replacement here is to remove markings from star option.
 
 	Jmol.jmeSmiles = function(jme, withStereoChemistry) {
    var s = jme._getSmiles();
-   //alert(s)
 		return s;
 	}
 
 	Jmol.jmeReadMolecule = function(jme, jmeOrMolData) {
-		// JME data is a single line with no line ending
 		jme._setCheck(false, "readmolecule");
     jmeOrMolData = jmeOrMolData.trim();
 		if (jmeOrMolData.indexOf("\n") < 0 && jmeOrMolData.indexOf("\r") < 0)
@@ -636,7 +462,6 @@
 	 jme._molData = jme._applet.molFile();
 	 jme._editMol = jme._applet.jmeFile();
 		jme._setCheck(true, "readmolecule2");
-	 //jme._setSVG();
 	}
 
 	Jmol.jmeGetFile = function(jme, asJME) {
@@ -652,17 +477,6 @@
 		jme._applet.options(options);
 	}
 
-// doesn't work because of the way JSME is created using frames and SVG.
-//	
-//  Jmol.getJSVAppletHtml = function(applet, Info, linkedApplet) {
-//    if (Info) {
-//      var d = Jmol._document;
-//      Jmol._document = null;
-//      applet = Jmol.getJMEApplet(applet, Info, linkedApplet);
-//      Jmol._document = d;
-//    }  
-//    return applet._code;
-//	}
 
 
 })(Jmol, document);

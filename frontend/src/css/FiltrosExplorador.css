@@ -1,4 +1,4 @@
-.sidebar input,
+﻿.sidebar input,
 .sidebar select{
 
   width:100%;
@@ -17,12 +17,10 @@
   font-size:14px;
 }
 
-/* BLOQUE INTERNO */
 .explorador-bloque{
   margin-bottom:20px;
 }
 
-/* TÍTULO DE BLOQUE */
 .explorador-titulo{
   font-size:13px;
   color:#aaa;

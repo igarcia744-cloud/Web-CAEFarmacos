@@ -51,7 +51,6 @@ function FiltrosTabla({ filtros, setFiltros }) {
 
       <p className="sidebar-title">Filtros Tabla</p>
 
-      {/* 🔹 BLOQUE MOSTRAR */}
       <div className="filtro-bloque">
 
         <p className="filtro-titulo">Mostrar:</p>
@@ -86,7 +85,6 @@ function FiltrosTabla({ filtros, setFiltros }) {
 
       </div>
 
-      {/* 🔹 BLOQUE BUSCAR */}
       <div className="filtro-bloque">
 
         <p className="filtro-titulo">Buscar por nombre:</p>
@@ -143,7 +141,6 @@ function FiltrosTabla({ filtros, setFiltros }) {
         {menuAbierto && (
           <div className="dropdown-contenido">
 
-            {/* 🔍 BUSCADOR */}
             <input
               type="text"
               placeholder="Buscar etiqueta..."
@@ -151,7 +148,6 @@ function FiltrosTabla({ filtros, setFiltros }) {
               onChange={(e) => setBusquedaEtiqueta(e.target.value)}
             />
 
-            {/* 🟢 SELECCIONADAS */}
             <div className="etiquetas-seleccionadas">
               {seleccionadas.map(id => {
                 const et = etiquetas.find(e => e.id === id);
@@ -164,7 +160,6 @@ function FiltrosTabla({ filtros, setFiltros }) {
               })}
             </div>
 
-            {/* 📋 LISTA */}
             <div className="lista-etiquetas">
               {etiquetas
                 .filter(e =>

@@ -1,4 +1,4 @@
-Clazz.declarePackage("JM");
+﻿Clazz.declarePackage("JM");
 Clazz.load(["java.lang.Enum", "JM.BioPolymer"], "JM.AlphaPolymer", ["JU.Measure", "$.P3", "J.c.STR", "JM.Helix", "$.Sheet", "$.Turn", "JU.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.pt0 = 0;
@@ -171,15 +171,7 @@ this.addStructureProtected(type, JM.AlphaPolymer.dsspTypes[dsspType] + (++pt), "
 }
 return count;
 }, "~N,~N,J.c.STR,JU.BS,~B");
-/*if2*/;(function(){
-var c$ = Clazz.declareType(JM.AlphaPolymer, "Code", Enum);
-Clazz.defineEnumConstant(c$, "NADA", 0, []);
-Clazz.defineEnumConstant(c$, "RIGHT_HELIX", 1, []);
-Clazz.defineEnumConstant(c$, "BETA_SHEET", 2, []);
-Clazz.defineEnumConstant(c$, "LEFT_HELIX", 3, []);
-Clazz.defineEnumConstant(c$, "LEFT_TURN", 4, []);
-Clazz.defineEnumConstant(c$, "RIGHT_TURN", 5, []);
-/*eoif2*/})();
+})();
 c$.dsspTypes =  Clazz.newArray(-1, ["H", null, "H", "S", "H", null, "T"]);
 });
 ;//5.0.1-v7 Sat Feb 28 10:50:06 CST 2026

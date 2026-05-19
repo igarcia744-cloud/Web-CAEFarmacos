@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import api from "../../api/api";
 import Modal from "./Modal";
 
@@ -23,7 +23,6 @@ function ModalLog({ isOpen, onClose }) {
     }
   };
 
-  // 🔍 FILTROS (igual estilo que compuestos)
   const logsFiltrados = logs.filter(log => {
 
     const coincideBusqueda =
@@ -53,14 +52,12 @@ function ModalLog({ isOpen, onClose }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Log del sistema">
 
-      {/* 🔍 BUSCADOR (igual que compuestos) */}
       <input
         placeholder="Buscar descripción..."
         value={busqueda}
         onChange={(e) => setBusqueda(e.target.value)}
       />
 
-      {/* 🔥 FILTROS EXTRA */}
       <div style={{ display: "flex", gap: "10px", margin: "10px 0" }}>
 
         <select
@@ -93,7 +90,6 @@ function ModalLog({ isOpen, onClose }) {
 
       </div>
 
-      {/* 🔥 TABLA EXACTA MISMA CLASE */}
       <div className="tabla-scroll">
         <table className="tabla-etiquetas">
 

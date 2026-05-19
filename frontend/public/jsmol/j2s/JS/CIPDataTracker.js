@@ -1,4 +1,4 @@
-Clazz.declarePackage("JS");
+﻿Clazz.declarePackage("JS");
 Clazz.load(["JS.CIPData", "java.util.Hashtable"], "JS.CIPDataTracker", ["JU.BS", "JV.JC"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.htTracker = null;
@@ -64,43 +64,7 @@ function(root, a, b){
 return (b.rootSubstituent == null ? "" : root.atom.getAtomName() + "." + a.rootSubstituent.atom.getAtomName() + "-" + b.rootSubstituent.atom.getAtomName());
 }, "JS.CIPChirality.CIPAtom,JS.CIPChirality.CIPAtom,JS.CIPChirality.CIPAtom");
 c$.$CIPDataTracker$CIPTracker$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.a = null;
-this.b = null;
-this.sphere = 0;
-this.score = 0;
-this.rule = 0;
-this.bsa = null;
-this.bsb = null;
-this.trackTerminal = false;
-Clazz.instantialize(this, arguments);}, JS.CIPDataTracker, "CIPTracker", null);
-Clazz.makeConstructor(c$, 
-function(rule, a, b, sphere, score, trackTerminal){
-this.rule = rule;
-this.a = a;
-this.b = b;
-this.sphere = sphere;
-this.score = score;
-this.trackTerminal = trackTerminal;
-this.bsa = a.listRS == null ?  new JU.BS() : a.listRS[0];
-this.bsb = b.listRS == null ?  new JU.BS() : b.listRS[0];
-}, "~N,JS.CIPChirality.CIPAtom,JS.CIPChirality.CIPAtom,~N,~N,~B");
-Clazz.defineMethod(c$, "getTrackerLine", 
-function(b, bsb, bsS, n){
-return "\t\t" + b.myPath + (!this.trackTerminal ? "" : b.isTerminal ? "-o" : "-" + b.atoms[0].atom.getAtomName()) + (this.rule != 8 && bsb.length() == 0 ? "" : "\t" + this.getLikeUnlike(bsb, b.listRS, n) + (bsS == null ? "" : "  " + this.getLikeUnlike(bsS, b.listRS, -n))) + "\n";
-}, "JS.CIPChirality.CIPAtom,JU.BS,JU.BS,~N");
-Clazz.defineMethod(c$, "getLikeUnlike", 
-function(bsa, listRS, n){
-if (this.rule != 8 && this.rule != 6) return "";
-var s = (n > 0 && (this.rule == 8 || bsa === listRS[1]) ? "(R)" : "(S)");
-n = Math.abs(n);
-for (var i = 0; i < n; i++) s += (bsa.get(i) ? "l" : "u");
-
-return s;
-}, "JU.BS,~A,~N");
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

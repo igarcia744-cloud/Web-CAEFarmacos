@@ -1,4 +1,4 @@
-(function(Clazz
+﻿(function(Clazz
 ,Clazz_getClassName
 ,Clazz_newLongArray
 ,Clazz_doubleToByte
@@ -56,11 +56,9 @@
 ,Clazz_defineMethod
 ,Clazz_overrideMethod
 ,Clazz_declareAnonymous
-//,Clazz_checkPrivateMethod
 ,Clazz_cloneFinals
 ){
 var $t$;
-//var c$;
 Clazz_declarePackage("JS");
 Clazz_load(null, "JS.ScriptExt", ["JU.AU"], function(){
 var c$ = Clazz_decorateAsClass(function(){
@@ -6548,29 +6546,10 @@ for (var i = bsInvalid.nextSetBit(0); i >= 0; i = bsInvalid.nextSetBit(i + 1)) t
 
 }, "JU.BS");
 c$.$MeshData$SSet$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz_decorateAsClass(function(){
-Clazz_prepareCallback(this, arguments);
-this.bs = null;
-this.n = 0;
-Clazz_instantialize(this, arguments);}, J.jvxl.data.MeshData, "SSet", null);
-Clazz_makeConstructor(c$, 
-function(bs){
-this.bs = bs;
-this.n = bs.cardinality();
-}, "JU.BS");
-/*eoif4*/})();
+})();
 };
 c$.$MeshData$SortSet$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz_decorateAsClass(function(){
-Clazz_prepareCallback(this, arguments);
-Clazz_instantialize(this, arguments);}, J.jvxl.data.MeshData, "SortSet", null, java.util.Comparator);
-Clazz_overrideMethod(c$, "compare", 
-function(o1, o2){
-return (o1.n > o2.n ? -1 : o1.n < o2.n ? 1 : 0);
-}, "J.jvxl.data.MeshData.SSet,J.jvxl.data.MeshData.SSet");
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026
@@ -9305,42 +9284,10 @@ this.surfaceReader.addTriangleCheck(t.pts[0], t.pts[1], t.pts[2], t.check, t.con
 }
 });
 c$.$MarchingSquares$ContourVertex$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz_decorateAsClass(function(){
-Clazz_prepareCallback(this, arguments);
-this.value = 0;
-Clazz_instantialize(this, arguments);}, J.jvxl.calc.MarchingSquares, "ContourVertex", JU.P3);
-Clazz_makeConstructor(c$, 
-function(vertexXYZ){
-Clazz_superConstructor (this, J.jvxl.calc.MarchingSquares.ContourVertex, []);
-this.setT(vertexXYZ);
-}, "JU.P3");
-Clazz_defineMethod(c$, "setValue", 
-function(value){
-this.value = value;
-}, "~N");
-Clazz_overrideMethod(c$, "toString", 
-function(){
-return this.value + " " + this.x + " " + this.y + " " + this.z;
-});
-/*eoif4*/})();
+})();
 };
 c$.$MarchingSquares$Triangle$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz_decorateAsClass(function(){
-Clazz_prepareCallback(this, arguments);
-this.pts = null;
-this.check = 0;
-this.isValid = true;
-this.contourIndex = 0;
-Clazz_instantialize(this, arguments);}, J.jvxl.calc.MarchingSquares, "Triangle", null);
-Clazz_makeConstructor(c$, 
-function(iA, iB, iC, check, contourIndex){
-this.pts =  Clazz_newIntArray(-1, [iA, iB, iC]);
-this.check = check;
-this.contourIndex = contourIndex;
-}, "~N,~N,~N,~N,~N");
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026
@@ -11273,69 +11220,10 @@ this.markPlaneVoxels(this.contactPair.myAtoms[0], this.contactPair.radii[0]);
 }return this.thisPlane;
 }, "~N");
 c$.$IsoSolventReader$Edge$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz_decorateAsClass(function(){
-Clazz_prepareCallback(this, arguments);
-this.ia = 0;
-this.ib = 0;
-this.nFaces = 0;
-this.nInvalid = 0;
-this.d = 0;
-this.d2 = 0;
-this.maxr = 0;
-this.cosASB2 = 0;
-this.v = null;
-Clazz_instantialize(this, arguments);}, J.jvxl.readers.IsoSolventReader, "Edge", JU.P3);
-Clazz_overrideConstructor(c$, 
-function(r, ia, ib, d){
-this.ia = Math.min(ia, ib);
-this.ib = Math.max(ia, ib);
-this.d = d;
-this.d2 = d * d;
-this.maxr = Math.sqrt(this.d2 / 4 + Math.max(r.rs2[ia], r.rs2[ib]));
-this.ave(r.atomXyzTruncated[ia], r.atomXyzTruncated[ib]);
-this.cosASB2 = (r.rs2[ia] + r.rs2[ib] - this.d2) / (r.rs[ib] * r.rs[ia]);
-this.v = JU.V3.newVsub(r.atomXyzTruncated[ib], r.atomXyzTruncated[ia]);
-this.v.normalize();
-}, "J.jvxl.readers.IsoSolventReader,~N,~N,~N");
-Clazz_defineMethod(c$, "addFace", 
-function(f){
-this.nFaces++;
-if (f == null) {
-this.nInvalid++;
-return;
-}}, "J.jvxl.readers.IsoSolventReader.Face");
-Clazz_defineMethod(c$, "isValid", 
-function(){
-return (this.nFaces == 0 || this.nInvalid != this.nFaces);
-});
-Clazz_overrideMethod(c$, "toString", 
-function(){
-return this.ia + "_" + this.ib;
-});
-/*eoif4*/})();
+})();
 };
 c$.$IsoSolventReader$Face$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz_decorateAsClass(function(){
-Clazz_prepareCallback(this, arguments);
-this.ia = 0;
-this.ib = 0;
-this.ic = 0;
-this.pS = null;
-Clazz_instantialize(this, arguments);}, J.jvxl.readers.IsoSolventReader, "Face", null);
-Clazz_makeConstructor(c$, 
-function(ia, ib, ic, pS){
-this.ia = ia;
-this.ib = ib;
-this.ic = ic;
-this.pS = JU.P3.newP(pS);
-}, "~N,~N,~N,JU.P3");
-Clazz_overrideMethod(c$, "toString", 
-function(){
-return this.ia + "_" + this.ib + "_" + this.ic + "_" + this.pS;
-});
-/*eoif4*/})();
+})();
 };
 c$.testLinear = false;
 });
@@ -13045,6 +12933,5 @@ this.g3d.drawLineAB(this.pt1f, this.pt2f);
 ,Clazz.defineMethod
 ,Clazz.overrideMethod
 ,Clazz.declareAnonymous
-//,Clazz.checkPrivateMethod
 ,Clazz.cloneFinals
 );

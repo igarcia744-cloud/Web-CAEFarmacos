@@ -1,4 +1,4 @@
-Clazz.declarePackage("JSV.common");
+﻿Clazz.declarePackage("JSV.common");
 Clazz.load(["java.lang.Enum", "J.api.EventManager", "java.util.Hashtable", "JU.Lst"], "JSV.common.PanelData", ["JU.CU", "JSV.common.Annotation", "$.Coordinate", "$.GraphSet", "$.JSVFileManager", "$.JSVersion", "$.JSViewer", "$.MeasurementData", "$.Parameters", "$.PeakPickEvent", "$.ScriptToken", "$.Spectrum", "$.SubSpecChangeEvent", "$.ZoomEvent", "JU.Font", "$.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.g2d = null;
@@ -1217,24 +1217,7 @@ this.vwr.close("views");
 this.vwr.close(this.getSourceID());
 this.vwr.execView("*", true);
 });
-/*if2*/;(function(){
-var c$ = Clazz.declareType(JSV.common.PanelData, "LinkMode", Enum);
-c$.getMode = Clazz.defineMethod(c$, "getMode", 
-function(abc){
-if (abc.equals("*")) return JSV.common.PanelData.LinkMode.ALL;
-for (var mode, $mode = 0, $$mode = JSV.common.PanelData.LinkMode.values(); $mode < $$mode.length && ((mode = $$mode[$mode]) || true); $mode++) if (mode.name().equalsIgnoreCase(abc)) return mode;
-
-return JSV.common.PanelData.LinkMode.NONE;
-}, "~S");
-Clazz.defineEnumConstant(c$, "ALL", 0, []);
-Clazz.defineEnumConstant(c$, "NONE", 1, []);
-Clazz.defineEnumConstant(c$, "AB", 2, []);
-Clazz.defineEnumConstant(c$, "ABC", 3, []);
-/*eoif2*/})();
-/*if2*/;(function(){
-var c$ = Clazz.declareType(JSV.common.PanelData, "Mouse", Enum);
-Clazz.defineEnumConstant(c$, "UP", 0, []);
-Clazz.defineEnumConstant(c$, "DOWN", 1, []);
-/*eoif2*/})();
+})();
+})();
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

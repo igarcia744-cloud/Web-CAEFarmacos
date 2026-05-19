@@ -1,14 +1,4 @@
-//CHECKJS  E:\js\gca\site\scroller.js 8/18/2008 6:51:31 PM
-// scroller.js gives simple div-based scroll
-// Bob Hanson 9:22 PM 7/21/2005
-// VERY simple div-based scroller.
-// body needs onload=initScrollers()
-//   then, somewhere: document.write(newScroller())
-//   with optional parameters: newScroller(name,caption,fCallback,width,x,y,isvertical,minvalue,maxvalue,initialvalue,factor)
-// fCallback must be string form of function, using _n, _v, _p (name, value, position)
-// For example, "newChart(Chart,'_n','_v','_p')
-// to set a scroller value from code, use resetScroller()
-Scrollers={}
+﻿Scrollers={}
 isScrollerInitialized=false
 
 function checkScroll(name){
@@ -95,7 +85,6 @@ function setScrollCaption(name){
 	var S=Scrollers[name]
 	if(S.caption.indexOf("_")>=0){
 		caption=strScrollValues(S,S.caption)
-		//document.title=name+" "+caption
 		document.getElementById("scr_"+name+"_caption").innerHTML=caption
 	}
 }
@@ -120,7 +109,6 @@ function setScrollValue(name,value,dotrigger){
 	S.pos=pos
 	S.value=scrollValue(name)
 	setScrollPosition(name,pos)
-	//	if(dotrigger)checkScroll(name)
 }
 
 function strScrollValues(S,what){

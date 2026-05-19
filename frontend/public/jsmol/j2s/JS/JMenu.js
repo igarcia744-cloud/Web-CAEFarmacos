@@ -1,4 +1,4 @@
-Clazz.declarePackage("JS");
+﻿Clazz.declarePackage("JS");
 Clazz.load(["JS.JMenuItem"], "JS.JMenu", null, function(){
 var c$ = Clazz.declareType(JS, "JMenu", JS.JMenuItem);
 Clazz.makeConstructor(c$, 
@@ -23,18 +23,6 @@ return this.getMenuHTML();
 });
 {
 {
-// JSmolMenu.js
-// author: Bob Hanson, hansonr@stolaf.edu
-// BH 10/17/2015 6:18:38 PM wraps with Jmol.__$ to use same version of jQuery as Jmol is using
-// BH 5/27/2014 11:01:46 PM frank menu fix; better event handling
-// BH 5/26/2014 allow for a user callback for customization of menu
-//    using Jmol._showMenuCallback(menu, x, y);
-// BH 2/17/2014 7:52:18 AM Jmol.Menu folded into Jmol.Swing
-// BH 1/16/2014 9:20:15 AM allowing second attempt to initiate this library to gracefully skip processing
-//! jQuery UI - v1.9.2 - 2012-12-17
-// http://jqueryui.com
-// Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.position.js, jquery.ui.menu.js
-// Copyright (c) 2012 jQuery Foundation and other contributors Licensed MIT
 ;(function(jQuery) {
 if (!jQuery.ui)
 try{
@@ -64,11 +52,6 @@ try{
 }catch (e) {
 System.out.println("coremenu failed to load jQuery.ui.position -- jQuery version conflict?");
 }
-//! jQuery UI - v1.9.2 - 2012-12-17
-//http://jqueryui.com
-//Includes: jquery.ui.core.css, jquery.ui.menu.css
-//To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Lucida%20Grande%2CLucida%20Sans%2CArial%2Csans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=5px&bgColorHeader=5c9ccc&bgTextureHeader=12_gloss_wave.png&bgImgOpacityHeader=55&borderColorHeader=4297d7&fcHeader=ffffff&iconColorHeader=d8e7f3&bgColorContent=fcfdfd&bgTextureContent=06_inset_hard.png&bgImgOpacityContent=100&borderColorContent=a6c9e2&fcContent=222222&iconColorContent=469bdd&bgColorDefault=dfeffc&bgTextureDefault=03_highlight_soft.png&bgImgOpacityDefault=85&borderColorDefault=c5dbec&fcDefault=2e6e9e&iconColorDefault=6da8d5&bgColorHover=d0e5f5&bgTextureHover=03_highlight_soft.png&bgImgOpacityHover=75&borderColorHover=79b7e7&fcHover=1d5987&iconColorHover=217bc0&bgColorActive=f5f8f9&bgTextureActive=06_inset_hard.png&bgImgOpacityActive=100&borderColorActive=79b7e7&fcActive=e17009&iconColorActive=f9bd01&bgColorHighlight=fbec88&bgTextureHighlight=01_flat.png&bgImgOpacityHighlight=55&borderColorHighlight=fad42e&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=fef1ec&bgTextureError=02_glass.png&bgImgOpacityError=95&borderColorError=cd0a0a&fcError=cd0a0a&iconColorError=cd0a0a&bgColorOverlay=aaaaaa&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=8px
-//Copyright (c) 2012 jQuery Foundation and other contributors Licensed MIT
 if (!jQuery.ui.menu)
 try{
 (function(e,t){var n=!1;e.widget("ui.menu",{version:"1.9.2",defaultElement:"<ul>",delay:300,options:{icons:{submenu:"ui-icon-carat-1-e"},menus:"ul",position:{my:"left top",at:"right top"},role:"menu",blur:null,focus:null,select:null},_create:function(){this.activeMenu=this.element,this.element.uniqueId().addClass("ui-menu ui-widget ui-widget-content ui-corner-all").toggleClass("ui-menu-icons",!!this.element.find(".ui-icon").length).attr({role:this.options.role,tabIndex:0}).bind("click"+this.eventNamespace,e.proxy(function(e){this.options.disabled&&e.preventDefault()},this)),this.options.disabled&&this.element.addClass("ui-state-disabled").attr("aria-disabled","true"),this._on({"mousedown .ui-menu-item > a":function(e){e.preventDefault()},"click .ui-state-disabled > a":function(e){e.preventDefault()},"click .ui-menu-item:has(a)":function(t){var r=e(t.target).closest(".ui-menu-item");!n&&r.not(".ui-state-disabled").length&&(n=!0,this.select(t),r.has(".ui-menu").length?this.expand(t):this.element.is(":focus")||(this.element.trigger("focus",[!0]),this.active&&this.active.parents(".ui-menu").length===1&&clearTimeout(this.timer)))},"mouseenter .ui-menu-item":function(t){var n=e(t.currentTarget);n.siblings().children(".ui-state-active").removeClass("ui-state-active"),this.focus(t,n)},mouseleave:"collapseAll","mouseleave .ui-menu":"collapseAll",focus:function(e,t){var n=this.active||this.element.children(".ui-menu-item").eq(0);t||this.focus(e,n)},blur:function(t){this._delay(function(){e.contains(this.element[0],this.document[0].activeElement)||this.collapseAll(t)})},keydown:"_keydown"}),this.refresh(),this._on(this.document,{click:function(t){e(t.target).closest(".ui-menu").length||this.collapseAll(t),n=!1}})},_destroy:function(){this.element.removeAttr("aria-activedescendant").find(".ui-menu").andSelf().removeClass("ui-menu ui-widget ui-widget-content ui-corner-all ui-menu-icons").removeAttr("role").removeAttr("tabIndex").removeAttr("aria-labelledby").removeAttr("aria-expanded").removeAttr("aria-hidden").removeAttr("aria-disabled").removeUniqueId().show(),this.element.find(".ui-menu-item").removeClass("ui-menu-item").removeAttr("role").removeAttr("aria-disabled").children("a").removeUniqueId().removeClass("ui-corner-all ui-state-hover").removeAttr("tabIndex").removeAttr("role").removeAttr("aria-haspopup").children().each(function(){var t=e(this);t.data("ui-menu-submenu-carat")&&t.remove()}),this.element.find(".ui-menu-divider").removeClass("ui-menu-divider ui-widget-content")},_keydown:function(t){function a(e){return e.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g,"\\$&")}var n,r,i,s,o,u=!0;switch(t.keyCode){case e.ui.keyCode.PAGE_UP:this.previousPage(t);break;case e.ui.keyCode.PAGE_DOWN:this.nextPage(t);break;case e.ui.keyCode.HOME:this._move("first","first",t);break;case e.ui.keyCode.END:this._move("last","last",t);break;case e.ui.keyCode.UP:this.previous(t);break;case e.ui.keyCode.DOWN:this.next(t);break;case e.ui.keyCode.LEFT:this.collapse(t);break;case e.ui.keyCode.RIGHT:this.active&&!this.active.is(".ui-state-disabled")&&this.expand(t);break;case e.ui.keyCode.ENTER:case e.ui.keyCode.SPACE:this._activate(t);break;case e.ui.keyCode.ESCAPE:this.collapse(t);break;default:u=!1,r=this.previousFilter||"",i=String.fromCharCode(t.keyCode),s=!1,clearTimeout(this.filterTimer),i===r?s=!0:i=r+i,o=new RegExp("^"+a(i),"i"),n=this.activeMenu.children(".ui-menu-item").filter(function(){return o.test(e(this).children("a").text())}),n=s&&n.index(this.active.next())!==-1?this.active.nextAll(".ui-menu-item"):n,n.length||(i=String.fromCharCode(t.keyCode),o=new RegExp("^"+a(i),"i"),n=this.activeMenu.children(".ui-menu-item").filter(function(){return o.test(e(this).children("a").text())})),n.length?(this.focus(t,n),n.length>1?(this.previousFilter=i,this.filterTimer=this._delay(function(){delete this.previousFilter},1e3)):delete this.previousFilter):delete this.previousFilter}u&&t.preventDefault()},_activate:function(e){this.active.is(".ui-state-disabled")||(this.active.children("a[aria-haspopup='true']").length?this.expand(e):this.select(e))},refresh:function(){var t,n=this.options.icons.submenu,r=this.element.find(this.options.menus);r.filter(":not(.ui-menu)").addClass("ui-menu ui-widget ui-widget-content ui-corner-all").hide().attr({role:this.options.role,"aria-hidden":"true","aria-expanded":"false"}).each(function(){var t=e(this),r=t.prev("a"),i=e("<span>").addClass("ui-menu-icon ui-icon "+n).data("ui-menu-submenu-carat",!0);r.attr("aria-haspopup","true").prepend(i),t.attr("aria-labelledby",r.attr("id"))}),t=r.add(this.element),t.children(":not(.ui-menu-item):has(a)").addClass("ui-menu-item").attr("role","presentation").children("a").uniqueId().addClass("ui-corner-all").attr({tabIndex:-1,role:this._itemRole()}),t.children(":not(.ui-menu-item)").each(function(){var t=e(this);/[^\-+�G��G��+�G��G��\s]/.test(t.text())||t.addClass("ui-widget-content ui-menu-divider")}),t.children(".ui-state-disabled").attr("aria-disabled","true"),this.active&&!e.contains(this.element[0],this.active[0])&&this.blur()},_itemRole:function(){return{menu:"menuitem",listbox:"option"}[this.options.role]},focus:function(e,t){var n,r;this.blur(e,e&&e.type==="focus"),this._scrollIntoView(t),this.active=t.first(),r=this.active.children("a").addClass("ui-state-focus"),this.options.role&&this.element.attr("aria-activedescendant",r.attr("id")),this.active.parent().closest(".ui-menu-item").children("a:first").addClass("ui-state-active"),e&&e.type==="keydown"?this._close():this.timer=this._delay(function(){this._close()},this.delay),n=t.children(".ui-menu"),n.length&&/^mouse/.test(e.type)&&this._startOpening(n),this.activeMenu=t.parent(),this._trigger("focus",e,{item:t})},_scrollIntoView:function(t){var n,r,i,s,o,u;this._hasScroll()&&(n=parseFloat(e.css(this.activeMenu[0],"borderTopWidth"))||0,r=parseFloat(e.css(this.activeMenu[0],"paddingTop"))||0,i=t.offset().top-this.activeMenu.offset().top-n-r,s=this.activeMenu.scrollTop(),o=this.activeMenu.height(),u=t.height(),i<0?this.activeMenu.scrollTop(s+i):i+u>o&&this.activeMenu.scrollTop(s+i-o+u))},blur:function(e,t){t||clearTimeout(this.timer);if(!this.active)return;this.active.children("a").removeClass("ui-state-focus"),this.active=null,this._trigger("blur",e,{item:this.active})},
@@ -80,9 +63,6 @@ clearTimeout(this.timer);if(e.attr("aria-hidden")!=="true")return;this.timer=thi
 System.out.println("JSmolMenu failed to load jQuery.ui.menu -- jQuery version conflict?");
 }
 ;(function(Swing) {
-//Jmol.Swing methods to coordinate with JS.JPopupMenu && JS.AbstractButton
-//classes, which call SwingController (aka Jmol.Swing in this case)
-//@author: Bob Hanson 2/17/2014 8:21:10 AM
 if (Swing.menuInitialized)return;
 Swing.menuCounter = 0;
 Swing.menuInitialized = 1;
@@ -115,8 +95,6 @@ Swing.__getMenuStyle = function(applet) { return '\
 .jmolPopupMenu .ui-state-disabled a:hover{background-color:transparent!important;border-color:transparent!important}\
 .jmolPopupMenu .ui-state-disabled .ui-icon{filter:Alpha(Opacity=35)}'};
 Swing.setMenu = function(menu) {
-// called by JS.JPopupMenu
-// note that the z-index is only set by the FIRST applet accessing this method
 Swing.__getMenuStyle && Jmol.$after("head", '<style>'+Swing.__getMenuStyle(menu.applet)+'</style>');
 Swing.__getStyle = null; // once only
 menu.tainted = true;
@@ -129,8 +107,6 @@ Jmol.$after("body",'<ul id="' + menu.id + '" class="jmolPopupMenu"></ul>');
 menu.setContainer(Jmol.$('#' + menu.id));
 }
 Swing.showMenu = function(menu, x, y) {
-// called by JS.JPopupMenu
-// allow for a user callback for customization of menu
 if (Jmol._showMenuCallback)
 Jmol._showMenuCallback(menu, x, y);
 if (menu.tainted) {
@@ -152,7 +128,6 @@ Swing.hideMenu(menu);
 menu.container.bind("contextmenu", function() {return false;})
 }
 Swing.disposeMenu = function(menu) {
-// called by JS.JPopupMenu
 if (Jmol._persistentMenu)
 return
 Swing.hideMenu(menu);
@@ -160,20 +135,16 @@ Swing.bindMenuActionCommands(menu, false);
 delete menu.applet._menus[menu.name];
 }
 Swing.initMenuItem = function(item) {
-// called by JS.AbstractButton
 item.applet = item.popupMenu.applet;
 item.id = Swing.getMenuID(item);
 item.icon && (item.icon = '<img src="' + item.applet._j2sPath + '/' + item.icon + '" style="max-height: 20px;" />')
 }
 Swing.getMenuID = function(item) {
-// called internally
 var popup = item.popupMenu;
 return popup.applet._id + '_' + popup.name + "_" + item.id + '_' + (++Swing.menuCounter);
 }
 Swing.hideMenu = function(menu) {
-// called internally
 if (!menu._visible)return;
-//menu.container.unbind('clickoutjsmol');
 menu.dragBind(false);
 menu.container.hide();
 menu._visible = menu.isDragging = false;
@@ -182,7 +153,6 @@ var delayHide = function(menu, f) {
 setTimeout(function(){Swing.hideMenus(menu.applet);f();},500);
 }
 Swing.bindMenuActionCommands = function(menu, isBind) {
-// called internally
 var n = menu.getComponentCount();
 for(var i = 0; i < n; i++)
 Swing.bindMenuActionCommands(menu.getComponent(i), isBind);

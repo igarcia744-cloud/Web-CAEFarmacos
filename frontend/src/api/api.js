@@ -1,4 +1,4 @@
-import axios from "axios";
+﻿import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -8,7 +8,6 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
-// ENVIAR TOKEN
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
 
@@ -19,7 +18,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// RECIBIR TOKEN RENOVADO
 api.interceptors.response.use(
   (response) => {
 
@@ -39,7 +37,6 @@ api.interceptors.response.use(
 
       localStorage.removeItem("token");
 
-      // redirigir al login
       window.location.href = "/"; 
     }
 

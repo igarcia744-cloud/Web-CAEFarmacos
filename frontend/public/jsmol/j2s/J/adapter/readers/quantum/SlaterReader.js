@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.adapter.readers.quantum");
+﻿Clazz.declarePackage("J.adapter.readers.quantum");
 Clazz.load(["J.adapter.readers.quantum.MOReader"], "J.adapter.readers.quantum.SlaterReader", ["java.util.Arrays", "JU.Lst", "J.quantum.SlaterData", "JU.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.scaleSlaters = true;
@@ -95,28 +95,10 @@ var f = ez < 0 ? J.adapter.readers.quantum.SlaterReader.dfact2[el + 1] : J.adapt
 return J.adapter.readers.quantum.SlaterReader.fact(f, zeta, n);
 }, "~N,~N,~N,~N,~N,~N");
 c$.$SlaterReader$SlaterSorter$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-Clazz.instantialize(this, arguments);}, J.adapter.readers.quantum.SlaterReader, "SlaterSorter", null, java.util.Comparator);
-Clazz.overrideMethod(c$, "compare", 
-function(sd1, sd2){
-return (sd1.atomNo < sd2.atomNo ? -1 : sd1.atomNo > sd2.atomNo ? 1 : 0);
-}, "J.quantum.SlaterData,J.quantum.SlaterData");
-/*eoif4*/})();
+})();
 };
 c$.$SlaterReader$OrbitalSorter$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-Clazz.instantialize(this, arguments);}, J.adapter.readers.quantum.SlaterReader, "OrbitalSorter", null, java.util.Comparator);
-Clazz.overrideMethod(c$, "compare", 
-function(mo1, mo2){
-var e1 = (mo1.get("energy")).floatValue();
-var e2 = (mo2.get("energy")).floatValue();
-return (e1 < e2 ? -1 : e2 < e1 ? 1 : 0);
-}, "java.util.Map,java.util.Map");
-/*eoif4*/})();
+})();
 };
 c$.fact_2n =  Clazz.newDoubleArray(-1, [1, 2, 24, 720, 40320, 3628800, 479001600]);
 c$.dfact2 =  Clazz.newDoubleArray(-1, [1, 1, 3, 15, 105]);

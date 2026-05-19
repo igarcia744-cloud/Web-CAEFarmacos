@@ -1,4 +1,4 @@
-(function(Clazz
+﻿(function(Clazz
 ,Clazz_getClassName
 ,Clazz_newLongArray
 ,Clazz_doubleToByte
@@ -56,11 +56,9 @@
 ,Clazz_defineMethod
 ,Clazz_overrideMethod
 ,Clazz_declareAnonymous
-//,Clazz_checkPrivateMethod
 ,Clazz_cloneFinals
 ){
 var $t$;
-//var c$;
 Clazz_declarePackage("JSV.dialog");
 Clazz_load(["JSV.dialog.JSVDialog"], "JSV.dialog.IntegrationDialog", ["JU.DF", "JSV.common.Annotation"], function(){
 var c$ = Clazz_decorateAsClass(function(){
@@ -935,6 +933,5 @@ Clazz_declareInterface(JSV.api, "PlatformDialog");
 ,Clazz.defineMethod
 ,Clazz.overrideMethod
 ,Clazz.declareAnonymous
-//,Clazz.checkPrivateMethod
 ,Clazz.cloneFinals
 );

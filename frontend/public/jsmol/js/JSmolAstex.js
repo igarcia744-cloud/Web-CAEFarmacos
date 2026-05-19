@@ -1,18 +1,7 @@
-// JmolAstex.js -- for the AstexViewer
-
-/*
-<applet
-	width="100%" height="100%" name="av"
-	code="MoleculeViewerApplet.class"
-	archive="/pdbe-srv/view/openastex/OpenAstexViewer.jar">
-<param name="scriptFile" value="/pdbe-srv/view/openastex/default.script">
-<param name="molecule1" value="/pdbe-srv/view/files/2x9t.pdb">
-</applet>
-*/
+﻿
 
 ;(function (Jmol, document) {
 
-	// _Applet -- the main, full-featured, Jmol object
 
 	Jmol._Astex = function(id, Info, checkOnly){
 	
@@ -69,8 +58,6 @@
 
 	;(function(Applet, proto) {
 	Applet._get = function(id, Info, checkOnly) {
-	// note that the variable name the return is assigned to MUST match the first parameter in quotes
-	// applet = Jmol.getApplet("applet", Info)
 
 		checkOnly || (checkOnly = false);
 		Info || (Info = {});
@@ -83,8 +70,6 @@
 			defaultModel: "",
 			script: null,
 			src: null,
-			//scriptFile: "http://www.ebi.ac.uk/pdbe/pdbe-srv/view/openastex/default.script",
-			//molecule1: "http://www.ebi.ac.uk/pdbe/entry-files/pdb1crn.ent",
 			readyFunction: null,
 			use: "HTML5",//other options include JAVA, WEBGL, and IMAGE
 			jarPath: "java",
@@ -131,7 +116,6 @@
  		  	applet = new Applet(id, Info);
 		}
 
-		// keyed to both its string id and itself
 		return (checkOnly ? applet : Jmol._registerApplet(id, applet));  
 	}
 
@@ -144,10 +128,6 @@
 	};
 
 
-	/*  AngelH, mar2007:
-		By (re)setting these variables in the webpage before calling Jmol.getApplet(),
-		a custom message can be provided (e.g. localized for user's language) when no Java is installed.
-	*/
 	Applet._noJavaMsg =
 			"Either you do not have Java applets enabled in your web<br />browser or your browser is blocking this applet.<br />\
 			Check the warning message from your browser and/or enable Java applets in<br />\
@@ -165,13 +145,9 @@
 		var jarFile = applet._jarFile;
 		var jnlp = ""
 		if (Jmol._isFile) {
-			// local installations need jnlp here and should reference JmolApplet(Signed).jar, not JmolApplet(Signed)0.jar  
 			jarFile = jarFile.replace(/0\.jar/,".jar");
 			jnlp = ""//" jnlp_href=\"" + jarFile.replace(/\.jar/,".jnlp") + "\"";
 		}
-		// size is set to 100% of containers' size, but only if resizable. 
-		// Note that resizability in MSIE requires: 
-		// <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		var w = (applet._containerWidth.indexOf("px") >= 0 ? applet._containerWidth : "100%");
 		var h = (applet._containerHeight.indexOf("px") >= 0 ? applet._containerHeight : "100%");
 		var widthAndHeight = " style=\"width:" + w + ";height:" + h + "\" ";
@@ -213,7 +189,6 @@
 		}	
 		t = Jmol._getWrapper(applet, true) + t + Jmol._getWrapper(applet, false) 
 			+ (Info.addSelectionOptions ? Jmol._getGrabberOptions(applet) : "");
-//		if (Jmol._debugAlert)
 			alert (t);
 		applet._code = Jmol._documentWrite(t);
 	}
@@ -225,7 +200,6 @@
 	proto._addCoreFiles = function() {
 		Jmol._addCoreFile("astex", this._j2sPath, this.__Info.preloadCore);
 		if (Jmol._debugCode) {
-		// no min package for that
 			Jmol._addExec([this, null, "astex.MoleculeViewerAppletJS", "load Astex"]);
 		}
   }
@@ -293,7 +267,6 @@
 		if ((!this._isInfoVisible) == (!tf))
 			return;
 		this._isInfoVisible = tf;
-		// 1px does not work for MSIE
 		if (this._isJava) {
 			var x = (tf ? 2 : "100%");
 			Jmol.$setSize(Jmol.$(this, "appletdiv"), x, x);
@@ -302,31 +275,6 @@
 		Jmol.$setVisible(Jmol.$(this, "infoheaderdiv"), tf);
 		this._show(!tf);
 	}
-/*
-	proto._show2d = function(tf) {
-		this._2dapplet._show2d(tf);
-		if (this._2dapplet._isEmbedded) {
-			this._showInfo(false);
-			this._show(!tf);
-		}
-	}
-
-  proto._getAtomCorrelation = function(molData) {
-    // get the first atom mapping available by loading the model structure into model 2, 
-    this._loadMolData(molData, "atommap = compare({1.1} {2.1} 'MAP' 'H'); zap 2.1", true);
-    var map = jmol._evaluate("atommap");
-    var n = jmol._evaluate("{*}.count");
-    var A = [];
-    var B = [];
-    // these are Jmol atom indexes. The second number will be >= n, and all must be incremented by 1.
-		for (var i = 0; i < map.length; i++) {
-		  var c = map[i];
-		  A[c[0] + 1] = c[1] - n + 1;
-		  B[c[1] - n + 1] = c[0] + 1;
-		}
-		return {fromJmol:A, toJmol:B}; // forward and rev.		
-  }
-  */
 	proto._show = function(tf) {
 		var x = (!tf ? 2 : "100%");
 		Jmol.$setSize(Jmol.$(this, "object"), x, x);
@@ -355,140 +303,9 @@
 		Jmol._setConsoleDiv(this._console);
 		this._applet.script(script + ";");
 	}
-/*
-	proto._syncScript = function(script) {
-		this._applet.syncScript(script);
-	}
-
-	proto._scriptCheck = function(script) {
-		return this._ready && this._applet.scriptCheck(script);  
-	}
-
-	proto._scriptWait = function(script, noReturn) {
-		var Ret = this._scriptWaitAsArray(script);
-		var s = "";
-		if (!noReturn)
-		for(var i = Ret.length; --i >= 0; )
-			for(var j = 0, jj = Ret[i].length; j < jj; j++)
-				s += Ret[i][j] + "\n";
-		return s;
-	}
-
-	proto._scriptEcho = function(script) {
-		// returns a newline-separated list of all echos from a script
-		var Ret = this._scriptWaitAsArray(script);
-		var s = "";
-		for(var i = Ret.length; --i >= 0; )
-			for(var j = Ret[i].length; --j >= 0; )
-				if(Ret[i][j][1] == "scriptEcho")
-					s += Ret[i][j][3] + "\n";
-		return s.replace(/ \| /g, "\n");
-	}
-
-	proto._scriptMessage = function(script) {
-		// returns a newline-separated list of all messages from a script, ending with "script completed\n"
-		var Ret = this._scriptWaitAsArray(script);
-		var s = "";
-		for(var i = Ret.length; --i >= 0; )
-			for(var j = Ret[i].length; --j >= 0; )
-				if(Ret[i][j][1] == "scriptStatus")
-					s += Ret[i][j][3] + "\n";
-		return s.replace(/ \| /g, "\n");
-	}
-
-	proto._scriptWaitOutput = function(script) {
-		var ret = "";
-		try {
-			if(script) {
-				ret += this._applet.scriptWaitOutput(script);
-			}
-		} catch(e) {
-		}
-		return ret;
-	}
-
-	proto._scriptWaitAsArray = function(script) {
-		var ret = "";
-		try {
-			this._getStatus("scriptEcho,scriptMessage,scriptStatus,scriptError");
-			if(script) {
-				ret += this._applet.scriptWait(script);
-				ret = Jmol._evalJSON(ret, "jmolStatus");
-				if( typeof ret == "object")
-					return ret;
-			}
-		} catch(e) {
-		}
-		return [[ret]];
-	}
-
-	proto._getStatus = function(strStatus) {
-		return Jmol._sortMessages(this._getPropertyAsArray("jmolStatus",strStatus));
-	}
-
-	proto._getPropertyAsArray = function(sKey,sValue) {
-		return Jmol._evalJSON(this._getPropertyAsJSON(sKey,sValue),sKey);
-	}
-
-	proto._getPropertyAsString = function(sKey,sValue) {
-		sValue == undefined && ( sValue = "");
-		return this._applet.getPropertyAsString(sKey, sValue) + "";
-	}
-
-	proto._getPropertyAsJSON = function(sKey,sValue) {
-		sValue == undefined && ( sValue = "");
-		try {
-			return (this._applet.getPropertyAsJSON(sKey, sValue) + "");
-		} catch(e) {
-			return "";
-		}
-	}
-
-	proto._getPropertyAsJavaObject = function(sKey,sValue) {		
-		sValue == undefined && ( sValue = "");
-		return this._applet.getProperty(sKey,sValue);
-	}
-
-  proto._evaluate = function(expr) {  
-  	expr != null || (expr = "");
-		return this._getPropertyAsArray("variableInfo", expr);
-
-  }
-
-	
-	proto._saveOrientation = function(id) {	
-		return this._savedOrientations[id] = this._getPropertyAsArray("orientationInfo","info").moveTo;
-	}
-
-	proto._restoreOrientation = function(id) {
-		var s = this._savedOrientations[id];
-		if(!s || s == "")
-			return s = s.replace(/1\.0/, "0");
-		return this._scriptWait(s);
-	}
-
-
-	proto._restoreOrientationDelayed = function(id,delay) {
-		arguments.length < 1 && ( delay = 1);
-		var s = this._savedOrientations[id];
-		if(!s || s == "")
-			return s = s.replace(/1\.0/, delay);
-		return this._scriptWait(s);
-	}
-*/
 	proto._resizeApplet = function(size) {
-		// See _jmolGetAppletSize() for the formats accepted as size [same used by jmolApplet()]
-		//  Special case: an empty value for width or height is accepted, meaning no change in that dimension.
 
-		/*
-		 * private functions
-		 */
 		function _getAppletSize(size, units) {
-			/* Accepts single number, 2-value array, or object with width and height as mroperties, each one can be one of:
-			 percent (text string ending %), decimal 0 to 1 (percent/100), number, or text string (interpreted as nr.)
-			 [width, height] array of strings is returned, with units added if specified.
-			 Percent is relative to container div or element (which should have explicitly set size).
-			 */
 			var width, height;
 			if(( typeof size) == "object" && size != null) {
 				width = size[0]||size.width;
@@ -548,8 +365,6 @@
 		fileName = Jmol._getDirectDatabaseCall(fileName);
 		this._fileName = fileName;
 		if (!this._scriptLoad(fileName, script)) {
-			// we load the data here instead of in Jmol in the case of
-			// JSmol/Java/Sandboxed or when part of a view set 
 			var me = this;      
 			Jmol._loadFileData(this, fileName, 
 				function(data){me.__loadModel(data, script, chemID)},
@@ -595,7 +410,6 @@
   }
   
 	proto._loadModelFromView = function(view, _jmol_loadModelFromView) {
-		// request from Jmol.View to update view with view.JME.data==null or needs changing
 		this._currentView = view;
 		var rec = view.Jmol;
 		if (rec.data != null) {
@@ -616,7 +430,6 @@
 	proto._updateView = function(_jmol_updateView) {
 		if (this._viewSet == null || !this._applet)
 			return;
-		// called from model change without chemical identifier, possibly by user action and call to Jmol.updateView(applet)
 		chemID = "" + this._getPropertyAsJavaObject("variableInfo","script('show chemical inchiKey')");
 		if (chemID.length() < 36) // InChIKey=RZVAJINKPMORJF-BGGKNDAXNA-N
 			chemID = null;
@@ -626,9 +439,7 @@
 	}
 
 	proto._atomPickedCallback = function(imodel, iatom, _jmol_atomPickedCallback) {
-		// direct callback from Jmol HTML5 applet
 		if (iatom < 0) {
-		// TODO could be a model change? 
 		} else {
 			var A = [iatom + 1];
 			Jmol.View.updateAtomPick(this, A);
@@ -652,20 +463,6 @@
 		}
 		return false;
 	}
-/*
-  proto._getSmiles = function() {
-		return this._evaluate("{visible}.find('SMILES')");   
-  }
-  
-  proto._getMol = function() {
-		return this._evaluate("getProperty('ExtractModel',{visible})");   
-  }
-
-  proto._getMol2D = function() {
-		return jmol._evaluate("script('select visible;show chemical sdf')"); // 2D equivalent
-  }
-  
-  */
 })(Jmol._Astex, Jmol._Astex.prototype);
 
 

@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.adapter.readers.xml");
+﻿Clazz.declarePackage("J.adapter.readers.xml");
 Clazz.load(["J.adapter.smarter.AtomSetCollectionReader", "JU.SB"], "J.adapter.readers.xml.XmlReader", ["java.util.Hashtable", "J.adapter.smarter.AtomSetCollection", "$.Resolver", "J.api.Interface", "JU.Logger"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.thisAtom = null;
@@ -213,13 +213,7 @@ if (this.thisReader != null && this.thisReader !== this) this.thisReader.finaliz
 this.thisReader = null;
 });
 c$.$XmlReader$NVPair$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.name = null;
-this.value = null;
-Clazz.instantialize(this, arguments);}, J.adapter.readers.xml.XmlReader, "NVPair", null);
-/*eoif4*/})();
+})();
 };
 });
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

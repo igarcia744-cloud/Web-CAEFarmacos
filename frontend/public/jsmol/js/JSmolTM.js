@@ -1,37 +1,6 @@
-// JSmolTM.js -- JSmol TwirlyMol implementation
-//
-// TM for "TwirlyMol" -- which this is derived from.
-// Can't say there is much of TwirlyMol left in here, as
-// we are not using dojo, there are no shadows, and I use a simpler
-// rendering idea. Nonetheless, TwirlyMol is the inspiration.
-//
-// author: Bob Hanson, hansonr@stolaf.edu	3/23/2012
-
-// This library requires
-//
-//	JSmoljQuery.js
-//	JSmolCore.js
-//
-// and is combined with those in JSmol.lite.jq.js
-// or packaged without jQuery -- because you are using it already -- in JSmol.lite.js
-//
+﻿
 
 
-// BH  3/19/2015 7:34:56 AM  Info.defaultModel not working
-//
-// BH 3/17/2015 3:47:31 PM  very simple scripting:
-//   image      (open a new window of the image in PNG format)
-//   spin on 
-//   spin off
-//   load $caffeine   (open a file -- can use : or $ or other known shortcuts)
-//
-//  These can be entered into the search box (see lite2.htm) with a preceding "!":
-//
-//   !image 
-//
-//  and concatenated with ";":
-// 
-//  spin off;image;spin on
 
    
 Jmol._grabberOptions = [
@@ -104,7 +73,6 @@ tm._CPK = ["#FF1493", "#FFFFFF", "#D9FFFF",
 	"#702EB0", "#00FF00", "#94FFFF", "#94E0E0", "#73C2C9", "#54B5B5", "#3B9E9E", "#248F8F", 
 		"#0A7D8C", "#006985", "#C0C0C0", "#FFD98F", "#A67573", "#668080", "#9E63B5", "#D47A00", "#940094", "#429EB0", 
 	"#57178F", "#00C900"] // through barium
-	//  "#70D4FF", "#FFFFC7", "#D9FFC7", "#C7FFC7", "#A3FFC7", "#8FFFC7", "#61FFC7", "#45FFC7", "#30FFC7", "#1FFFC7", "#00FF9C", "#00E675", "#00D452", "#00BF38", "#00AB24", "#4DC2FF", "#4DA6FF", "#2194D6", "#267DAB", "#266696", "#175487", "#D0D0E0", "#FFD123", "#B8B8D0", "#A6544D", "#575961", "#9E4FB5", "#AB5C00", "#754F45", "#428296", "#420066", "#007D00", "#70ABFA", "#00BAFF", "#00A1FF", "#008FFF", "#0080FF", "#006BFF", "#545CF2", "#785CE3", "#8A4FE3", "#A136D4", "#B31FD4", "#B31FBA", "#B30DA6", "#BD0D87", "#C70066", "#CC0059", "#D1004F", "#D90045", "#E00038", "#E6002E", "#EB0026"]; 
 tm._elem = ['X', 'H', 'He', 
 	'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 
 	'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 
@@ -119,7 +87,6 @@ tm._elemNo = {};
 
 ;(function(proto) {
 
-// A user-available function
 
 proto.spin = function(TF) {
 	this.__Info.spin = TF;
@@ -270,7 +237,6 @@ proto._show = function(tf) {
 
 proto._resize = function() {
 	var s = "__resizeTimeout_" + this._id;
-	// only at end
 	if (Jmol[s])
 		clearTimeout(Jmol[s]);
 	var me = this;
@@ -461,10 +427,8 @@ proto._transform = function(pt, spt, c, mat, f, sc) {
 }
 
 
-//  adaptable --- 
 
 proto._parse = function(data) {
-	// just MOL data for now
 	this._parseSDF(data);
 }
 
@@ -516,7 +480,6 @@ proto._parseSDF = function(sdf) {
 		var p2 = (a2.radius < d ? tm._getPointAlong(a2.xyz, xyz, a2.radius/d) : [0, 0, 99999]);
 		this.elements[ept++] = this.bonds[i] = {type:1, atoms: [a1, a2], xyz:xyz, pts:[p1,p2], sxyz:[0, 0, 0], spts:[[0,0,0],[0,0,0]], order: order, color: 0};
 	}
-	//alert(this.atoms.length + " atoms " + this.bonds.length + " bonds")
 }
 
 proto._getColor = function(c, f) {
@@ -553,13 +516,11 @@ proto._draw = function() {
 	}
 }
 
-///////////////// drawing ///////////////////
 
 
 
 proto._drawAtom = function(ctx, a) {
 	ctx.beginPath();
-	// context.fillStyle = "rgba(0, 0, 0, 1)";
 
 	if (this.shadeAtoms) {
 		var offset = a.srad / 4;

@@ -1,16 +1,6 @@
-// JSmolControls.js
-// BH 11/13/2015 7:12:40 PM addded indeterminate checkbox masters
-// BH 5/29/2014 8:14:06 AM added default command for command input box
-// BH 5/15/2014 -- removed script check prior to execution
-// BH 12/3/2013 12:39:48 PM added up/down arrow key-driven command history for commandInput (changed keypress to keydown)
-// BH 5/16/2013 8:14:47 AM fix for checkbox groups and default radio names
-// BH 8:36 AM 7/27/2012  adds name/id for cmd button 
-// BH 8/12/2012 6:51:53 AM adds function() {...} option for all controls:
-//    Jmol.jmolButton(jmol, function(jmol) {...}, "xxxx")
-
+﻿
 (function(Jmol) {
 
-	// private
 
 	var c = Jmol.controls = {
 
@@ -53,7 +43,6 @@
 	}
 
 	c._getIdForControl = function(appletOrId, script) {
-	//alert(appletOrId + " " + typeof appletOrId + " " + script + appletOrId._canScript)
 		return (typeof appletOrId == "string" ? appletOrId 
 			: !script || !appletOrId._canScript || appletOrId._canScript(script) ? appletOrId._id
 			: null);
@@ -86,7 +75,6 @@
 		return t;
 	}
 
-/////////// events //////////
 
 	c._scriptExecute = function(element, scriptInfo) {
 		var applet = Jmol._applets[scriptInfo[0]];
@@ -133,7 +121,6 @@
 					d._cmdadd = 0;
 					d._cmddir = 0;
 			 } else {
-					//d._cmdpt -= d._cmddir;
 					d._cmdadd = 0;
 			 }
 			 d.value = "";
@@ -179,7 +166,6 @@
 	}
 
 	c._cbNotifyMaster = function(m){
-  	//called when a group item is checked
     var allOn = true;
     var allOff = true;
     var mixed = false;
@@ -203,7 +189,6 @@
 	}
   
 	c._cbNotifyGroup = function(m, isOn){
-		//called when a master item is checked
 		for (var chkBox in m.chkGroup){
 			var item = m.chkGroup[chkBox]
 			if (item.checked != isOn) {
@@ -268,10 +253,8 @@
 		return true;
 	}
 
-// from JmolApplet
 
 	c._onloadResetForms = function() {
-		// must be evaluated ONLY once -- is this compatible with jQuery?
 		if (c._hasResetForms)
 			return;
 		c._hasResetForms = true;
@@ -287,13 +270,11 @@
 		}
 	}
 
-// from JmolApi
 
 	c._getButton = function(appletOrId, script, label, id, title) {
 		var appId = c._getIdForControl(appletOrId, script);
 		if (appId == null)
 			return "";
-		//_jmolInitCheck();
 		id != undefined && id != null || (id = "jmolButton" + c._buttonCount);
 		label != undefined && label != null || (label = script.substring(0, 32));
 		++c._buttonCount;
@@ -316,7 +297,6 @@
 		if (appId == null)
 			return "";
 
-		//_jmolInitCheck();
 		id != undefined && id != null || (id = "jmolCheckbox" + c._checkboxCount);
 		++c._checkboxCount;
 		if (scriptWhenChecked == undefined || scriptWhenChecked == null ||
@@ -349,7 +329,6 @@
 		var appId = c._getIdForControl(appletOrId, "x");
 		if (appId == null)
 			return "";
-		//_jmolInitCheck();
 		id != undefined && id != null || (id = "jmolCmd" + c._cmdCount);
 		label != undefined && label != null || (label = "Execute");
 		size != undefined && !isNaN(size) || (size = 60);
@@ -367,7 +346,6 @@
 		var appId = c._getIdForControl(appletOrId, script);
 		if (appId == null)
 			return "";
-		//_jmolInitCheck();
 		id != undefined && id != null || (id = "jmolLink" + c._linkCount);
 		label != undefined && label != null || (label = script.substring(0, 32));
 		++c._linkCount;
@@ -383,7 +361,6 @@
 	c._getMenu = function(appletOrId, arrayOfMenuItems, size, id, title) {
 		var appId = c._getIdForControl(appletOrId, null);
 		var optgroup = null;
-		//_jmolInitCheck();
 		id != undefined && id != null || (id = "jmolMenu" + c._menuCount);
 		++c._menuCount;
 		var type = typeof arrayOfMenuItems;
@@ -432,7 +409,6 @@
 	}
 
 	c._getRadio = function(appletOrId, script, labelHtml, isChecked, separatorHtml, groupName, id, title) {
-		//_jmolInitCheck();
 		if (c._radioGroupCount == 0)
 			++c._radioGroupCount;
 		groupName || (groupName = "jmolRadioGroup" + (c._radioGroupCount - 1));
@@ -445,14 +421,7 @@
 	}
 
 	c._getRadioGroup = function(appletOrId, arrayOfRadioButtons, separatorHtml, groupName, id, title) {
-		/*
 
-			array: [radio1,radio2,radio3...]
-			where radioN = ["script","label",isSelected,"id","title"]
-
-		*/
-
-		//_jmolInitCheck();
 		var type = typeof arrayOfRadioButtons;
 		if (type != "object" || type == null || ! arrayOfRadioButtons.length) {
 			alert("invalid arrayOfRadioButtons");

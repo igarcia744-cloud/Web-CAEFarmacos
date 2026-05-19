@@ -1,4 +1,4 @@
-Clazz.declarePackage("JU");
+﻿Clazz.declarePackage("JU");
 (function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.a = null;
@@ -154,71 +154,7 @@ s += "]";
 return s;
 });
 c$.$Matrix$LUDecomp$ = function(){
-/*if4*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.LU = null;
-this.piv = null;
-this.pivsign = 0;
-Clazz.instantialize(this, arguments);}, JU.Matrix, "LUDecomp", null);
-Clazz.makeConstructor(c$, 
-function(m, n){
-this.LU = this.b$["JU.Matrix"].getArrayCopy();
-this.piv =  Clazz.newIntArray (m, 0);
-for (var i = m; --i >= 0; ) this.piv[i] = i;
-
-this.pivsign = 1;
-var LUrowi;
-var LUcolj =  Clazz.newDoubleArray (m, 0);
-for (var j = 0; j < n; j++) {
-for (var i = m; --i >= 0; ) LUcolj[i] = this.LU[i][j];
-
-for (var i = m; --i >= 0; ) {
-LUrowi = this.LU[i];
-var kmax = Math.min(i, j);
-var s = 0.0;
-for (var k = kmax; --k >= 0; ) s += LUrowi[k] * LUcolj[k];
-
-LUrowi[j] = LUcolj[i] -= s;
-}
-var p = j;
-for (var i = m; --i > j; ) if (Math.abs(LUcolj[i]) > Math.abs(LUcolj[p])) p = i;
-
-if (p != j) {
-for (var k = n; --k >= 0; ) {
-var t = this.LU[p][k];
-this.LU[p][k] = this.LU[j][k];
-this.LU[j][k] = t;
-}
-var k = this.piv[p];
-this.piv[p] = this.piv[j];
-this.piv[j] = k;
-this.pivsign = -this.pivsign;
-}if ( new Boolean (j < m & this.LU[j][j] != 0.0).valueOf()) for (var i = m; --i > j; ) this.LU[i][j] /= this.LU[j][j];
-
-}
-}, "~N,~N");
-Clazz.defineMethod(c$, "solve", 
-function(b, n){
-for (var j = 0; j < n; j++) if (this.LU[j][j] == 0) return null;
-
-var nx = b.n;
-var x = b.getMatrixSelected(this.piv, nx);
-var a = x.a;
-for (var k = 0; k < n; k++) for (var i = k + 1; i < n; i++) for (var j = 0; j < nx; j++) a[i][j] -= a[k][j] * this.LU[i][k];
-
-
-
-for (var k = n; --k >= 0; ) {
-for (var j = nx; --j >= 0; ) a[k][j] /= this.LU[k][k];
-
-for (var i = k; --i >= 0; ) for (var j = nx; --j >= 0; ) a[i][j] -= a[k][j] * this.LU[i][k];
-
-
-}
-return x;
-}, "JU.Matrix,~N");
-/*eoif4*/})();
+})();
 };
 })();
 ;//5.0.1-v7 Sat Feb 21 18:17:38 CST 2026

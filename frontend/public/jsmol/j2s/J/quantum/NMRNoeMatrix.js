@@ -1,4 +1,4 @@
-Clazz.declarePackage("J.quantum");
+﻿Clazz.declarePackage("J.quantum");
 Clazz.load(["java.text.NumberFormat"], "J.quantum.NMRNoeMatrix", ["java.io.BufferedReader", "$.File", "$.FileReader", "java.util.Hashtable", "JU.BS", "$.Lst", "$.SB"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.eigenValues = null;
@@ -547,100 +547,8 @@ Clazz.defineMethod(c$, "getNoe",
 function(i, j){
 return (i < 0 || j < 0 || i >= this.nHAtoms ? NaN : this.noeM[i][j]);
 }, "~N,~N");
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.noesy = false;
-this.tau = 0;
-this.freq = 0;
-this.tMix = 0;
-this.cutoff = 0;
-this.rhoStar = 0;
-this.tainted = true;
-this.mixingChanged = true;
-this.id = 0;
-Clazz.instantialize(this, arguments);}, J.quantum.NMRNoeMatrix, "NOEParams", null);
-Clazz.prepareFields (c$, function(){
-{
-this.freq = 2.5132741228718348E9;
-this.tau = 80E-12;
-this.tMix = 0.5;
-this.cutoff = 10;
-this.rhoStar = 0.1;
-this.noesy = true;
-}});
-Clazz.overrideMethod(c$, "toString", 
-function(){
-return "[id=" + this.id + " freq=" + this.getNMRfreqMHz() + " tau=" + this.tau + " tMix=" + this.tMix + " cutoff=" + this.cutoff + " rhoStar=" + this.rhoStar + " noesy=" + this.noesy + "]";
-});
-Clazz.defineMethod(c$, "setCorrelationTimeTauPS", 
-function(t){
-this.tau = t * 1E-12;
-this.tainted = true;
-}, "~N");
-Clazz.defineMethod(c$, "setMixingTimeSec", 
-function(t){
-this.tMix = t;
-this.mixingChanged = true;
-}, "~N");
-Clazz.defineMethod(c$, "setNMRfreqMHz", 
-function(f){
-this.freq = f * 2 * 3.141592653589793 * 1E6;
-this.tainted = true;
-}, "~N");
-Clazz.defineMethod(c$, "setCutoffAng", 
-function(c){
-this.cutoff = c;
-this.tainted = true;
-}, "~N");
-Clazz.defineMethod(c$, "setRhoStar", 
-function(c){
-this.rhoStar = c;
-this.tainted = true;
-}, "~N");
-Clazz.defineMethod(c$, "setNoesy", 
-function(b){
-this.noesy = b;
-this.tainted = true;
-}, "~B");
-Clazz.defineMethod(c$, "getCorrelationTimeTauPS", 
-function(){
-return this.tau;
-});
-Clazz.defineMethod(c$, "getMixingTimeSec", 
-function(){
-return this.tMix;
-});
-Clazz.defineMethod(c$, "getNoesy", 
-function(){
-return this.noesy;
-});
-Clazz.defineMethod(c$, "getNMRfreqMHz", 
-function(){
-return this.freq / 2 / 3.141592653589793 / 1E6;
-});
-Clazz.defineMethod(c$, "getCutoffAng", 
-function(){
-return this.cutoff;
-});
-/*eoif3*/})();
-/*if3*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-this.x = 0;
-this.y = 0;
-this.z = 0;
-this.x1 = 0;
-this.y1 = 0;
-this.z1 = 0;
-this.x2 = 0;
-this.y2 = 0;
-this.z2 = 0;
-this.xa = null;
-this.ya = null;
-this.za = null;
-this.methyl = false;
-this.equiv = false;
-Clazz.instantialize(this, arguments);}, J.quantum.NMRNoeMatrix, "NOEAtom", null);
-/*eoif3*/})();
+})();
+})();
 c$.staticid = 0;
 c$.nf = java.text.NumberFormat.getInstance();
 {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import api from "../../api/api";
 
@@ -10,7 +10,6 @@ function ModalSubirMol2({ isOpen, onClose }) {
   const [busqueda, setBusqueda] = useState("");
   const [libreriaSeleccionada, setLibreriaSeleccionada] = useState(null);
 
-  // cargar librerías
   useEffect(() => {
     if (isOpen) {
       cargarLibrerias();
@@ -26,17 +25,14 @@ function ModalSubirMol2({ isOpen, onClose }) {
     }
   };
 
-  // filtro búsqueda
   const filtradas = librerias.filter(l =>
     (l.nombre ?? "").toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  // seleccionar librería
   const seleccionarLibreria = (libreria) => {
     setLibreriaSeleccionada(libreria);
   };
 
-  // submit
   const handleSubmit = async (e) => {
 
     e.preventDefault();
@@ -85,14 +81,12 @@ function ModalSubirMol2({ isOpen, onClose }) {
 
       <div className="modal-librerias-container">
 
-        {/* BUSCADOR */}
         <input
           placeholder="Buscar librería..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
         />
 
-        {/* TABLA CON SCROLL */}
         <div className="modal-librerias-tabla">
 
           <div className="tabla-scroll">
@@ -151,7 +145,6 @@ function ModalSubirMol2({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* ZONA SUBIDA FIJA */}
         <div className="modal-subida">
 
           <form onSubmit={handleSubmit}>
@@ -162,7 +155,6 @@ function ModalSubirMol2({ isOpen, onClose }) {
               onChange={(e)=>setArchivo(e.target.files[0])}
             />
 
-            {/* Librería seleccionada */}
             {libreriaSeleccionada && (
               <p style={{color:"#438e23"}}>
                 Compuesto seleccionado: {libreriaSeleccionada.nombre}

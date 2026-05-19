@@ -1,5 +1,4 @@
-// BH 2024.04.16
-
+﻿
 data = `[[Table Loading files from databases
 ||
 COD 

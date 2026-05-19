@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+﻿import React, { useState, useRef, useEffect } from "react";
 import "../css/Dashboard.css";
 import logo from "../assets/logo-principal.png";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,6 @@ const Dashboard = () => {
     etiquetas: [],
     orden: "nombre_asc",
 
-    // 🔥 NUEVOS
     filtroTipo: "",
     filtroNombreLibreria: "",
     minCompuestos: 0,
@@ -66,7 +65,6 @@ const Dashboard = () => {
 
   const [mostrarLog, setMostrarLog] = useState(false);
 
-  /* cerrar dropdown si se hace click fuera */
 
   useEffect(() => {
 
@@ -110,7 +108,7 @@ const Dashboard = () => {
     localStorage.removeItem("user_id");
     localStorage.removeItem("nombre");
 
-    navigate("/"); // o "/" según tu ruta
+    navigate("/"); 
   };
 
   return (
@@ -131,8 +129,6 @@ const Dashboard = () => {
           <button className="nav-item" onClick={() => setModalCompuestos(true)}>
             Conformaciones
           </button>
-
-          {/* ETIQUETAS */}
 
           <div className="dropdown" ref={etiquetasRef}>
 
@@ -158,8 +154,6 @@ const Dashboard = () => {
             )}
 
           </div>
-
-          {/* SUBIR ARCHIVO */}
 
           <div className="dropdown" ref={uploadRef}>
 
@@ -217,7 +211,6 @@ const Dashboard = () => {
       
       <div className="dashboard-main">
 
-        {/* SIDEBAR */}
         <div className="sidebar">
 
           <h2>Filtro</h2>
@@ -258,7 +251,6 @@ const Dashboard = () => {
 
         </div>
 
-        {/* CONTENIDO */}
         <div className="dashboard-content">
 
           {vista === "tabla" && (

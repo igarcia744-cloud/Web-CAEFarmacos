@@ -1,7 +1,4 @@
-/* =========================
-   CONTENEDOR GENERAL
-========================= */
-
+﻿
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -12,9 +9,6 @@
 }
 
 
-/* =========================
-   HEADER
-========================= */
 
 .dashboard-header {
   display: flex;
@@ -28,7 +22,6 @@
 }
 
 
-/* LOGO */
 
 .logo-container{
   display:flex;
@@ -42,9 +35,6 @@
 }
 
 
-/* =========================
-   MENU
-========================= */
 
 .nav-menu {
   display: flex;
@@ -68,9 +58,6 @@
 }
 
 
-/* =========================
-   DROPDOWN
-========================= */
 
 .dropdown {
   position: relative;
@@ -110,7 +97,6 @@
 }
 
 
-/* ANIMACIÓN */
 
 @keyframes dropdownFade {
   from{
@@ -124,9 +110,6 @@
 }
 
 
-/* =========================
-   USUARIO
-========================= */
 
 .usuario {
   font-size: 16px;
@@ -144,9 +127,6 @@
 }
 
 
-/* =========================
-   BODY
-========================= */
 
 .dashboard-content{
   flex:1;
@@ -154,8 +134,8 @@
   background:#202020;
   color:white;
 
-  display:flex;              /* 🔴 IMPORTANTE */
-  flex-direction:column;     /* 🔴 IMPORTANTE */
+  display:flex;              
+  flex-direction:column;     
 
   overflow:hidden;
 }
@@ -169,15 +149,13 @@
   flex: 1;
 }
 
-/* Layout principal */
 .dashboard-main{
   display:flex;
   height:100vh;
   background:#282828;
-  height:calc(100vh - 80px); /* ajusta si tu header mide otra cosa */
+  height:calc(100vh - 80px);
 }
 
-/* SIDEBAR */
 .sidebar{
 
   width:25%;
@@ -188,33 +166,29 @@
   display:flex;
   flex-direction:column;
 
-  height:100%;        /* 🔥 importante */
-  overflow-y:auto;    /* 🔥 clave */
+  height:100%;        
+  overflow-y:auto;    
 
 }
 
-/* Título */
 .sidebar h2{
   color:#438e23;
   margin-bottom:25px;
   font-size:22px;
 }
 
-/* Sección */
 .sidebar-section{
   display:flex;
   flex-direction:column;
   gap: 15px;
 }
 
-/* Subtítulo */
 .sidebar-title{
   color:#888;
   font-size:14px;
   margin-bottom:10px;
 }
 
-/* Items */
 .sidebar-item{
 
   padding:12px;
@@ -227,12 +201,10 @@
 
 }
 
-/* Hover */
 .sidebar-item:hover{
   background:#2a2a2a;
 }
 
-/* Activo */
 .sidebar-item.active{
 
   background:#438e23;

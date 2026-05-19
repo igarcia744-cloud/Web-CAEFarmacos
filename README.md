@@ -4,6 +4,18 @@ TFG – Desarrollo de una aplicación web para la gestión de librerías de comp
 
 ## Tecnologías utilizadas
 
+## Requisitos previos
+
+Antes de instalar, asegúrate de tener instalados:
+
+- Python 3.10+ (incluye pip)
+- Node.js 16+ (incluye npm)
+- PostgreSQL 12+ (opcional: PgAdmin4 para administración)
+- Git
+
+
+## Tecnologías utilizadas
+
 ### Backend
 - Python
 - FastAPI
@@ -45,10 +57,10 @@ Ejecutar script de instalación:
 Copiar archivo de ejemplo:
 
 ```
-cp .env.example .env
+cp seguridad.env.example seguridad.env
 ```
 
-Editar con los datos de la base de datos.
+Editar seguridad.env con los datos de la base de datos y claves secretas. Asegúrate de que el archivo se llama seguridad.env porque el código lo carga así.
 
 ---
 

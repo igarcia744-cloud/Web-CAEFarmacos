@@ -1,27 +1,25 @@
-/* Fondo oscuro del modal */
-.modal-overlay{
+﻿.modal-overlay{
   position:fixed;
   top:0;
   left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.75); /* oscurece el fondo */
+  background:rgba(0,0,0,0.75); 
   display:flex;
   justify-content:center;
   align-items:center;
   z-index:1000;
 }
 
-/* Caja principal del modal */
 .modal-content{
 
   background:#202020;
 
   width:90%;
-  max-width:1200px;   /* 🔥 más grande pero controlado */
+  max-width:1200px;  
 
-  max-height:90vh;    /* 🔥 límite máximo */
-  height:auto;        /* 🔥 se adapta al contenido */
+  max-height:90vh;    
+  height:auto;        
 
   padding:30px;
   border-radius:12px;
@@ -33,13 +31,11 @@
   flex-direction:column;
 }
 
-/* Título */
 .modal-content h2{
   margin-bottom:25px;
   color:#438e23;
 }
 
-/* Inputs */
 .modal-content input,
 .modal-content textarea{
   width:100%;
@@ -58,7 +54,6 @@
   min-height: 0;
 }
 
-/* Botones */
 .modal-buttons{
   display:flex;
   justify-content:flex-end;
@@ -80,7 +75,6 @@
   color:#438e23;
 }
 
-/* Botón X */
 .modal-close{
   position:absolute;
   top:10px;
@@ -94,7 +88,6 @@
   color:#438e23;
 }
 
-/* Modal Etiquetas */
 .tabla-etiquetas{
 
   width:100%;
@@ -119,7 +112,7 @@
 
   word-wrap: break-word;
   overflow-wrap: break-word;
-  white-space: normal; /* 🔥 permite saltos */
+  white-space: normal;
 }
 
 .tabla-etiquetas th{
@@ -175,7 +168,6 @@
   font-size:14px;
 }
 
-/* GRID TIPO EXPLORADOR */
 .etiquetas-grid{
 
   display:grid;
@@ -185,7 +177,6 @@
   margin-bottom:15px;
 }
 
-/* ITEM */
 .etiqueta-item{
 
   background:#181818;
@@ -198,35 +189,30 @@
 
 }
 
-/* NUEVAS */
 .etiqueta-item.nueva{
   background:#2a2a2a;
   color:#5bbf2f;
   font-weight:bold;
 }
 
-/* SEPARADOR */
 .modal-separador{
   height:1px;
   background:#333;
   margin:15px 0;
 }
 
-/* LISTA */
 .lista-etiquetas{
   max-height:150px;
   overflow-y:auto;
   margin-top:10px;
 }
 
-/* ITEM LISTA */
 .lista-item{
   display:block;
   margin-bottom:8px;
   cursor:pointer;
 }
 
-/* 🔥 CONTENEDOR FILTROS */
 .log-filtros {
   display: flex;
   gap: 20px;
@@ -235,20 +221,17 @@
   flex-wrap: wrap;
 }
 
-/* 🔥 GRUPO */
 .filtro-grupo {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-/* 🔥 LABEL */
 .filtro-grupo label {
   font-size: 14px;
   color: #aaa;
 }
 
-/* 🔥 SELECT + INPUT */
 .filtro-grupo select,
 .filtro-grupo input {
   padding: 8px 12px;
@@ -260,14 +243,12 @@
   transition: 0.2s;
 }
 
-/* 🔥 HOVER / FOCUS */
 .filtro-grupo select:focus,
 .filtro-grupo input:focus {
   border-color: #438e23;
   box-shadow: 0 0 5px rgba(67, 142, 35, 0.5);
 }
 
-/* 🔥 TABLA ESTILO PRO */
 .tabla-datos {
   width: 100%;
   border-collapse: collapse;
@@ -276,7 +257,6 @@
   overflow: hidden;
 }
 
-/* HEADER */
 .tabla-datos thead {
   background: #2a2a2a;
 }
@@ -288,18 +268,15 @@
   font-weight: 600;
 }
 
-/* FILAS */
 .tabla-datos td {
   padding: 10px;
   border-bottom: 1px solid #333;
 }
 
-/* HOVER FILA */
 .tabla-datos tr:hover {
   background: #2a2a2a;
 }
 
-/* 🎨 COLORES POR ACCIÓN */
 .accion-create {
   color: green;
   font-weight: bold;
@@ -330,7 +307,6 @@
   margin-top:10px;
 }
 
-/* 🔥 scrollbar EXACTO como el tuyo */
 .tabla-scroll::-webkit-scrollbar{
   width:8px;
 }
@@ -355,9 +331,8 @@
   scrollbar-color:#2e6b1a #202020;
 }
 
-/* 🔥 SELECT BONITO */
 .select-accion {
-  appearance: none; /* quita estilo feo del navegador */
+  appearance: none; 
   -webkit-appearance: none;
   -moz-appearance: none;
 
@@ -373,12 +348,10 @@
   transition: all 0.2s ease;
 }
 
-/* 🔥 HOVER */
 .select-accion:hover {
   border-color: #438e23;
 }
 
-/* 🔥 FOCUS */
 .select-accion:focus {
   outline: none;
   border-color: #438e23;

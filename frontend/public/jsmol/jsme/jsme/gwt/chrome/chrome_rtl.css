@@ -1,44 +1,4 @@
-/**
- * The file contains styles for GWT widgets in the chrome theme, in RTL mode.
- *
- * In order to maintain cross-browser compatibility, the following syntax is
- * used to create IE6 specific style rules:
- *    .gwt-Widget {
- *      property: rule applies to all browsers
- *      -property: rule applies only to IE6 (overrides previous rule)
- *    }
- *    * html .gwt-Widget {
- *      property: rule applies to all versions of IE
- *    }
- */
-
-/*
-body, table td, select {
-  font-family: Arial Unicode MS, Arial, sans-serif;
-  font-size: small;
-}
-pre {
-  font-family: "courier new", courier;
-  font-size: small;
-}
-body {
-  color: black;
-  margin: 0px;
-  border: 0px;
-  padding: 0px;
-  background: #fff;
-  direction: rtl;
-}
-a, a:visited, a:hover {
-  color: #0000AA;
-}
-*/
-/**
- * The reference theme can be used to determine when this style sheet has
- * loaded.  Create a hidden div element with absolute position, assign the style
- * name below, and attach it to the DOM.  Use a timer to detect when the
- * element's height and width are set to 5px.
- */
+﻿
 .gwt-Reference-chrome-rtl {
   height: 5px;
   width: 5px;

@@ -1,69 +1,10 @@
-Clazz.load(null, "java.util.ResourceBundle", ["java.util.Enumeration", "net.sf.j2s.ajax.HttpRequest"], function(){
+﻿Clazz.load(null, "java.util.ResourceBundle", ["java.util.Enumeration", "net.sf.j2s.ajax.HttpRequest"], function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.parent = null;
 this.locale = null;
 this.bundleName = null;
 Clazz.instantialize(this, arguments);}, java.util, "ResourceBundle", null);
-/*LV!1824 unnec constructor*/Clazz.defineMethod(c$, "getString", 
-function(key){
-return this.getObject(key);
-}, "~S");
-Clazz.defineMethod(c$, "getStringArray", 
-function(key){
-return this.getObject(key);
-}, "~S");
-Clazz.defineMethod(c$, "getObject", 
-function(key){
-var obj = this.handleGetObject(key);
-if (obj == null) {
-if (this.parent != null) {
-obj = this.parent.getObject(key);
-}if (obj == null) throw  new java.util.MissingResourceException("Can't find resource for bundle " + this.getClass().getName() + ", key " + key, this.getClass().getName(), key);
-}return obj;
-}, "~S");
-Clazz.defineMethod(c$, "getLocale", 
-function(){
-return this.locale;
-});
-Clazz.defineMethod(c$, "setParent", 
-function(parent){
-this.parent = parent;
-}, "java.util.ResourceBundle");
-c$.getBundle = Clazz.defineMethod(c$, "getBundle", 
-function(baseName){
-return java.util.ResourceBundle.getBundleImpl(baseName, null, null);
-}, "~S");
-c$.getBundle = Clazz.defineMethod(c$, "getBundle", 
-function(baseName, locale){
-return java.util.ResourceBundle.getBundleImpl(baseName, locale, null);
-}, "~S,java.util.Locale");
-c$.getBundle = Clazz.defineMethod(c$, "getBundle", 
-function(baseName, locale, loader){
-if (loader == null) {
-throw  new NullPointerException();
-}return java.util.ResourceBundle.getBundleImpl(baseName, locale, loader);
-}, "~S,java.util.Locale,ClassLoader");
-c$.getBundleImpl = Clazz.defineMethod(c$, "getBundleImpl", 
-function(baseName, locale, loader){
-if (baseName == null) {
-throw  new NullPointerException();
-}for (var i = 0; i < java.util.ResourceBundle.caches.length; i++) {
-if (java.util.ResourceBundle.caches[i].bundleName === baseName) {
-return java.util.ResourceBundle.caches[i];
-}}
-var bundle =  new java.util.ResourceBundle.TextResourceBundle(baseName);
-java.util.ResourceBundle.caches[java.util.ResourceBundle.caches.length] = bundle;
-return bundle;
-}, "~S,java.util.Locale,ClassLoader");
-c$.registerBundle = Clazz.defineMethod(c$, "registerBundle", 
-function(baseName, content){
-for (var i = 0; i < java.util.ResourceBundle.caches.length; i++) {
-if (java.util.ResourceBundle.caches[i].bundleName === baseName) {
-return;
-}}
-java.util.ResourceBundle.caches[java.util.ResourceBundle.caches.length] =  new java.util.ResourceBundle.TextResourceBundle(baseName, content);
-}, "~S,~S");
-/*if3*/;(function(){
+;(function(){
 var c$ = Clazz.decorateAsClass(function(){
 this.map = null;
 this.keys = null;
@@ -184,23 +125,5 @@ return m[key];
 }return m;
 }, "~S");
 c$.$ResourceBundle$TextResourceBundle$1$=function(){
-/*if5*/;(function(){
-var c$ = Clazz.decorateAsClass(function(){
-Clazz.prepareCallback(this, arguments);
-this.index = -1;
-Clazz.instantialize(this, arguments);}, java.util, "ResourceBundle$TextResourceBundle$1", null, java.util.Enumeration);
-Clazz.overrideMethod(c$, "nextElement", 
-function(){
-this.index++;
-return this.b$["java.util.ResourceBundle.TextResourceBundle"].keys[this.index];
-});
-Clazz.overrideMethod(c$, "hasMoreElements", 
-function(){
-return this.index < this.b$["java.util.ResourceBundle.TextResourceBundle"].keys.length - 1;
-});
-/*eoif5*/})();
+})();
 };
-/*eoif3*/})();
-c$.caches =  new Array(0);
-});
-;//5.0.1-v7 Mon May 12 23:42:45 CDT 2025

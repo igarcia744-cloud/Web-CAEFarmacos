@@ -1,29 +1,7 @@
-// JmolApplet.js -- Jmol._Applet and Jmol._Image
-
-// BH 2022.08.25 fixing ?j2sdebugcode to allow menu and console
-// BH 2022.01.23 updated _availableParams callbacks
-// BH 1/28/2018 7:15:09 AM adding _notifyAudioEnded
-// BH 2/14/2016 12:31:02 PM fixed local reader not disappearing after script call
-// BH 2/14/2016 12:30:41 PM Info.appletLoadingImage: "j2s/img/JSmol_spinner.gif", // can be set to "none" or some other image
-// BH 2/14/2016 12:27:09 PM Jmol.setCursor, proto._getSpinner 
-// BH 1/15/2016 4:23:14 PM adding Info.makeLiveImage
-// BH 4/17/2015 2:33:32 PM update for SwingJS 
-// BH 10/19/2014 8:08:51 PM moved applet._cover and applet._displayCoverImage to 
-// BH 5/8/2014 11:20:21 AM trying to fix AH nd JG problem with multiple applets
-// BH 1/27/2014 8:36:43 AM adding Info.viewSet
-// BH 12/13/2013 9:04:53 AM _evaluate DEPRECATED (see JSmolApi.js Jmol.evaulateVar
-// BH 11/24/2013 11:41:31 AM streamlined createApplet, with added JNLP for local reading
-// BH 10/11/2013 7:17:10 AM streamlined and made consistent with JSV and JSME
-// BH 7/16/2012 1:50:03 PM adds server-side scripting for image
-// BH 8/11/2012 11:00:01 AM adds Jmol._readyCallback for MSIE not in Quirks mode
-// BH 8/12/2012 3:56:40 AM allows .min.png to be replaced by .all.png in Image file name
-// BH 8/13/2012 6:16:55 PM fix for no-java message not displaying
-// BH 11/18/2012 1:06:39 PM adds option ">" in database query box for quick command execution
-// BH 12/17/2012 6:25:00 AM change ">" option to "!"
+﻿
 
 ;(function (Jmol, document) {
 
-	// _Applet -- the main, full-featured, Jmol object
 
 	Jmol._Applet = function(id, Info, checkOnly){
 		window[id] = this;
@@ -80,8 +58,6 @@
 	;(function(Applet, proto) {
 	Applet._get = function(id, Info, checkOnly) {
 
-	// note that the variable name the return is assigned to MUST match the first parameter in quotes
-	// applet = Jmol.getApplet("applet", Info)
 
 		checkOnly || (checkOnly = false);
 		Info || (Info = {});
@@ -108,7 +84,6 @@
 			deferUncover: false,  // true == the image should remain until command execution is complete 
 			disableJ2SLoadMonitor: false,
 			disableInitialConsole: true, // new default since now we have the spinner 2/14/2016 12:26:28 PM
-      //appletLoadingImage: "j2s/img/JSmol_spinner.gif", // can be set to "none" or some other image
 			debug: false
 		};	 
 		Jmol._addDefaultInfo(Info, DefaultInfo);
@@ -136,9 +111,6 @@
           List.push("JAVA");
         }
 				break;
-//			case "IMAGE":
-//				applet = new Jmol._Image(id, Info, checkOnly);
-//				break;
 			}
 			if (applet != null)
 				break;		  
@@ -150,7 +122,6 @@
  		  	applet = new Applet(id, Info);
 		}
 
-		// keyed to both its string id and itself
 		return (checkOnly ? applet : Jmol._registerApplet(id, applet));  
 	}
 
@@ -169,10 +140,6 @@
 	};
 
 
-	/*  AngelH, mar2007:
-		By (re)setting these variables in the webpage before calling Jmol.getApplet(),
-		a custom message can be provided (e.g. localized for user's language) when no Java is installed.
-	*/
 	Applet._noJavaMsg =
 			"Either you do not have Java applets enabled in your web<br />browser or your browser is blocking this applet.<br />\
 			Check the warning message from your browser and/or enable Java applets in<br />\
@@ -190,13 +157,8 @@
 		var jarFile = applet._jarFile;
 		var jnlp = ""
 		if (Jmol._isFile) {
-			// local installations need jnlp here and should reference JmolApplet(Signed).jar, not JmolApplet(Signed)0.jar  
 			jarFile = jarFile.replace(/0\.jar/,".jar");
-			//jnlp = " jnlp_href=\"" + jarFile.replace(/\.jar/,".jnlp") + "\"";
 		}
-		// size is set to 100% of containers' size, but only if resizable. 
-		// Note that resizability in MSIE requires: 
-		// <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		var w = (applet._containerWidth.indexOf("px") >= 0 ? applet._containerWidth : "100%");
 		var h = (applet._containerHeight.indexOf("px") >= 0 ? applet._containerHeight : "100%");
 		var widthAndHeight = " style=\"width:" + w + ";height:" + h + "\" ";
@@ -259,7 +221,6 @@
 		}
 		if (!this._is2D) {
 	 		Jmol._addExec([this, null, "J.export.JSExporter","load JSExporter"])
-	//		Jmol._addExec([this, this.__addExportHook, null, "addExportHook"])
 		}
 		if (Jmol._debugCode) {
 			Jmol._addExec([this, null, "J.appletjs.Jmol", "load Jmol"]);
@@ -308,15 +269,12 @@
 			return function() {setTimeout(function(){vwr.refresh(2)},10)};
 		default:
 			switch (clazzName) {
-			// debug mode only, when core.z.js has not been loaded and prior to start
 			case "J.shape.Balls":
 			case "J.shape.Sticks":
 			case "J.shape.Frank":
 				return null;
 			}
 			
-			//if (vwr.rm.repaintPending)
-				//return function() {setTimeout(function(){vwr.refresh(2)},10)};
 			if (vwr && vwr.isScriptExecuting && vwr.isScriptExecuting()) {
 				if (Jmol._asyncCallbacks[clazzName]) {
 					System.out.println("...ignored");
@@ -332,7 +290,6 @@
 			}
 			System.out.println(clazzName + "?????????????????????" + state)
 			return function() {setTimeout(function(){vwr.refresh(2)},10)};
-			//return null;
 		}
 	}
 
@@ -360,7 +317,6 @@
 		var app = this._2dapplet;
 		if (app && app._isEmbedded && app._ready && app.__Info.visible) {
       var me = this;
-      // for some reason, JSME doesn't get the width/height correctly the first time
 			me._show2d(true);me._show2d(false);me._show2d(true);
     }
     Jmol._hideLoadingSpinner(this);
@@ -375,7 +331,6 @@
 		if ((!this._isInfoVisible) == (!tf))
 			return;
 		this._isInfoVisible = tf;
-		// 1px does not work for MSIE
 		if (this._isJava) {
 			var x = (tf ? 2 : "100%");
 			Jmol.$setSize(Jmol.$(this, "appletdiv"), x, x);
@@ -390,7 +345,6 @@
 		if (this._2dapplet._isEmbedded) {
 			this._showInfo(false);
 			this._show(!tf);
-			// for whatever reason this must be here
 			this._2dapplet.__showContainer(true, true);
 		}
 	}
@@ -400,7 +354,6 @@
   }
 
   proto._getAtomCorrelation = function(molData, isC13) {
-    // get the first atom mapping available by loading the model structure into model 2, 
 
     var n = this._evaluate("{*}.count");
     if (n == 0)return;
@@ -409,7 +362,6 @@
     var map = this._evaluate("atommap");
     var A = [];
     var B = [];
-    // these are Jmol atom indexes. The second number will be >= n, and all must be incremented by 1.
 		for (var i = 0; i < map.length; i++) {
 		  var c = map[i];
 		  A[c[0] + 1] = c[1] - n + 1;
@@ -472,7 +424,6 @@
 	}
 
 	proto._scriptEcho = function(script) {
-		// returns a newline-separated list of all echos from a script
 		var Ret = this._scriptWaitAsArray(script);
 		var s = "";
 		for(var i = Ret.length; --i >= 0; )
@@ -483,7 +434,6 @@
 	}
 
 	proto._scriptMessage = function(script) {
-		// returns a newline-separated list of all messages from a script, ending with "script completed\n"
 		var Ret = this._scriptWaitAsArray(script);
 		var s = "";
 		for(var i = Ret.length; --i >= 0; )
@@ -553,8 +503,6 @@
   }
 
 	proto._evaluateDEPRECATED = function(molecularMath) {   // DEPRECATED!!!	
-	// DEPRECATED!!!	
-		//carries out molecular math on a model
 		var result = "" + this._getPropertyAsJavaObject("evaluate", molecularMath);
 		var s = result.replace(/\-*\d+/, "");
 		if(s == "" && !isNaN(parseInt(result)))
@@ -563,7 +511,6 @@
 		if(s == "" && !isNaN(parseFloat(result)))
 			return parseFloat(result);
 		return result;
-	// DEPRECATED!!!	
 	}
 
 	proto._saveOrientation = function(id) {	
@@ -587,18 +534,8 @@
 	}
 
 	proto._resizeApplet = function(size) {
-		// See _jmolGetAppletSize() for the formats accepted as size [same used by jmolApplet()]
-		//  Special case: an empty value for width or height is accepted, meaning no change in that dimension.
 
-		/*
-		 * private functions
-		 */
 		function _getAppletSize(size, units) {
-			/* Accepts single number, 2-value array, or object with width and height as mroperties, each one can be one of:
-			 percent (text string ending %), decimal 0 to 1 (percent/100), number, or text string (interpreted as nr.)
-			 [width, height] array of strings is returned, with units added if specified.
-			 Percent is relative to container div or element (which should have explicitly set size).
-			 */
 			var width, height;
 			if(( typeof size) == "object" && size != null) {
 				width = size[0]||size.width;
@@ -657,8 +594,6 @@
 		this._thisJmolModel = "" + Math.random();
 		this._fileName = fileName;
 		if (!this._scriptLoad(fileName, script)) {
-			// we load the data here instead of in Jmol in the case of
-			// JSmol/Java/Sandboxed or when part of a view set 
 			var me = this;      
 			Jmol._loadFileData(this, fileName, 
 				function(data){me.__loadModel(data, script, chemID)},
@@ -687,7 +622,6 @@
 			return;
 		if (this._viewSet != null) {
 			script || (script = ""); 
-			// first component only
 			script += ";if ({*}.molecule.max > 1 || {*}.modelindex.max > 0){ delete molecule > 1 or modelindex > 0;x = getProperty('extractModel',{*});load inline @x};"
 		}
 		if (!script && this._noscript) {
@@ -708,7 +642,6 @@
   }
   
 	proto._loadModelFromView = function(view, _jmol_loadModelFromView) {
-		// request from Jmol.View to update view with view.JME.data==null or needs changing
 		this._currentView = view;
 		var rec = view.Jmol;
 		if (rec.data != null) {
@@ -733,7 +666,6 @@
 	proto._updateView = function(_jmol_updateView) {
 		if (this._viewSet == null || !this._applet)
 			return;
-		// called from model change without chemical identifier, possibly by user action and call to Jmol.updateView(applet)
 		chemID = "" + this._getPropertyAsJavaObject("variableInfo","script('show chemical inchiKey')");
 		if (chemID.length < 36) // InChIKey=RZVAJINKPMORJF-BGGKNDAXNA-N
 			chemID = null;
@@ -743,9 +675,7 @@
 	}
 
 	proto._atomPickedCallback = function(imodel, iatom, _jmol_atomPickedCallback) {
-		// direct callback from Jmol HTML5 applet
 		if (iatom < 0) {
-		// TODO could be a model change? 
 		} else {
 			var A = [iatom + 1];
 			Jmol.View.updateAtomPick(this, A);
@@ -775,7 +705,6 @@
 			this._displayCoverImage(doCover);
 			return;
 		}
-		// uncovering UNMADE applet upon clicking image
 		var s = (this._coverScript ? this._coverScript : "");
 		this._coverScript = "";
 		if (this._deferUncover)
@@ -817,140 +746,6 @@
   
 })(Jmol._Applet, Jmol._Applet.prototype);
 
-/* ****************************************
-
-
-	// _Image -- an alternative to _Applet
-	// commented out here, as it has found no use
-
-	Jmol._Image = function(id, Info, checkOnly){
-		this._jmolType = "image";
-		if (checkOnly)
-			return this;
-		this._create(id, Info);
-		return this;
-	}
-
-;(function (Image, proto) {
-
-	Jmol._Applet._setCommonMethods(proto);
-
-	proto._create = function(id, Info) {
-		Jmol._setObject(this, id, Info);
-		thisnfo);
-		this._src || (this._src = "");
-		var t = Jmol._getWrapper(this, true) 
-			+ '<img id="'+id+'_image" width="' + Info.width + '" height="' + Info.height + '" src=""/>'
-		 	+	Jmol._getWrapper(this, false)
-			+ (Info.addSelectionOptions ? Jmol._getGrabberOptions(this) : "");
-		if (Jmol._debugAlert)
-			alert (t);
-		this._code = Jmol._documentWrite(t);
-		this._ready = false;
-		if (Jmol._document)
-			this._readyCallback(id, null, this._ready = true, null);
-	}
-
-	proto._canScript = function(script) {
-		var slc = script.toLowerCase().replace(/[\",\']/g, '');
-		var ipt = slc.length;
-		return (script.indexOf("#alt:LOAD") >= 0 || slc.indexOf(";") < 0 && slc.indexOf("\n") < 0
-			&& (slc.indexOf("script ") == 0 || slc.indexOf("load ") == 0)
-			&& (slc.indexOf(".png") == ipt - 4 || slc.indexOf(".jpg") == ipt - 4));
-	}
-
-	proto._script = function(script) {
-		var slc = script.toLowerCase().replace(/[\",\']/g, '');
-		// single command only
-		// "script ..." or "load ..." only
-		// PNG or PNGJ or JPG only
-		// automatically switches to .all.png(j) from .min.png(j)
-		var ipt = slc.length;
-		if (slc.indexOf(";") < 0 && slc.indexOf("\n") < 0
-			&& (slc.indexOf("script ") == 0 || slc.indexOf("load ") == 0)
-			&& (slc.indexOf(".png") == ipt - 4 || slc.indexOf(".pngj") == ipt - 5 || slc.indexOf(".jpg") == ipt - 4)) {
-			var imageFile = script.substring(script.indexOf(" ") + 1);
-			ipt = imageFile.length;
-			for (var i = 0; i < ipt; i++) {
-				switch (imageFile.charAt(i)) {
-				case " ":
-					continue;
-				case '"':
-					imageFile = imageFile.substring(i + 1, imageFile.indexOf('"', i + 1))
-					i = ipt;
-					continue;
-				case "'":
-					imageFile = imageFile.substring(i + 1, imageFile.indexOf("'", i + 1))
-					i = ipt;
-					continue;
-				default:
-					imageFile = imageFile.substring(i)
-					i = ipt;
-					continue;
-				}
-			}
-			imageFile = imageFile.replace(/\.min\.png/,".all.png")
-			document.getElementById(this._id + "_image").src = imageFile
-		} else if (script.indexOf("#alt:LOAD ") >= 0) {
-			imageFile = script.split("#alt:LOAD ")[1]
-			if (imageFile.indexOf("??") >= 0) {
-				var db = imageFile.split("??")[0];
-				imageFile = prompt(imageFile.split("??")[1], "");
-				if (!imageFile)
-					return;
-				if (!Jmol.db._DirectDatabaseCalls[imageFile.substring(0,1)])
-					imageFile = db + imageFile;
-			}
-			this._loadFile(imageFile);
-		}
-	}
-
-	proto._show = function(tf) {
-		Jmol._getElement(this, "appletdiv").style.display = (tf ? "block" : "none");
-	}
-
-	proto._loadFile = function(fileName, params){
-		this._showInfo(false);
-		this._thisJmolModel = "" + Math.random();
-		params = (params ? params : "");
-		var database = "";
-		if (Jmol._isDatabaseCall(fileName)) {
-			database = fileName.substring(0, 1); 
-			fileName = Jmol._getDirectDatabaseCall(fileName, false);
-		} else if (fileName.indexOf("://") < 0) {
-			var ref = document.location.href
-			var pt = ref.lastIndexOf("/");
-			fileName = ref.substring(0, pt + 1) + fileName;
-		}
-
-		var src = Jmol._serverUrl 
-				+ "?call=getImageForFileLoad"
-				+ "&file=" + escape(fileName)
-				+ "&width=" + this._width
-				+ "&height=" + this._height
-				+ "&params=" + encodeURIComponent(params + ";frank off;");
-		Jmol._getElement(this, "image").src = src;
-	}
-
-	proto._searchDatabase = function(query, database, script){
-		if (query.indexOf("?") == query.length - 1) {
-			Jmol._getInfoFromDatabase(this, database, query.split("?")[0]);
-			return;
-		}
-		this._showInfo(false);
-		script || (script = Jmol._getScriptForDatabase(database));
-		var src = Jmol._serverUrl 
-			+ "?call=getImageFromDatabase"
-			+ "&database=" + database
-			+ "&query=" + query
-			+ "&width=" + this._width
-			+ "&height=" + this._height
-			+ "&script=" + encodeURIComponent(script + ";frank off;");
-		Jmol._getElement(this, "image").src = src;
-	}
-})(Jmol._Image, Jmol._Image.prototype);
-
-************************************ */
 
 	Jmol.jmolSmiles = function(jmol, withStereoChemistry) {
 		return jmol._getSmiles();
