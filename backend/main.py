@@ -15,12 +15,13 @@ from routers.explorador import router as explorador_router
 from routers.download import router as download_router
 from routers.archivos import router as archivos
 from routers.log import router as logs
+from routers.usuarios import router as usuarios_router
 
 from auth import *
 
 app = FastAPI()
 app.include_router(auth_router)
-app.include_router(usuarios.router)
+app.include_router(usuarios_router)
 
 app.include_router(librerias_router)
 app.include_router(compuestos_router)

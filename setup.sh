@@ -62,18 +62,6 @@ EOF
 
 echo "Se ha creado seguridad.env.example. Copia o edita este archivo y guárdalo como seguridad.env."
 
-# Ofrecer crear seguridad.env y generar SECRET_KEY
-read -p "¿Crear seguridad.env desde el ejemplo y generar SECRET_KEY aleatorio? [y/N]: " create_env
-if [[ "$create_env" =~ ^[Yy]$ ]]; then
-  SECRET=$($PYTHON_CMD - <<PY
-import secrets
-print(secrets.token_urlsafe(32))
-PY
-  )
-  sed "s/SECRET_KEY=CAMBIA_ESTO_POR_UNA_CLAVE_SECRETA/SECRET_KEY=$SECRET/" seguridad.env.example > seguridad.env
-  echo "seguridad.env creado."
-fi
-
 # Instalación del frontend
 if [ -d "frontend" ]; then
   if command -v npm >/dev/null 2>&1; then
