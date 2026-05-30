@@ -50,18 +50,6 @@ else
   $PYTHON_CMD -m pip install -r requirements.txt
 fi
 
-# Crear ejemplo de archivo de variables de entorno
-cat > seguridad.env.example <<EOF
-# Variables de entorno para la aplicación
-DATABASE_URL=postgresql+asyncpg://user:password@localhost:5432/tu_basedatos
-SECRET_KEY=CAMBIA_ESTO_POR_UNA_CLAVE_SECRETA
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=60
-STORAGE_PATH=storage
-EOF
-
-echo "Se ha creado seguridad.env.example. Copia o edita este archivo y guárdalo como seguridad.env."
-
 # Instalación del frontend
 if [ -d "frontend" ]; then
   if command -v npm >/dev/null 2>&1; then
@@ -73,6 +61,7 @@ if [ -d "frontend" ]; then
 fi
 
 # Opción para crear tablas en la base de datos usando SQLAlchemy (requiere DATABASE_URL configurada)
+echo "Utilize .env.example como archivo seguridad.env, configúrelo según sus necesidades"
 read -p "¿Crear tablas en la base de datos ahora? (requiere que seguridad.env tenga DATABASE_URL) [y/N]: " create_db
 if [[ "$create_db" =~ ^[Yy]$ ]]; then
   if [ ! -f seguridad.env ]; then
