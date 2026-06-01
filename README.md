@@ -69,7 +69,11 @@ Editar seguridad.env con los datos de la base de datos y claves secretas. Asegú
 ### Backend
 
 ```
-uvicorn backend.main:app --reload
+cd backend
+```
+
+```
+uvicorn main:app --reload
 ```
 
 Backend disponible en:
